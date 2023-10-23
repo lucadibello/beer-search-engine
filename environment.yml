@@ -1,0 +1,56 @@
+name: beer-search-engine
+channels:
+  - defaults
+dependencies:
+  - ca-certificates=2023.08.22=hca03da5_0
+  - libcxx=14.0.6=h848a8c0_0
+  - libffi=3.4.4=hca03da5_0
+  - ncurses=6.4=h313beb8_0
+  - openssl=3.0.11=h1a28f6b_2
+  - pip=23.3=py38hca03da5_0
+  - python=3.8.18=hb885b13_0
+  - readline=8.2=h1a28f6b_0
+  - setuptools=68.0.0=py38hca03da5_0
+  - sqlite=3.41.2=h80987f9_0
+  - tk=8.6.12=hb8d0fd4_0
+  - wheel=0.41.2=py38hca03da5_0
+  - xz=5.4.2=h80987f9_0
+  - zlib=1.2.13=h5a0b063_0
+  - pip:
+      - attrs==23.1.0
+      - automat==22.10.0
+      - certifi==2023.7.22
+      - cffi==1.16.0
+      - charset-normalizer==3.3.1
+      - constantly==15.1.0
+      - cryptography==41.0.4
+      - cssselect==1.2.0
+      - filelock==3.12.4
+      - hyperlink==21.0.0
+      - idna==3.4
+      - incremental==22.10.0
+      - itemadapter==0.8.0
+      - itemloaders==1.1.0
+      - jmespath==1.0.1
+      - lxml==4.9.3
+      - packaging==23.2
+      - parsel==1.8.1
+      - protego==0.3.0
+      - pyasn1==0.5.0
+      - pyasn1-modules==0.3.0
+      - pycparser==2.21
+      - pydispatcher==2.0.7
+      - pyopenssl==23.2.0
+      - queuelib==1.6.2
+      - requests==2.31.0
+      - requests-file==1.5.1
+      - scrapy==2.11.0
+      - service-identity==23.1.0
+      - six==1.16.0
+      - tldextract==5.0.1
+      - twisted==22.10.0
+      - typing-extensions==4.8.0
+      - urllib3==2.0.7
+      - w3lib==2.1.2
+      - zope-interface==6.1
+prefix: /opt/homebrew/Caskroom/miniconda/base/envs/beer-search-engine
