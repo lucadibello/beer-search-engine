@@ -8,4 +8,4 @@ deactivate:
 
 # Export dependencies
 export:
-	conda env export > environment.yml
+	conda env export --no-builds > environment.yml
