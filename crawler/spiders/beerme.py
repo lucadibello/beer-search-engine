@@ -2,7 +2,7 @@ import scrapy
 
 
 class BeermeSpiderSpider(scrapy.Spider):
-    name = "beerme-spider"
+    name = "beerme"
     allowed_domains = ["beerme.com"]
     start_urls = ["https://beerme.com"]
 

@@ -3,7 +3,7 @@ import scrapy
 
 
 class RatebeerSpiderSpider(scrapy.Spider):
-    name = "ratebeer-spider"
+    name = "ratebeer"
     allowed_domains = ["ratebeer.com"]
     start_urls = ["https://ratebeer.com"]
 
@@ -97,7 +97,7 @@ class RatebeerSpiderSpider(scrapy.Spider):
             url="https://beta.ratebeer.com/v1/api/graphql/",
             method="POST",
             body=json.dumps({"query": query, "variables": variables}),
-            callback=self.parse_beer_search
+            callback=self.parse_beer_search,
         )
 
     def parse_beer_search(self, response):
