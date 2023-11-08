@@ -1,11 +1,7 @@
-# Activate conda venv
-activate:
-	conda enable beer-search-engine
-
-# Deactivate conda venv
-deactivate:
-	conda deactivate beer-search-engine
+# Launch scrapy spider
+crawl:
+	scrapy crawl --nolog -o data.json -t json
 
 # Export dependencies
-export:
+exportenv:
 	conda env export --no-builds > environment.yml
