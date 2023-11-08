@@ -87,14 +87,9 @@ class WinevybeSpider(scrapy.Spider):
                     # Update dictionary for critic_score with a sub-dictionary
                     table_data[possible_headers[property_name]] = {  # type: ignore
                         "name": value,
-                        "location": {
-                            "country": {
-                                "name": None,
-                                "code": None,
-                            },
-                            "state": None,
-                            "city": None,
-                        },
+                        "country": None,
+                        "state": None,
+                        "city": None,
                     }
                 else:
                     # Update the value for this header in table_data
