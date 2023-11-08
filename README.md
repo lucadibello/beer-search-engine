@@ -5,7 +5,6 @@
 - [1. Getting started](#1-getting-started)
   - [1.1. Create project environment](#11-create-project-environment)
   - [1.2. Activate environment](#12-activate-environment)
-  - [1.3. Install requirements](#13-install-requirements)
 - [2. Project requirements](#2-project-requirements)
   - [2.1. Tools](#21-tools)
   - [2.2. Python packages](#22-python-packages)
@@ -26,15 +25,9 @@ conda env create -f environment.yml
 conda activate beer-search-engine
 ```
 
-### 1.3. Install requirements
-
-```bash
-pip install -r requirements.txt
-```
-
 ## 2. Project requirements
 
-Project requirements.
+WIP: Project requirements.
 
 ### 2.1. Tools
 
