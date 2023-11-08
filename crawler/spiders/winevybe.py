@@ -6,23 +6,23 @@ class WinevybeSpider(scrapy.Spider):
     name = "winevybe"
     allowed_domains = ["winevybe.com"]
 
-    _all_scraped = False
+    # Additional fields to comform to the same format as before:
+    _additional_fields = {
+        "style": None,
+    }
 
     def start_requests(self):
         # Scrape all pages!
-        index = 1
-        while not self._all_scraped:
+        for index in range(100):
             yield scrapy.Request(
                 url=f"https://winevybe.com/beer/page/{index}/", callback=self.parse
             )
-            # Increment page index
-            index += 1
 
     def parse(self, response):
         # Check if all pages have been scraped (404 page)
         if response.status == 404:
-            # Set flag
-            self._all_scraped = True
+            # Return
+            return
 
         # Print response
         products = response.css("li.product.type-product")
@@ -37,7 +37,7 @@ class WinevybeSpider(scrapy.Spider):
 
     def parse_product(self, response: scrapy.Selector):
         # Extract brand and name
-        brand, name = self.parse_product_brand_name(response)
+        _, name = self.parse_product_brand_name(response)
 
         # Extract product image URL
         image_url = response.css(
@@ -50,13 +50,11 @@ class WinevybeSpider(scrapy.Spider):
         ## NOW, SCRAPING THE TABLE
         possible_headers = {
             "Critic Score": "critic_score",
-            "Producer": "producer",
-            "Type": "type",
+            "Producer": "brewer",
             "Alcohol bv": "alcohol_bv",
             "Tasting Notes": "tasting_notes",
             "Closure": "closure",
             "Packaging": "packaging",
-            "MPN #": "mpn",
         }
 
         # Initialize table_data with all possible headers set to None
@@ -82,13 +80,28 @@ class WinevybeSpider(scrapy.Spider):
                         "max": max_critics_score,
                         "actual": actual_critics_score,
                     }
+                elif property_name == "Alcohol bv" and value is not None:
+                    # Update dictionary for critic_score with a sub-dictionary
+                    table_data[possible_headers[property_name]] = float(value.replace("%", ""))  # type: ignore
+                elif property_name == "Producer" and value is not None:
+                    # Update dictionary for critic_score with a sub-dictionary
+                    table_data[possible_headers[property_name]] = {  # type: ignore
+                        "name": value,
+                        "location": {
+                            "country": {
+                                "name": None,
+                                "code": None,
+                            },
+                            "state": None,
+                            "city": None,
+                        },
+                    }
                 else:
                     # Update the value for this header in table_data
                     table_data[possible_headers[property_name]] = value  # type: ignore
 
         # Return product
         yield {
-            "brand": brand,
             "name": name,
             "description": self.parse_product_description(response),
             "image_url": image_url,
@@ -96,6 +109,7 @@ class WinevybeSpider(scrapy.Spider):
                 "amount": price,
                 "currency": currency,
             },
+            **self._additional_fields,  # Spread additional fields
             **table_data,  # Spread dictionary containing row data
         }
 
