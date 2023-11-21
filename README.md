@@ -10,6 +10,7 @@
   - [2.2. Python packages](#22-python-packages)
 - [3. Beer search engine features](#3-beer-search-engine-features)
   - [3.1. Crawler](#31-crawler)
+- [4. Backend](#4-backend)
 
 ## 1. Getting started
 
@@ -50,3 +51,11 @@ $\textcolor{red}{\textbf{Work in progress...}}$
 - [RateBeer](https://www.ratebeer.com/)
 - [Untappd](https://untappd.com/)
 - [BeerMenus](https://www.beermenus.com/)
+
+## 4. Backend
+
+To start backend server (powered by FastAPI and Uvicorn):
+
+```bash
+cd backend && make start
+```
