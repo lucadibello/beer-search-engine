@@ -1,8 +1,14 @@
-# imports
 import pyterrier as pt
 import pandas as pd
 import json
 import os
+from typing import TypedDict, List
+
+
+# Define type for document item to index
+class Document(TypedDict):
+    docno: str
+    text: str
 
 
 class Indexer:
@@ -12,15 +18,13 @@ class Indexer:
 
         # Save index path
         self.index_destination_path = index_destination_path
-
-        # Load the dataset
-        self._dataset = self._load_jsonl_dataset(dataset_path)
+        self.dataset_path = dataset_path
 
     def _init_indexer(self):
         if not pt.started():
             pt.init()
 
-    def _load_jsonl_dataset(self, dataset_path: str) -> pd.DataFrame:
+    def load_dataset(self) -> List[Document]:
         """
         Loads a dataset from a jsonl file and returns it as a pandas dataframe.
 
@@ -31,14 +35,14 @@ class Indexer:
         """
 
         # Ensure that the file exists + has jsonl extension
-        if not os.path.isfile(dataset_path):
+        if not os.path.isfile(self.dataset_path):
             raise FileNotFoundError("Dataset file not found")
-        if not dataset_path.endswith(".jsonl"):
+        if not self.dataset_path.endswith(".jsonl"):
             raise ValueError("Dataset file must be in jsonl format")
 
         # Read and process JSON Lines file
         json_objects = []
-        with open(dataset_path, "r") as jsonl_file:
+        with open(self.dataset_path, "r") as jsonl_file:
             json_objects = [json.loads(line) for line in jsonl_file]
 
         # Now, prepare dataset
@@ -49,20 +53,20 @@ class Indexer:
 
         # Generate documents list using list comprehension
         documents = [
-            {"docno": f"d{i+1}", "text": process_json_object(obj)}
+            Document(docno=f"d{i+1}", text=process_json_object(obj))
             for i, obj in enumerate(json_objects)
         ]
 
         # Convert file into pandas dataframe
-        return pd.DataFrame(documents)
+        return documents
 
-    def create_index(self, overwrite=False):
+    def create_index(self, documents: List[Document], overwrite=False):
         # Create directory if not exists
         if not os.path.exists(self.index_destination_path):
             os.makedirs(self.index_destination_path)
 
-        # Paths join
-        indexer = pt.DFIndexer(self.index_destination_path, overwrite=overwrite)
-        index_ref = indexer.index(self._dataset["text"], self._dataset["docno"])
+        # Create + start indexer
+        indexer = pt.IterDictIndexer(self.index_destination_path, overwrite=overwrite)
+        index_ref = indexer.index(documents, meta=["docno"])
         # Save value as singlethon
         return pt.IndexFactory.of(index_ref)
