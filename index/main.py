@@ -1,3 +1,4 @@
+from weakref import ref
 from modules import Indexer
 
 # Create the indexer
@@ -8,8 +9,17 @@ documents = indexer.load_dataset()
 
 # Create new index / load one if already built
 print("Building index...")
-index = indexer.create_index(documents, overwrite=True)
+ref = indexer.create_index(
+    documents,
+    overwrite=True,
+    stemmer="porter",
+    stopwords="terrier",
+    tokeniser="english",
+    threads=1,
+)
+print("Index built! Ref: ", ref.toString())
 
 # Print statistics
-print(index.getCollectionStatistics().toString())
+print("Index statistics:")
+print(Indexer.retrieve_index(ref).getCollectionStatistics().toString())
 print("Index built successfully!")

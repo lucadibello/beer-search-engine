@@ -60,13 +60,32 @@ class Indexer:
         # Convert file into pandas dataframe
         return documents
 
-    def create_index(self, documents: List[Document], overwrite=False):
+    def create_index(
+        self,
+        documents: List[Document],
+        overwrite=False,
+        stemmer="porter",
+        stopwords="terrier",
+        tokeniser="UTFTokeniser",
+        threads=1,
+    ):
         # Create directory if not exists
         if not os.path.exists(self.index_destination_path):
             os.makedirs(self.index_destination_path)
 
         # Create + start indexer
-        indexer = pt.IterDictIndexer(self.index_destination_path, overwrite=overwrite)
+        indexer = pt.IterDictIndexer(
+            self.index_destination_path,
+            overwrite=overwrite,
+            stemmer=stemmer,
+            stopwords=stopwords,
+            tokeniser=tokeniser,
+            threads=threads,
+        )
         index_ref = indexer.index(documents, meta=["docno"])
         # Save value as singlethon
+        return index_ref
+
+    @staticmethod
+    def retrieve_index(index_ref):
         return pt.IndexFactory.of(index_ref)
