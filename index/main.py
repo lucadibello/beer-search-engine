@@ -4,10 +4,11 @@ from modules import Indexer
 indexer = Indexer(
     index_destination_path="./beer-index", dataset_path="../data/data.jsonl"
 )
+documents = indexer.load_dataset()
 
 # Create new index / load one if already built
 print("Building index...")
-index = indexer.create_index(overwrite=False)
+index = indexer.create_index(documents, overwrite=True)
 
 # Print statistics
 print(index.getCollectionStatistics().toString())
