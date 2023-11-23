@@ -1,9 +1,10 @@
 from typing import Union
 
 from fastapi import FastAPI
-from 
 
 app = FastAPI()
+
+# TODO: Load documents from dataset + load index and build retrival modal using PyTerrier
 
 
 @app.get("/")
