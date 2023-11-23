@@ -115,7 +115,6 @@ class Indexer:
             IndexDocument(docno=document["docno"], text=process_json_object(document))
             for i, document in enumerate(documents)
         ]
-        print(docs[0])
 
         # Create + start indexer
         indexer = pt.IterDictIndexer(
