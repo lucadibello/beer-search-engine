@@ -30,15 +30,18 @@ export default function Home() {
           _hover={{
             boxShadow: 'md',
           }}
-          _active={{
-            border: '1px solid #805AD5',
-          }}
         >
           <InputLeftElement pointerEvents='none'
             color='gray.300'
             fontSize='1.2em'
           >
-            <Icon as={FiSearch} color='gray.300' />
+            <Icon
+              as={FiSearch}
+              color='gray.300'
+              _hover={{
+                color: 'red'
+              }}
+            />
           </InputLeftElement>
           <Input
             placeholder='Search for a beer'
@@ -52,6 +55,12 @@ export default function Home() {
                 // Trigger search
                 console.log('Search triggered: ', query)
               }
+            }}
+            // Disable blue border when focused
+            _focus={{
+              borderWidth: '1px',
+              borderColor: 'gray.300',
+              boxShadow: 'none'
             }}
           />
           <InputRightElement>
