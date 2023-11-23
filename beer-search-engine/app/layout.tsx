@@ -1,7 +1,5 @@
-import Header from '@/components/Header'
-import './globals.css'
+import { Providers } from './providers'
 import { Inter } from 'next/font/google'
-
 
 // FIXME: We need to find a better description...
 export const metadata = {
@@ -23,8 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <Header />
-        {children}
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
