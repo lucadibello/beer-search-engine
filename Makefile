@@ -16,4 +16,4 @@ exportenv:
 
 # Build index
 build_index:
-	python index/main.py
+	python backend/build_index.py

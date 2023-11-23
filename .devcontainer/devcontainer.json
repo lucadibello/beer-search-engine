@@ -15,9 +15,8 @@
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   "forwardPorts": [
-    3000 // Next.js
-
-    // FIXME: Add Uvicorn port
+    3000, // Next.js (Frontend)
+    8080 // Uvicorn (Backend)
   ]
 
   // Use 'postCreateCommand' to run commands after the container is created.

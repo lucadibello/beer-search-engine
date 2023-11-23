@@ -1,15 +1,12 @@
 from weakref import ref
 from modules import Indexer
 
-# Create the indexer
-indexer = Indexer(
-    index_destination_path="./beer-index", dataset_path="../data/data.jsonl"
-)
-documents = indexer.load_dataset()
+# Load dataset into memory
+documents = Indexer.load_dataset("../data/data.jsonl")
 
 # Create new index / load one if already built
 print("Building index...")
-ref = indexer.create_index(
+ref = Indexer(index_destination_path="./.beer-index").create_index(
     documents,
     overwrite=True,
     stemmer="porter",
