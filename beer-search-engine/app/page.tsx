@@ -1,6 +1,6 @@
 'use client'
 
-import { Badge, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftAddon, InputLeftElement, InputRightAddon, InputRightElement, List, ListItem, Text, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
 import { useState } from 'react';
 import { FiSearch, FiMic } from 'react-icons/fi'
 
