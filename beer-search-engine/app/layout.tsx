@@ -1,3 +1,4 @@
+import Nav from '@/components/Nav'
 import { Providers } from './providers'
 import { Inter } from 'next/font/google'
 
@@ -21,7 +22,10 @@ export default function RootLayout({
   return (
     <html lang="en" className={inter.className}>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          <Nav />
+          {children}
+        </Providers>
       </body>
     </html>
   )
