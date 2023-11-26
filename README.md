@@ -46,7 +46,6 @@ $\textcolor{red}{\textbf{Work in progress...}}$
 
 **Websites to scrape:**
 
-- [BeerAdvocate](https://www.beeradvocate.com/)
 - [RateBeer](https://www.ratebeer.com/)
-- [Untappd](https://untappd.com/)
-- [BeerMenus](https://www.beermenus.com/)
+- [BeerMe]([https://www.ratebeer.com/](https://beerme.com/beerlist.php))
+- [Wine Vybe](https://winevybe.com/beer/)
