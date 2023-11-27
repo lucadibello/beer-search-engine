@@ -13,3 +13,7 @@ crawl_ratebeer:
 # Export dependencies
 exportenv:
 	conda env export --no-builds > environment.yml
+
+# Build index
+build_index:
+	python backend/build_index.py

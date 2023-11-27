@@ -1,6 +1,6 @@
-import './globals.css'
+import Nav from '@/components/Nav'
+import { Providers } from '@/providers/providers'
 import { Inter } from 'next/font/google'
-
 
 // FIXME: We need to find a better description...
 export const metadata = {
@@ -21,7 +21,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={inter.className}>
-      <body>{children}</body>
+      <body>
+        <Providers>
+          <Nav />
+          {children}
+        </Providers>
+      </body>
     </html>
   )
 }
