@@ -1,5 +1,5 @@
 import Nav from '@/components/Nav'
-import { Providers } from './providers'
+import { Providers } from '@/providers/providers'
 import { Inter } from 'next/font/google'
 
 // FIXME: We need to find a better description...
