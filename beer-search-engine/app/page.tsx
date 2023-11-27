@@ -1,6 +1,7 @@
 'use client'
 
 import { Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { RedirectType, redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FiSearch, FiMic } from 'react-icons/fi'
 
@@ -11,6 +12,9 @@ export default function Home() {
 
   // State to keep track if active or not
   const [active, setActive] = useState<Boolean>(false);
+
+  // Load router
+  const { push } = useRouter()
 
   return (
     <Container centerContent>
@@ -54,6 +58,9 @@ export default function Home() {
               if (e.key === 'Enter') {
                 // Trigger search
                 console.log('Search triggered: ', query)
+
+                // Redirect to search page
+                push(`/search?q=${query}`)
               }
             }}
             // Disable blue border when focused
