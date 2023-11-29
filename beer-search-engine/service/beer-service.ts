@@ -27,12 +27,15 @@ export interface Beer {
   packaging: null | string
 }
 
-export async function searchBeer(query: string, limit: number = 100): Promise<Beer[]> {
-  if (process.env.API_URL === undefined) {
-    throw new Error("API_URL is not defined")
-  }
-  const res = await fetch(process.env.API_URL + "/search?query=" + query + "&top=" + limit)
+export async function preloadSearch(query: string): Promise<void> {
+  void searchBeer(query)
+}
 
+export async function searchBeer(query: string, limit: number = 100): Promise<Beer[]> {
+  if (process.env.NEXT_PUBLIC_API_URL === undefined) {
+    throw new Error("NEXT_PUBLIC_API_URL is not defined")
+  }
+  const res = await fetch(process.env.NEXT_PUBLIC_API_URL + "/search?query=" + query + "&top=" + limit)
 
   // Check if the request was successful
   if (!res.ok) {
