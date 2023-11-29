@@ -13,10 +13,13 @@ import ExampleQueryItem from '@/components/ExampleQueryItem';
 export default function Home() {
 
   // State to keep track of the query
-  const [query, setQuery] = useState<String>('');
+  const [query, setQuery] = useState<string>('');
 
   // State to keep track if active or not
-  const [active, setActive] = useState<Boolean>(false);
+  const [active, setActive] = useState<boolean>(false);
+
+  // Loading state
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Load router
   const { push } = useRouter()
@@ -28,10 +31,15 @@ export default function Home() {
     // Redirect to search page
     push(`/search?q=${encodedQuery}`)
   }
+  const tryQuery = (query: string) => {
+    // Fill query
+    setQuery(query)
+    // Trigger search
+    search(query)
+  }
 
   return (
     <Container centerContent>
-
       <Flex direction="column" align="center" justify="center" h="60vh">
         {/* Logo */}
         <Box mb={8}>
@@ -55,7 +63,8 @@ export default function Home() {
             boxShadow: 'md',
           }}
         >
-          <InputLeftElement pointerEvents='none'
+          <InputLeftElement
+            pointerEvents='none'
             color='gray.300'
             fontSize='1.2em'
           >
@@ -71,16 +80,17 @@ export default function Home() {
             placeholder='Search for a beer'
             spellCheck={true} // Force spellcheck
             autoFocus
+            isDisabled={loading}
             onFocus={() => setActive(true)}
             onBlur={() => setActive(false)}
+            value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
-                // Trigger search
-                console.log('Search triggered: ', query)
-
-                // Redirect to search page
-                push(`/search?q=${query}`)
+                // Set loading state
+                setLoading(true)
+                // Search beers!
+                search(query)
               }
             }}
             // Disable blue border when focused
@@ -101,7 +111,6 @@ export default function Home() {
                   _hover={{
                     color: "purple.500",
                     transform: "scale(1.2)",
-
                     // Transition on hover and release
                     transition: "all 0.2s ease-in-out"
                   }}
@@ -119,9 +128,9 @@ export default function Home() {
           Example query:
         </Heading>
         <UnorderedList>
-          <ExampleQueryItem query='What&apos;s a beer that tastes like chocolate?' onClick={search} />
-          <ExampleQueryItem query="What&apos;s a beer perfect for a hot summer day?" onClick={search} />
-          <ExampleQueryItem query="What&apos;s the best beer for a party?" onClick={search} />
+          <ExampleQueryItem query='What&apos;s a beer that tastes like chocolate?' onClick={tryQuery} isDisabled={loading} />
+          <ExampleQueryItem query="What&apos;s a beer perfect for a hot summer day?" onClick={tryQuery} isDisabled={loading} />
+          <ExampleQueryItem query="What&apos;s the best beer for a party?" onClick={tryQuery} isDisabled={loading} />
         </UnorderedList>
       </Flex>
     </Container>
