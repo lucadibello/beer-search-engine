@@ -1,9 +1,14 @@
 'use client'
 
-import { Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
+import Image from 'next/image';
 import { RedirectType, redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FiSearch, FiMic } from 'react-icons/fi'
+
+// Import image
+import logo from '@/public/logo.png'
+import ExampleQueryItem from '@/components/ExampleQueryItem';
 
 export default function Home() {
 
@@ -16,13 +21,28 @@ export default function Home() {
   // Load router
   const { push } = useRouter()
 
+  // utility function to redirect
+  const search = (query: string) => {
+    // URL encode query
+    const encodedQuery = encodeURIComponent(query)
+    // Redirect to search page
+    push(`/search?q=${encodedQuery}`)
+  }
+
   return (
     <Container centerContent>
 
-      <Flex direction="column" align="center" justify="center" h="70vh">
-        <Heading as="h1" size="2xl" mb={4}>
-          Beer Search Engine
-        </Heading>
+      <Flex direction="column" align="center" justify="center" h="60vh">
+        {/* Logo */}
+        <Box mb={8}>
+          <Image
+            alt='Beer Search Engine logo'
+            src={logo}
+            placeholder='blur'
+            width={500}
+            height={200}
+          />
+        </Box>
 
         <InputGroup
           w="full"
@@ -99,9 +119,9 @@ export default function Home() {
           Example query:
         </Heading>
         <UnorderedList>
-          <ListItem>What&apos;s a beer that tastes like chocolate?</ListItem>
-          <ListItem>What&apos;s a beer perfect for a hot summer day?</ListItem>
-          <ListItem>What&apos;s the best beer for a party?</ListItem>
+          <ExampleQueryItem query='What&apos;s a beer that tastes like chocolate?' onClick={search} />
+          <ExampleQueryItem query="What&apos;s a beer perfect for a hot summer day?" onClick={search} />
+          <ExampleQueryItem query="What&apos;s the best beer for a party?" onClick={search} />
         </UnorderedList>
       </Flex>
     </Container>
