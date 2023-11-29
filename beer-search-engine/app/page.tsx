@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Spinner, Tooltip, UnorderedList } from '@chakra-ui/react'
 import Image from 'next/image';
 import { RedirectType, redirect, useRouter } from 'next/navigation';
 import { useState } from 'react';
@@ -9,6 +9,7 @@ import { FiSearch, FiMic } from 'react-icons/fi'
 // Import image
 import logo from '@/public/logo.png'
 import ExampleQueryItem from '@/components/ExampleQueryItem';
+import { preloadSearch } from '@/service/beer-service';
 
 export default function Home() {
 
@@ -28,6 +29,8 @@ export default function Home() {
   const search = (query: string) => {
     // URL encode query
     const encodedQuery = encodeURIComponent(query)
+    // Preload search API
+    preloadSearch(encodedQuery)
     // Redirect to search page
     push(`/search?q=${encodedQuery}`)
   }
@@ -47,8 +50,10 @@ export default function Home() {
             alt='Beer Search Engine logo'
             src={logo}
             placeholder='blur'
-            width={500}
-            height={200}
+            style={{
+              width: '500px',
+              height: 'auto',
+            }}
           />
         </Box>
 
@@ -68,13 +73,15 @@ export default function Home() {
             color='gray.300'
             fontSize='1.2em'
           >
-            <Icon
-              as={FiSearch}
-              color='gray.300'
-              _hover={{
-                color: 'red'
-              }}
-            />
+            {!loading ?
+              <Icon
+                as={loading ? FiMic : FiSearch}
+                color='gray.300'
+                _hover={{
+                  color: 'red'
+                }}
+              /> : <Spinner />
+            }
           </InputLeftElement>
           <Input
             placeholder='Search for a beer'
@@ -89,6 +96,7 @@ export default function Home() {
               if (e.key === 'Enter') {
                 // Set loading state
                 setLoading(true)
+
                 // Search beers!
                 search(query)
               }
