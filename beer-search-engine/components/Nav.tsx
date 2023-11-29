@@ -8,12 +8,9 @@ import {
   Stack,
   useColorMode,
   Icon,
+  Heading,
 } from '@chakra-ui/react'
 import { FiMoon, FiSun } from 'react-icons/fi'
-
-interface Props {
-  children: React.ReactNode
-}
 
 export default function Nav() {
   const { colorMode, toggleColorMode } = useColorMode()
@@ -21,7 +18,7 @@ export default function Nav() {
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Box>Logo</Box>
+          <Heading size='md'>Beer Search Engine</Heading>
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
