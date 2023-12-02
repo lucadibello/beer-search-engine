@@ -1,6 +1,3 @@
-from pydoc import doc
-from typing import Union
-
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
