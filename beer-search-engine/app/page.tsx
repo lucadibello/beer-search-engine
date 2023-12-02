@@ -9,7 +9,7 @@ import { FiSearch, FiMic } from 'react-icons/fi'
 // Import image
 import logo from '@/public/logo.png'
 import ExampleQueryItem from '@/components/ExampleQueryItem';
-import { preloadSearch } from '@/service/beer-service';
+import { preloadSearch } from '@/service';
 
 export default function Home() {
 

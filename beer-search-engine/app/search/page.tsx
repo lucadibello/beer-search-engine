@@ -1,6 +1,6 @@
 import BeerResult from "@/components/BeerResult"
 import Loader from "@/components/Loader"
-import { searchBeer } from "@/service/beer-service"
+import { searchBeer } from "@/service"
 import { Box, Stack } from "@chakra-ui/react"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
@@ -32,7 +32,7 @@ export default async function Search({
       <hr style={{ marginBottom: '40px' }} />
       <Suspense fallback={<Loader />}>
         <Stack p={2} spacing={4} align='center'>
-          {documents.map((document) => <BeerResult key={document.docno} query={keywords} beer={document} />)}
+          {documents.data.map((document) => <BeerResult key={document.docno} query={keywords} beer={document} />)}
         </Stack>
       </Suspense>
     </Box>
