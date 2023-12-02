@@ -1,4 +1,4 @@
-import { SearchApiResponse } from "@/service/beer-service/types"
+import { SearchApiResponse } from "@/service/beer-service"
 
 export async function preloadSearch(query: string): Promise<void> {
   void searchBeer(query)
