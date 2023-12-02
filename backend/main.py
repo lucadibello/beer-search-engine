@@ -12,6 +12,7 @@ if not pt.started():
 
 from modules.indexer import Indexer
 from modules.sanitizer import sanitize_query
+from modules.response import format_response
 
 # Constants
 DATASET_PATH = "../data/data.jsonl"
@@ -46,7 +47,7 @@ index = pt.IndexFactory.of(INDEX_PATH)  # type: ignore
 model = pt.BatchRetrieve(index, wmodel="BM25")  # type: ignore
 
 # Create FastAPI app + CORS middleware
-app = FastAPI(default_response_class=ORJSONResponse)
+app = FastAPI(response_class=ORJSONResponse)
 origins = [
     FRONTEND_URL
 ]
@@ -80,6 +81,11 @@ def search(query: str, top: int = 100):
 
     # Drop the temporary ordering column and reset index
     ordered_docs = merged_docs.drop(columns=["order"]).reset_index(drop=True)
-
+    
     # Return the documents as JSON
-    return ordered_docs.to_dict("records")
+    return ORJSONResponse(
+        format_response(
+            ordered_docs.to_dict(orient="records"),
+            ordered_docs.shape[0]
+        )
+    )
