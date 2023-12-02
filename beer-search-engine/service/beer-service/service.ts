@@ -9,9 +9,7 @@ export async function searchBeer(query: string, limit: number = 10): Promise<Sea
     throw new Error("NEXT_PUBLIC_API_URL is not defined")
   }
   const URL = process.env.NEXT_PUBLIC_API_URL + "/search?query=" + query + "&top=" + limit
-  const res = await fetch(URL, {
-    cache: "no-store"
-  })
+  const res = await fetch(URL)
 
   // Check if the request was successful
   if (!res.ok) {
