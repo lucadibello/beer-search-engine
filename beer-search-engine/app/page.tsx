@@ -1,8 +1,8 @@
-'use client'
+'use client';
 
-import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Spinner, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Tooltip, UnorderedList } from '@chakra-ui/react'
 import Image from 'next/image';
-import { RedirectType, redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { FiSearch, FiMic } from 'react-icons/fi'
 
