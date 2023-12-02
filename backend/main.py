@@ -16,6 +16,7 @@ from modules.sanitizer import sanitize_query
 # Constants
 DATASET_PATH = "../data/data.jsonl"
 INDEX_PATH = "./.beer-index"
+FRONTEND_URL = "http://localhost:3000"
 API_VERSION = "1"
 
 
@@ -47,7 +48,7 @@ model = pt.BatchRetrieve(index, wmodel="BM25")  # type: ignore
 # Create FastAPI app + CORS middleware
 app = FastAPI(default_response_class=ORJSONResponse)
 origins = [
-    "http://localhost:3000",
+    FRONTEND_URL
 ]
 app.add_middleware(
     CORSMiddleware,
