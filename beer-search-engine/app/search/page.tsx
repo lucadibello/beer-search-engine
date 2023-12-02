@@ -1,7 +1,8 @@
-import BeerResult from "@/components/BeerResult"
+import BeerResultLibrary from "@/components/BeerResultLibrary"
 import Loader from "@/components/Loader"
 import { searchBeer } from "@/service"
-import { Box, Stack } from "@chakra-ui/react"
+import { getKeywords } from "@/util/keywords"
+import { Box } from "@chakra-ui/react"
 import { redirect } from "next/navigation"
 import { Suspense } from "react"
 
@@ -21,7 +22,7 @@ export default async function Search({
   }
 
   // Split query by space
-  const keywords = query.split(' ')
+  const keywords = getKeywords(query)
 
   // Now, fetch the data from the API using the service
   const documents = await searchBeer(query, 100)
@@ -31,9 +32,7 @@ export default async function Search({
       <h1>Search: {query}</h1>
       <hr style={{ marginBottom: '40px' }} />
       <Suspense fallback={<Loader />}>
-        <Stack p={2} spacing={4} align='center'>
-          {documents.data.map((document) => <BeerResult key={document.docno} query={keywords} beer={document} />)}
-        </Stack>
+        <BeerResultLibrary beers={documents.data} keywords={keywords} />
       </Suspense>
     </Box>
   )
