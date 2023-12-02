@@ -17,8 +17,6 @@ export default function BeerResult(props: BeerResultProps) {
       <Stack>
         <CardBody>
           <Heading size='sm'>{props.beer.name}</Heading>
-
-
           <Text fontSize='sm' color='gray.500'>
             <Highlight
               query={props.query || ""}
