@@ -27,6 +27,7 @@ export default async function Search({
   // Now, fetch the data from the API using the service
   const documents = await searchBeer(query, 100)
 
+  // Return the page
   return (
     <Box>
       <h1>Search: {query}</h1>
