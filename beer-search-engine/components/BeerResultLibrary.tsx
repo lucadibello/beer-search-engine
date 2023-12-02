@@ -1,5 +1,5 @@
 import { Beer } from "@/service/beer-service";
-import { Box, Button, Card, CardBody, CardFooter, Grid, GridItem, HStack, Heading, Highlight, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, HStack, Heading, Highlight, Stack, Text } from "@chakra-ui/react";
 
 type BeerResultStackProps = {
   beers: Beer[];
@@ -9,6 +9,14 @@ type BeerResultStackProps = {
 interface BeerResultProps {
   beer: Beer;
   query?: string | string[];
+}
+
+const reduceDescription = (description: string, wordsLimit: number = 30) => {
+  const words = description.split(' ')
+  if (words.length > wordsLimit) {
+    return words.slice(0, wordsLimit).join(' ') + '...'
+  }
+  return description
 }
 
 function BeerResult(props: BeerResultProps) {
@@ -36,7 +44,7 @@ function BeerResult(props: BeerResultProps) {
                 }
               }}
             >
-              {props.beer.description}
+              {reduceDescription(props.beer.description)}
             </Highlight>
           </Text>
         </CardBody>
