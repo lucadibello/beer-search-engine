@@ -4,7 +4,8 @@ import { Beer } from "@/service/beer-service";
 import { Box, Button, Card, CardBody, CardFooter, HStack, Heading, Highlight, IconButton, Stack, Text, Tooltip } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
-import { FiMaximize2 } from "react-icons/fi";
+import { FiMaximize2, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
+import RelevanceFeedback from "./RelevanceFeedback";
 
 type BeerResultStackProps = {
   totalHits?: number;
@@ -44,6 +45,16 @@ function BeerResult({ query, beer, onClick }: BeerResultProps) {
             {beer.alcohol_bv > 0 && (
               <Text fontSize='sm' color='gray.500'>({beer.alcohol_bv.toFixed(1)}%)</Text>
             )}
+
+            {/* Spacer */}
+            <Box flex={1} />
+
+            {/* Relevance feedback buttons */}
+            <RelevanceFeedback onRelevant={() => {
+              console.log(beer, 'marked as relevant')
+            }} onIrrelevant={() => {
+              console.log(beer, 'marked as irrelevant')
+            }} />
           </HStack>
           <Text fontSize='sm' color='gray.500'>
             <Highlight

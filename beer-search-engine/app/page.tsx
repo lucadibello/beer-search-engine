@@ -4,20 +4,17 @@ import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElemen
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FiSearch, FiMic } from 'react-icons/fi'
 
 // Import image
 import logo from '@/public/logo.png'
 import ExampleQueryItem from '@/components/ExampleQueryItem';
 import { preloadSearch } from '@/service';
+import QueryInput from '@/components/QueryInput';
 
-export default function Home() {
+export default function HomePage() {
 
   // State to keep track of the query
   const [query, setQuery] = useState<string>('');
-
-  // State to keep track if active or not
-  const [active, setActive] = useState<boolean>(false);
 
   // Loading state
   const [loading, setLoading] = useState<boolean>(false);
@@ -26,7 +23,7 @@ export default function Home() {
   const { push } = useRouter()
 
   // utility function to redirect
-  const search = (query: string) => {
+  const search = () => {
     // URL encode query
     const encodedQuery = encodeURIComponent(query)
     // Preload search API
@@ -38,7 +35,7 @@ export default function Home() {
     // Fill query
     setQuery(query)
     // Trigger search
-    search(query)
+    search()
   }
 
   return (
@@ -57,80 +54,17 @@ export default function Home() {
           />
         </Box>
 
-        <InputGroup
-          w="full"
-          maxW="xl"
-          size='md'
-          borderRadius='md'
-          boxShadow={active ? 'md' : 'sm'}
-          transition='all 0.2s ease-in-out'
-          _hover={{
-            boxShadow: 'md',
+        <QueryInput
+          query={query}
+          setQuery={setQuery}
+          isLoading={loading}
+          onSearch={() => {
+            // Set loading state
+            setLoading(true)
+            // Search beers based on query
+            search()
           }}
-        >
-          <InputLeftElement
-            pointerEvents='none'
-            color='gray.300'
-            fontSize='1.2em'
-          >
-            {!loading ?
-              <Icon
-                as={loading ? FiMic : FiSearch}
-                color='gray.300'
-                _hover={{
-                  color: 'red'
-                }}
-              /> : <Spinner />
-            }
-          </InputLeftElement>
-          <Input
-            placeholder='Search for a beer'
-            spellCheck={true} // Force spellcheck
-            autoFocus
-            isDisabled={loading}
-            onFocus={() => setActive(true)}
-            onBlur={() => setActive(false)}
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                // Set loading state
-                setLoading(true)
-
-                // Search beers!
-                search(query)
-              }
-            }}
-            // Disable blue border when focused
-            _focus={{
-              borderWidth: '1px',
-              borderColor: 'gray.300',
-              boxShadow: 'none'
-            }}
-          />
-          <InputRightElement>
-            {/* Voice input */}
-            <Tooltip label='Voice input' aria-label='Voice input' placement='bottom' hasArrow>
-              <span>
-                <Icon
-                  as={FiMic}
-                  cursor={"pointer"}
-                  transition="all 0.2s ease-in-out"
-                  _hover={{
-                    color: "purple.500",
-                    transform: "scale(1.2)",
-                    // Transition on hover and release
-                    transition: "all 0.2s ease-in-out"
-                  }}
-                  onClick={() => {
-                    // Trigger voice input
-                    console.log('Voice input triggered')
-                  }}
-                />
-              </span>
-            </Tooltip>
-          </InputRightElement>
-        </InputGroup>
+        />
 
         <Heading as="h2" size="md" mt={8}>
           Example query:
