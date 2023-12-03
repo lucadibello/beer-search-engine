@@ -33,7 +33,12 @@ export default async function Search({
       <h1>Search: {query}</h1>
       <hr style={{ marginBottom: '40px' }} />
       <Suspense fallback={<Loader />}>
-        <BeerResultLibrary beers={documents.data} keywords={keywords} />
+        <BeerResultLibrary
+          totalHits={documents.total_hits}
+          beers={documents.data}
+          keywords={keywords}
+          enableRichResults={true}
+        />
       </Suspense>
     </Box>
   )

@@ -1,14 +1,23 @@
+'use client';
+
 import { Beer } from "@/service/beer-service";
-import { Box, Button, Card, CardBody, CardFooter, HStack, Heading, Highlight, Stack, Text } from "@chakra-ui/react";
+import { Box, Button, Card, CardBody, CardFooter, HStack, Heading, Highlight, IconButton, Stack, Text, Tooltip } from "@chakra-ui/react";
+import Image from "next/image";
+import { useState } from "react";
+import { FiMaximize2 } from "react-icons/fi";
 
 type BeerResultStackProps = {
+  totalHits?: number;
   beers: Beer[];
   keywords?: string | string[];
+  onClick?: (beer: Beer) => void;
+  enableRichResults?: boolean;
 }
 
 interface BeerResultProps {
   beer: Beer;
   query?: string | string[];
+  onClick?: (beer: Beer) => void;
 }
 
 const reduceDescription = (description: string, wordsLimit: number = 30) => {
@@ -19,20 +28,26 @@ const reduceDescription = (description: string, wordsLimit: number = 30) => {
   return description
 }
 
-function BeerResult(props: BeerResultProps) {
+function BeerResult({ query, beer, onClick }: BeerResultProps) {
   return (
     <Card
       direction={{ base: 'column', sm: 'row' }}
       overflow='hidden'
       variant='elevated'
       size='sm'
+      w='100%'
     >
-      <Stack>
+      <Stack w='100%'>
         <CardBody>
-          <Heading size='sm'>{props.beer.name}</Heading>
+          <HStack spacing={2}>
+            <Heading size='sm'>{beer.name}</Heading>
+            {beer.alcohol_bv > 0 && (
+              <Text fontSize='sm' color='gray.500'>({beer.alcohol_bv.toFixed(1)}%)</Text>
+            )}
+          </HStack>
           <Text fontSize='sm' color='gray.500'>
             <Highlight
-              query={props.query || ""}
+              query={query || ""}
               styles={{
                 px: '2',
                 py: '1',
@@ -44,26 +59,45 @@ function BeerResult(props: BeerResultProps) {
                 }
               }}
             >
-              {reduceDescription(props.beer.description)}
+              {reduceDescription(beer.description)}
             </Highlight>
           </Text>
         </CardBody>
 
         <CardFooter>
-          <Button
-            variant='solid'
-            colorScheme='blue'
-            size='sm'
+          <HStack // space around
+            spacing={2}
+            justifyContent={'space-between'}
+            w='100%'
           >
-            View
-          </Button>
+            {/* Beer page button */}
+            <Button
+              variant='solid'
+              colorScheme='blue'
+              size='sm'
+            >
+              View
+            </Button>
+
+            {/* View details button */}
+            <Tooltip label='View details' hasArrow>
+              <IconButton
+                aria-label='View details'
+                icon={<FiMaximize2 />}
+                variant='ghost'
+                colorScheme='info'
+                size='sm'
+                onClick={onClick ? () => onClick(beer) : undefined}
+              />
+            </Tooltip>
+          </HStack>
         </CardFooter>
       </Stack>
     </Card>
   )
 }
 
-function BeerResultStack({ beers, keywords }: BeerResultStackProps) {
+function BeerResultStack({ beers, keywords, onClick }: BeerResultStackProps) {
   return (
     <Stack
       spacing={4}
@@ -76,6 +110,7 @@ function BeerResultStack({ beers, keywords }: BeerResultStackProps) {
           <BeerResult
             query={keywords || []}
             beer={beer}
+            onClick={onClick}
           />
         </Box>
       ))}
@@ -83,7 +118,14 @@ function BeerResultStack({ beers, keywords }: BeerResultStackProps) {
   )
 }
 
-export default function BeerResultLibrary({ beers, keywords }: BeerResultStackProps) {
+export default function BeerResultLibrary({
+  beers,
+  keywords,
+  totalHits,
+  enableRichResults = false
+}: BeerResultStackProps) {
+  const [beer, setBeer] = useState<Beer | null>(null)
+
   return (
     <HStack
       spacing={4}
@@ -95,25 +137,53 @@ export default function BeerResultLibrary({ beers, keywords }: BeerResultStackPr
       <Box
         w='100%'
         // Occupy 70% of the flex container
-        flex={{ base: '0 0 100%', md: '0 0 65%' }}
+        flex={beer ? { base: '0 0 100%', md: '0 0 65%' } : {}}
         px={5}
       >
-        <Heading size='md' mb={5}>Results</Heading>
+        <Heading size='md' mb={5}>
+          Results
+
+          {totalHits && (
+            <span style={{ marginLeft: '10px' }}>
+              {totalHits} results
+            </span>
+          )}
+        </Heading>
         <BeerResultStack
           beers={beers}
           keywords={keywords}
+          onClick={enableRichResults ? (beer) => setBeer(beer) : undefined}
         />
       </Box>
 
       {/* Rich results */}
-      <Box
-        w='100%'
-        // Hide on smaller screens
-        display={{ base: 'none', md: 'block' }}
-      >
-        <Heading size='md'>Rich results</Heading>
-      </Box>
-    </HStack>
+      {beer && (
+        <Box
+          w='100%'
+          // Hide on smaller screens
+          display={{ base: 'none', md: 'block' }}
+        >
+          <Heading size='md'>Details</Heading>
+          <Box>
+            <Image
+              src={beer.image_url}
+              width={200}
+              height={200}
+              alt={`${beer.name} image`}
+            />
 
+            <img src={beer.image_url} alt={`${beer.name} image`} />
+
+            <Heading size='md'>{beer.name}</Heading>
+            <Text fontSize='sm' color='gray.500'>
+              {beer.style}
+            </Text>
+            <Text fontSize='sm' color='gray.500'>
+              {beer.description}
+            </Text>
+          </Box>
+        </Box>
+      )}
+    </HStack>
   )
 }
