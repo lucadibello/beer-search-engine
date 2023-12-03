@@ -152,13 +152,17 @@ export default function BeerResultLibrary({
         px={5}
       >
         <Heading size='md' mb={5}>
-          Results
+          Results:
 
           {totalHits && (
             <span style={{ marginLeft: '10px' }}>
               {totalHits} results
             </span>
           )}
+
+          <span style={{ color: 'gray' }}>
+            {' '}ordered by relevance
+          </span>
         </Heading>
         <BeerResultStack
           beers={beers}

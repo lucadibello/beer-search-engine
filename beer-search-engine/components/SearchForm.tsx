@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import QueryInput from "./QueryInput";
 
@@ -14,9 +14,17 @@ export default function SearchForm({ onSearch, initialQuery }: SearchFormProps) 
   const [query, setQuery] = useState<string>(initialQuery || '');
 
   return (
-    <Box>
-      <Heading>Search</Heading>
-      <Box mb={4} p={4}>
+    <Box
+      // Sticking to the top
+      px={4}
+      pb={5}
+      w='100%'
+      position="sticky"
+      top="50px"
+      zIndex="sticky"
+      bg={useColorModeValue('gray.100', 'gray.900')}
+    >
+      <Box maxW={{ base: '100%', md: '3xl' }}>
         <QueryInput
           query={query}
           setQuery={setQuery}

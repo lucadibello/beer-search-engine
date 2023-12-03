@@ -16,7 +16,6 @@ export default function QueryInput({ query, setQuery, isLoading, onSearch }: Que
   return (
     <InputGroup
       w="full"
-      maxW="xl"
       size='md'
       borderRadius='md'
       boxShadow={active ? 'md' : 'sm'}
