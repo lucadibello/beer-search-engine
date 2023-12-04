@@ -1,10 +1,10 @@
 import { FiMaximize2 } from "react-icons/fi";
-import RelevanceFeedback from "./RelevanceFeedback";
+import RelevanceFeedback from "./snippet/RelevanceFeedback";
 import { Beer, Brewer } from "@/service/beer-service";
 import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
-import StarRating from "./StarRating";
-import { BreweryLocation } from "./BreweryLocation";
-import { HightlightWords } from "./HightlightWords";
+import StarRating from "./snippet/StarRating";
+import { BreweryLocation } from "./snippet/BreweryLocation";
+import { HightlightWords } from "../HightlightWords";
 
 
 interface BeerResultSnippetProps {
