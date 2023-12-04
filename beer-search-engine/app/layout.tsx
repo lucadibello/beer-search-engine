@@ -23,8 +23,13 @@ export default function RootLayout({
     <html lang="en" className={inter.className}>
       <body>
         <Providers>
-          <Nav />
-          {children}
+          {/* Sticky navbar */}
+          <div style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+            <Nav />
+          </div>
+
+          {/* Main content */}
+          <main>{children}</main>
         </Providers>
       </body>
     </html>

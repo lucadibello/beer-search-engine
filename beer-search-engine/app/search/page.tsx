@@ -1,11 +1,14 @@
-import BeerResult from "@/components/BeerResult"
-import { searchBeer } from "@/service/beer-service"
+'use client';
+
+import LazyBeerResultLibrary from "@/components/search-results/LazyLoadBeerResultLibrary";
+import Loader from "@/components/Loader"
+import SearchForm from "@/components/SearchForm";
 import { Box } from "@chakra-ui/react"
-import { redirect } from "next/navigation"
+import { redirect, useRouter } from "next/navigation"
 import { Suspense } from "react"
 
 // Search page
-export default async function Search({
+export default function SearchPage({
   searchParams,
 }: {
   searchParams: { q: string }
@@ -19,17 +22,24 @@ export default async function Search({
     redirect('/')
   }
 
-  // Now, fetch the data from the API using the service
-  const documents = await searchBeer(query, 100)
+  // If all data is ready, load router for further navigation
+  const { push } = useRouter()
 
-  // console.log('Documents: ', documents)
-
+  // Return the page
   return (
     <Box>
-      <h1>Search: {query}</h1>
+      <SearchForm
+        initialQuery={query}
+        onSearch={(newQuery) => {
+          // Redirect to new query (shallow)
+          push(`/search?q=${newQuery}`, {
+            shallow: true
+          })
+        }}
+      />
       <hr style={{ marginBottom: '40px' }} />
-      <Suspense fallback={<p>Loading...</p>}>
-        {documents.map((document) => <BeerResult key={document.docno} beer={document} />)}
+      <Suspense fallback={<Loader />}>
+        <LazyBeerResultLibrary query={query} />
       </Suspense>
     </Box>
   )

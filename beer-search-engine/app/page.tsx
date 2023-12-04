@@ -1,107 +1,91 @@
-'use client'
+'use client';
 
-import { Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, ListItem, Tooltip, UnorderedList } from '@chakra-ui/react'
-import { RedirectType, redirect, useRouter } from 'next/navigation';
+import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Tooltip, UnorderedList, useColorMode, useColorModeValue } from '@chakra-ui/react'
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import { FiSearch, FiMic } from 'react-icons/fi'
 
-export default function Home() {
+// Import image
+import logoDarkMode from '@/public/logo-dark-mode.png'
+import logoLightMode from '@/public/logo-light-mode.png'
+
+import ExampleQueryItem from '@/components/ExampleQueryItem';
+import { preloadSearch } from '@/service';
+import QueryInput from '@/components/QueryInput';
+
+export default function HomePage() {
 
   // State to keep track of the query
-  const [query, setQuery] = useState<String>('');
+  const [inputQuert, setInputQuery] = useState<string>('');
 
-  // State to keep track if active or not
-  const [active, setActive] = useState<Boolean>(false);
+  // Loading state
+  const [loading, setLoading] = useState<boolean>(false);
 
   // Load router
   const { push } = useRouter()
 
+  // utility function to redirect
+  const search = (query: string) => {
+    // URL encode query
+    const encodedQuery = encodeURIComponent(query)
+    // Preload search API
+    preloadSearch(encodedQuery)
+    // Redirect to search page
+    push(`/search?q=${encodedQuery}`)
+  }
+  const tryQuery = (query: string) => {
+    // Fill query + search
+    setInputQuery(query)
+    // Search beers based on query
+    search(query)
+  }
+
   return (
     <Container centerContent>
-
-      <Flex direction="column" align="center" justify="center" h="70vh">
-        <Heading as="h1" size="2xl" mb={4}>
-          Beer Search Engine
-        </Heading>
-
-        <InputGroup
-          w="full"
-          maxW="xl"
-          size='md'
-          borderRadius='md'
-          boxShadow={active ? 'md' : 'sm'}
-          transition='all 0.2s ease-in-out'
-          _hover={{
-            boxShadow: 'md',
-          }}
-        >
-          <InputLeftElement pointerEvents='none'
-            color='gray.300'
-            fontSize='1.2em'
-          >
-            <Icon
-              as={FiSearch}
-              color='gray.300'
-              _hover={{
-                color: 'red'
-              }}
-            />
-          </InputLeftElement>
-          <Input
-            placeholder='Search for a beer'
-            spellCheck={true} // Force spellcheck
-            autoFocus
-            onFocus={() => setActive(true)}
-            onBlur={() => setActive(false)}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter') {
-                // Trigger search
-                console.log('Search triggered: ', query)
-
-                // Redirect to search page
-                push(`/search?q=${query}`)
-              }
-            }}
-            // Disable blue border when focused
-            _focus={{
-              borderWidth: '1px',
-              borderColor: 'gray.300',
-              boxShadow: 'none'
+      <Flex direction="column" align="center" justify="center" h="60vh">
+        {/* Logo */}
+        <Box mb={8}>
+          <Image
+            alt='Beer Search Engine logo'
+            src={useColorModeValue(logoLightMode, logoDarkMode)}
+            style={{
+              width: '500px',
+              height: 'auto',
             }}
           />
-          <InputRightElement>
-            {/* Voice input */}
-            <Tooltip label='Voice input' aria-label='Voice input' placement='bottom' hasArrow>
-              <span>
-                <Icon
-                  as={FiMic}
-                  cursor={"pointer"}
-                  transition="all 0.2s ease-in-out"
-                  _hover={{
-                    color: "purple.500",
-                    transform: "scale(1.2)",
+        </Box>
 
-                    // Transition on hover and release
-                    transition: "all 0.2s ease-in-out"
-                  }}
-                  onClick={() => {
-                    // Trigger voice input
-                    console.log('Voice input triggered')
-                  }}
-                />
-              </span>
-            </Tooltip>
-          </InputRightElement>
-        </InputGroup>
+        <QueryInput
+          query={inputQuert}
+          setQuery={setInputQuery}
+          isLoading={loading}
+          onSearch={(query) => {
+            // Set loading state
+            setLoading(true)
+            // Search beers based on query
+            search(query)
+          }}
+        />
 
         <Heading as="h2" size="md" mt={8}>
           Example query:
         </Heading>
-        <UnorderedList>
-          <ListItem>What&apos;s a beer that tastes like chocolate?</ListItem>
-          <ListItem>What&apos;s a beer perfect for a hot summer day?</ListItem>
-          <ListItem>What&apos;s the best beer for a party?</ListItem>
+        <UnorderedList gap={2} mt={4}>
+          <ExampleQueryItem
+            query='What&apos;s a beer that tastes like chocolate?'
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
+          <ExampleQueryItem
+            query="What&apos;s a beer perfect for a hot summer day?"
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
+          <ExampleQueryItem
+            query="What&apos;s the best beer for a party?"
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
         </UnorderedList>
       </Flex>
     </Container>

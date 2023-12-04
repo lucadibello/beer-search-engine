@@ -117,7 +117,7 @@ class Indexer:
         ]
 
         # Create + start indexer
-        indexer = pt.IterDictIndexer(
+        indexer = pt.IterDictIndexer(  # type: ignore
             self.index_destination_path,
             overwrite=overwrite,
             stemmer=stemmer,
@@ -131,4 +131,4 @@ class Indexer:
 
     @staticmethod
     def retrieve_index(index_ref):
-        return pt.IndexFactory.of(index_ref)
+        return pt.IndexFactory.of(index_ref)  # type: ignore
