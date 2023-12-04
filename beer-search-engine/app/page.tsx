@@ -14,7 +14,7 @@ import QueryInput from '@/components/QueryInput';
 export default function HomePage() {
 
   // State to keep track of the query
-  const [query, setQuery] = useState<string>('');
+  const [inputQuert, setInputQuery] = useState<string>('');
 
   // Loading state
   const [loading, setLoading] = useState<boolean>(false);
@@ -23,7 +23,7 @@ export default function HomePage() {
   const { push } = useRouter()
 
   // utility function to redirect
-  const search = () => {
+  const search = (query: string) => {
     // URL encode query
     const encodedQuery = encodeURIComponent(query)
     // Preload search API
@@ -32,10 +32,10 @@ export default function HomePage() {
     push(`/search?q=${encodedQuery}`)
   }
   const tryQuery = (query: string) => {
-    // Fill query
-    setQuery(query)
-    // Trigger search
-    search()
+    // Fill query + search
+    setInputQuery(query)
+    // Search beers based on query
+    search(query)
   }
 
   return (
@@ -55,14 +55,14 @@ export default function HomePage() {
         </Box>
 
         <QueryInput
-          query={query}
-          setQuery={setQuery}
+          query={inputQuert}
+          setQuery={setInputQuery}
           isLoading={loading}
-          onSearch={() => {
+          onSearch={(query) => {
             // Set loading state
             setLoading(true)
             // Search beers based on query
-            search()
+            search(query)
           }}
         />
 
@@ -70,9 +70,21 @@ export default function HomePage() {
           Example query:
         </Heading>
         <UnorderedList>
-          <ExampleQueryItem query='What&apos;s a beer that tastes like chocolate?' onClick={tryQuery} isDisabled={loading} />
-          <ExampleQueryItem query="What&apos;s a beer perfect for a hot summer day?" onClick={tryQuery} isDisabled={loading} />
-          <ExampleQueryItem query="What&apos;s the best beer for a party?" onClick={tryQuery} isDisabled={loading} />
+          <ExampleQueryItem
+            query='What&apos;s a beer that tastes like chocolate?'
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
+          <ExampleQueryItem
+            query="What&apos;s a beer perfect for a hot summer day?"
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
+          <ExampleQueryItem
+            query="What&apos;s the best beer for a party?"
+            onClick={tryQuery}
+            isDisabled={loading}
+          />
         </UnorderedList>
       </Flex>
     </Container>

@@ -19,10 +19,16 @@ export default function Nav() {
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Heading size='md' _hover={{
-            cursor: 'pointer',
-          }}>
-            <Link href='/'>
+          <Heading
+            size='md'
+            transition='all 0.2s ease-in-out'
+            _hover={{
+              cursor: 'pointer',
+              letterSpacing: '1px',
+              transition: 'all 0.2s ease-in-out',
+            }}
+          >
+            <Link href='/' about='Home page'>
               Beer Search Engine
             </Link>
           </Heading>
