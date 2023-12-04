@@ -1,12 +1,14 @@
 'use client';
 
-import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Tooltip, UnorderedList } from '@chakra-ui/react'
+import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Tooltip, UnorderedList, useColorMode, useColorModeValue } from '@chakra-ui/react'
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 // Import image
-import logo from '@/public/logo.png'
+import logoDarkMode from '@/public/logo-dark-mode.png'
+import logoLightMode from '@/public/logo-light-mode.png'
+
 import ExampleQueryItem from '@/components/ExampleQueryItem';
 import { preloadSearch } from '@/service';
 import QueryInput from '@/components/QueryInput';
@@ -45,8 +47,7 @@ export default function HomePage() {
         <Box mb={8}>
           <Image
             alt='Beer Search Engine logo'
-            src={logo}
-            placeholder='blur'
+            src={useColorModeValue(logoLightMode, logoDarkMode)}
             style={{
               width: '500px',
               height: 'auto',
@@ -69,7 +70,7 @@ export default function HomePage() {
         <Heading as="h2" size="md" mt={8}>
           Example query:
         </Heading>
-        <UnorderedList>
+        <UnorderedList gap={2} mt={4}>
           <ExampleQueryItem
             query='What&apos;s a beer that tastes like chocolate?'
             onClick={tryQuery}
