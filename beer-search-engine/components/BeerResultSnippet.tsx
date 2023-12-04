@@ -1,14 +1,15 @@
-
-import { FiMaximize2, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
+import { FiMaximize2 } from "react-icons/fi";
 import RelevanceFeedback from "./RelevanceFeedback";
-import { Beer } from "@/service/beer-service";
-import { Card, Stack, CardBody, HStack, Heading, Highlight, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
+import { Beer, Brewer } from "@/service/beer-service";
+import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
 import StarRating from "./StarRating";
+import { BreweryLocation } from "./BreweryLocation";
+import { HightlightWords } from "./HightlightWords";
 
 
 interface BeerResultSnippetProps {
   beer: Beer;
-  query?: string | string[];
+  keywords?: string | string[];
   onClick?: (beer: Beer) => void;
 }
 
@@ -20,7 +21,7 @@ const reduceDescription = (description: string, wordsLimit: number = 30) => {
   return description
 }
 
-export default function BeerResultSnippet({ query, beer, onClick }: BeerResultSnippetProps) {
+export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResultSnippetProps) {
   return (
     <Card
       direction={{ base: 'column', sm: 'row' }}
@@ -51,29 +52,35 @@ export default function BeerResultSnippet({ query, beer, onClick }: BeerResultSn
               console.log(beer, 'marked as irrelevant')
             }} />
           </HStack>
-          <Text fontSize='sm' color='gray.500'>
-            <Highlight
-              query={query || ""}
-              styles={{
-                px: '2',
-                py: '1',
-                rounded: 'full',
-                bg: 'yellow.200',
-                _hover: {
-                  bg: 'yellow.300',
-                  transition: 'all 0.2s ease-in-out'
-                }
-              }}
-            >
-              {reduceDescription(beer.description)}
-            </Highlight>
 
-            {JSON.stringify(beer)}
-          </Text>
+          {/* Brewery location */}
+          <Heading size='xs' color='gray.500' mt={2}>
+            Brewery
+          </Heading>
+          <BreweryLocation brewer={beer.brewer} />
 
+          {/* Description */}
+          <Heading size='xs' color='gray.500' mt={2}>
+            Description
+          </Heading>
+          {beer.description ? (
+            <HightlightWords keywords={keywords || []} text={reduceDescription(beer.description)} />
+          ) : (
+            <Text fontSize='sm' color='gray.500'>
+              No description available
+            </Text>
+          )}
+
+          {/* Alcohol */}
+          <Heading size='xs' color='gray.500' mt={2}>
+            Alcohol
+          </Heading>
           {beer.alcohol_bv > 0 && (
             <Text fontSize='sm' color='gray.500'>({beer.alcohol_bv.toFixed(1)}%)</Text>
           )}
+
+          {/* Style */}
+
         </CardBody>
 
         <CardFooter>

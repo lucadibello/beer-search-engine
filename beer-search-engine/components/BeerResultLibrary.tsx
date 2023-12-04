@@ -1,12 +1,12 @@
 'use client';
 
 import { Beer } from "@/service/beer-service";
-import { Box, HStack, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, HStack, Heading, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
-import BeerResultSnippet from "./BeerResultSnippet";
+import { BeerResultStack } from "./BeerResultStack";
 
-type BeerResultStackProps = {
+type BeerResultLibrary = {
   totalHits?: number;
   beers: Beer[];
   keywords?: string | string[];
@@ -14,34 +14,12 @@ type BeerResultStackProps = {
   enableRichResults?: boolean;
 }
 
-
-function BeerResultStack({ beers, keywords, onClick }: BeerResultStackProps) {
-  return (
-    <Stack
-      spacing={4}
-      direction='column'
-      align='flex-start'
-      justify='left'
-    >
-      {beers.map((beer) => (
-        <Box key={beer.docno} w='100%'>
-          <BeerResultSnippet
-            query={keywords || []}
-            beer={beer}
-            onClick={onClick}
-          />
-        </Box>
-      ))}
-    </Stack>
-  )
-}
-
 export default function BeerResultLibrary({
   beers,
   keywords,
   totalHits,
   enableRichResults = false
-}: BeerResultStackProps) {
+}: BeerResultLibrary) {
   const [beer, setBeer] = useState<Beer | null>(null)
 
   return (

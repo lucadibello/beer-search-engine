@@ -22,7 +22,11 @@ export default function Nav() {
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
-              <Button onClick={toggleColorMode}>
+              <Button
+                onClick={toggleColorMode}
+                size='sm'
+                variant='ghost'
+              >
                 {colorMode === 'light' ? <Icon as={FiMoon} /> : <Icon as={FiSun} />}
               </Button>
             </Stack>

@@ -1,5 +1,22 @@
 import { ApiResponse } from "@/service"
 
+export type Brewer = {
+  name: string | null
+  city: string | null
+  country: {
+    code: string | null
+    name: string | null
+  }
+  state: {
+    name: string | null
+  }
+}
+
+export type CriticScore = {
+  max: number
+  actual: number
+}
+
 export interface Beer {
   docno: string
   name: string
@@ -7,22 +24,8 @@ export interface Beer {
   image_url: string
   price: null | number
   style: null | string
-  critic_score: {
-    max: number
-    actual: number
-  }
-  brewer: {
-    name: string
-    city: string
-
-    country: {
-      code: string
-      name: string
-    }
-    state: {
-      name: string
-    }
-  }
+  critic_score: CriticScore
+  brewer: Brewer
   alcohol_bv: number
   tasting_notes: null | string
   closure: null | string
