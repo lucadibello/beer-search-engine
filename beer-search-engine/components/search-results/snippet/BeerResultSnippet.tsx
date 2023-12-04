@@ -1,6 +1,6 @@
 import RelevanceFeedback from "./RelevanceFeedback";
 import { Beer } from "@/service/beer-service";
-import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
+import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text, Flex } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 import { BreweryLocation } from "./BreweryLocation";
 import { HightlightWords } from "../../HightlightWords";
@@ -43,6 +43,7 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
           alt={beer.name}
           loading='lazy'
           fill={true}
+          sizes="200px"
           style={{
             objectFit: 'contain',
           }}
@@ -51,18 +52,26 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
 
       <Stack w='100%'>
         <CardBody>
-          <HStack spacing={2}>
-            <Heading size='sm'>{beer.name}</Heading>
+          <HStack
+            justify='space-between'
+            align='center'
+            w='100%'
+          >
+            <Flex
+              gap={2}
+              direction={{ base: 'column', md: 'row' }}
+              // Middle align
+              alignItems={{ base: 'flex-start', md: 'center' }}
+            >
+              <Heading size='sm'>{beer.name}</Heading>
 
-            {beer.critic_score.actual > 0 && (
-              <StarRating
-                rating={beer.critic_score.actual}
-                maxRating={beer.critic_score.max}
-              />
-            )}
-
-            {/* Spacer */}
-            <Box flex={1} />
+              {beer.critic_score.actual > 0 && (
+                <StarRating
+                  rating={beer.critic_score.actual}
+                  maxRating={beer.critic_score.max}
+                />
+              )}
+            </Flex>
 
             {/* Relevance feedback buttons */}
             <RelevanceFeedback onRelevant={() => {

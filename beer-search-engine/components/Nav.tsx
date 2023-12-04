@@ -10,6 +10,7 @@ import {
   Icon,
   Heading,
 } from '@chakra-ui/react'
+import Link from 'next/link';
 import { FiMoon, FiSun } from 'react-icons/fi'
 
 export default function Nav() {
@@ -18,7 +19,13 @@ export default function Nav() {
     <>
       <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4}>
         <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-          <Heading size='md'>Beer Search Engine</Heading>
+          <Heading size='md' _hover={{
+            cursor: 'pointer',
+          }}>
+            <Link href='/'>
+              Beer Search Engine
+            </Link>
+          </Heading>
 
           <Flex alignItems={'center'}>
             <Stack direction={'row'} spacing={7}>
@@ -32,7 +39,7 @@ export default function Nav() {
             </Stack>
           </Flex>
         </Flex>
-      </Box>
+      </Box >
     </>
   )
 }

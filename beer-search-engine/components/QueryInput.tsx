@@ -6,10 +6,17 @@ interface QueryInputProps {
   query: string
   setQuery: (query: string) => void
   isLoading?: boolean
+  showVoiceInput?: boolean
   onSearch?: (query: string) => void
 }
 
-export default function QueryInput({ query, setQuery, isLoading, onSearch }: QueryInputProps) {
+export default function QueryInput({
+  query,
+  setQuery,
+  isLoading,
+  onSearch,
+  showVoiceInput = false
+}: QueryInputProps) {
   // State to keep track of active state
   const [active, setActive] = useState<boolean>(false)
 
@@ -60,28 +67,29 @@ export default function QueryInput({ query, setQuery, isLoading, onSearch }: Que
           boxShadow: 'none'
         }}
       />
-      <InputRightElement>
-        {/* Voice input */}
-        <Tooltip label='Voice input' aria-label='Voice input' placement='bottom' hasArrow>
-          <span>
-            <Icon
-              as={FiMic}
-              cursor={"pointer"}
-              transition="all 0.2s ease-in-out"
-              _hover={{
-                color: "purple.500",
-                transform: "scale(1.2)",
-                // Transition on hover and release
-                transition: "all 0.2s ease-in-out"
-              }}
-              onClick={() => {
-                // Trigger voice input
-                console.log('Voice input triggered')
-              }}
-            />
-          </span>
-        </Tooltip>
-      </InputRightElement>
+      {showVoiceInput && (
+        <InputRightElement>
+          <Tooltip label='Voice input' aria-label='Voice input' placement='bottom' hasArrow>
+            <span>
+              <Icon
+                as={FiMic}
+                cursor={"pointer"}
+                transition="all 0.2s ease-in-out"
+                _hover={{
+                  color: "purple.500",
+                  transform: "scale(1.2)",
+                  // Transition on hover and release
+                  transition: "all 0.2s ease-in-out"
+                }}
+                onClick={() => {
+                  // Trigger voice input
+                  console.log('Voice input triggered')
+                }}
+              />
+            </span>
+          </Tooltip>
+        </InputRightElement>
+      )}
     </InputGroup>
   )
 }
