@@ -1,4 +1,4 @@
-import { HStack, Icon } from "@chakra-ui/react";
+import { HStack, Icon, Text } from "@chakra-ui/react";
 import { FaStarHalfAlt, FaStar, FaRegStar } from 'react-icons/fa'
 
 interface StarRatingProps {
@@ -61,7 +61,7 @@ export default function StarRating({ rating, maxRating = 5 }: StarRatingProps) {
         }
         return <Star key={i} filled={filled} />
       })}
-      <span>{textRating.toFixed(1)}</span>
+      <Text fontWeight={'bold'} ml={1}>{textRating.toFixed(1)}</Text>
     </HStack>
   );
 }
