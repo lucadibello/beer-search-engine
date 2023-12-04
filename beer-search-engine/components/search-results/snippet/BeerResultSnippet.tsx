@@ -87,32 +87,15 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
         </CardBody>
 
         <CardFooter>
-          <HStack // space around
-            spacing={2}
-            justifyContent={'space-between'}
-            w='100%'
+          {/* Beer page button */}
+          <Button
+            variant='solid'
+            colorScheme='blue'
+            size='sm'
+            onClick={onClick ? () => onClick(beer) : undefined}
           >
-            {/* Beer page button */}
-            <Button
-              variant='solid'
-              colorScheme='blue'
-              size='sm'
-            >
-              View
-            </Button>
-
-            {/* View details button */}
-            <Tooltip label='View details' hasArrow>
-              <IconButton
-                aria-label='View details'
-                icon={<FiMaximize2 />}
-                variant='ghost'
-                colorScheme='info'
-                size='sm'
-                onClick={onClick ? () => onClick(beer) : undefined}
-              />
-            </Tooltip>
-          </HStack>
+            View
+          </Button>
         </CardFooter>
       </Stack>
     </Card>

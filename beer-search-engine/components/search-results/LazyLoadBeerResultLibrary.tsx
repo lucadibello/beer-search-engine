@@ -36,8 +36,10 @@ export default function LazyBeerResultLibrary({
     <BeerResultLibrary
       totalHits={beers?.total_hits || 0}
       beers={beers?.data || []}
-      enableRichResults={true}
       keywords={getKeywords(query)}
+      onBeerSelected={(beer) => {
+        console.log('beer selected', beer)
+      }}
     />
   )
 }

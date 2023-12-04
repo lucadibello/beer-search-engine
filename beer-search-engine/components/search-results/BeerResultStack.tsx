@@ -7,11 +7,11 @@ type BeerResultStackProps = {
   totalHits?: number;
   beers: Beer[];
   keywords?: string | string[];
-  onClick?: (beer: Beer) => void;
+  onBeerSelected?: (beer: Beer) => void;
   enableRichResults?: boolean;
 }
 
-export function BeerResultStack({ beers, keywords, onClick }: BeerResultStackProps) {
+export function BeerResultStack({ beers, keywords, onBeerSelected }: BeerResultStackProps) {
   return (
     <Stack
       spacing={4}
@@ -24,7 +24,7 @@ export function BeerResultStack({ beers, keywords, onClick }: BeerResultStackPro
           <BeerResultSnippet
             keywords={keywords || []}
             beer={beer}
-            onClick={onClick} />
+            onClick={onBeerSelected} />
         </Box>
       ))}
     </Stack>
