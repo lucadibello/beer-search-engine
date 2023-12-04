@@ -1,6 +1,6 @@
 'use client';
 
-import { Box, Heading, useColorModeValue } from "@chakra-ui/react";
+import { Box, useColorModeValue } from "@chakra-ui/react";
 import { useState } from "react";
 import QueryInput from "./QueryInput";
 
