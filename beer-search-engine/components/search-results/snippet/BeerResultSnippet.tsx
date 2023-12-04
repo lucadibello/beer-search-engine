@@ -1,7 +1,6 @@
-import { FiMaximize2 } from "react-icons/fi";
 import RelevanceFeedback from "./RelevanceFeedback";
-import { Beer, Brewer } from "@/service/beer-service";
-import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
+import { Beer } from "@/service/beer-service";
+import { Card, Image, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 import { BreweryLocation } from "./BreweryLocation";
 import { HightlightWords } from "../../HightlightWords";
@@ -30,6 +29,13 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
       size='sm'
       w='100%'
     >
+      <Image
+        objectFit='cover'
+        maxW={{ base: '100%', sm: '200px' }}
+        src={beer.image_url || 'https://via.placeholder.com/200'}
+        alt='Caffe Latte'
+      />
+
       <Stack w='100%'>
         <CardBody>
           <HStack spacing={2}>
