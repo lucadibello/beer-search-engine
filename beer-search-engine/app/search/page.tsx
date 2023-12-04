@@ -1,6 +1,6 @@
 'use client';
 
-import LazyBeerResultLibrary from "@/components/LazyLoadBeerResultLibrary";
+import LazyBeerResultLibrary from "@/components/search-results/LazyLoadBeerResultLibrary";
 import Loader from "@/components/Loader"
 import SearchForm from "@/components/SearchForm";
 import { Box } from "@chakra-ui/react"

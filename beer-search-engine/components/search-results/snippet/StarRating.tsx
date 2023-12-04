@@ -24,34 +24,44 @@ function Star({ filled }: StarProps) {
 }
 
 /**
- * Normalize rating in range [0, 5]. Return value rounded to half star.
- * @param rating  The rating to normalize
- * @param maxRating  The maximum rating
- * @returns The normalized rating rounded to half star
+ * Normalize rating for visual star display, rounded to the nearest half star.
+ * @param rating The rating to normalize
+ * @param maxRating The maximum rating
+ * @returns The normalized rating rounded to half star for display
  */
-const normalizeRating = (rating: number, maxRating: number) => {
-  const normalizedRating = Math.round((rating / maxRating) * 5 * 2) / 2
-  return normalizedRating
-}
+const normalizeRatingForDisplay = (rating: number, maxRating: number): number => {
+  return Math.round((rating / maxRating) * 5 * 2) / 2;
+};
+
+/**
+ * Normalize rating for text display, rounded to the nearest tenth.
+ * @param rating The rating to normalize
+ * @param maxRating The maximum rating
+ * @returns The normalized rating rounded to tenth for text display
+ */
+const normalizeRatingForText = (rating: number, maxRating: number): number => {
+  return Math.round((rating / maxRating) * 5 * 10) / 10;
+};
 
 export default function StarRating({ rating, maxRating = 5 }: StarRatingProps) {
-  rating = normalizeRating(rating, maxRating)
+  const displayRating = normalizeRatingForDisplay(rating, maxRating);
+  const textRating = normalizeRatingForText(rating, maxRating);
 
   return (
     <HStack spacing={1}>
       {[...Array(5)].map((_, i) => {
         const index = i + 1;
         let filled: StarFillType;
-        if (rating >= index - 0.5 && rating < index) {
+        if (displayRating >= index - 0.5 && displayRating < index) {
           filled = 'half';
-        } else if (rating >= index) {
+        } else if (displayRating >= index) {
           filled = 'full';
         } else {
           filled = 'empty';
         }
         return <Star key={i} filled={filled} />
       })}
-      <span>{rating}</span>
+      <span>{textRating.toFixed(1)}</span>
     </HStack>
-  )
+  );
 }
