@@ -26,6 +26,11 @@ export default function LazyBeerResultLibrary({
   // Use hook to search for beers
   const beers = useBeerSearcher(query);
 
+  // Do not show anything until a result is actually available
+  if (!beers) {
+    return null
+  }
+
   // Return the page
   return (
     <BeerResultLibrary

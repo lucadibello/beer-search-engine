@@ -1,11 +1,10 @@
 'use client';
 
 import { Beer } from "@/service/beer-service";
-import { Box, Button, Card, CardBody, CardFooter, HStack, Heading, Highlight, IconButton, Stack, Text, Tooltip } from "@chakra-ui/react";
+import { Box, HStack, Heading, Stack, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import { useState } from "react";
-import { FiMaximize2, FiThumbsDown, FiThumbsUp } from "react-icons/fi";
-import RelevanceFeedback from "./RelevanceFeedback";
+import BeerResultSnippet from "./BeerResultSnippet";
 
 type BeerResultStackProps = {
   totalHits?: number;
@@ -15,98 +14,6 @@ type BeerResultStackProps = {
   enableRichResults?: boolean;
 }
 
-interface BeerResultProps {
-  beer: Beer;
-  query?: string | string[];
-  onClick?: (beer: Beer) => void;
-}
-
-const reduceDescription = (description: string, wordsLimit: number = 30) => {
-  const words = description.split(' ')
-  if (words.length > wordsLimit) {
-    return words.slice(0, wordsLimit).join(' ') + '...'
-  }
-  return description
-}
-
-function BeerResult({ query, beer, onClick }: BeerResultProps) {
-  return (
-    <Card
-      direction={{ base: 'column', sm: 'row' }}
-      overflow='hidden'
-      variant='elevated'
-      size='sm'
-      w='100%'
-    >
-      <Stack w='100%'>
-        <CardBody>
-          <HStack spacing={2}>
-            <Heading size='sm'>{beer.name}</Heading>
-            {beer.alcohol_bv > 0 && (
-              <Text fontSize='sm' color='gray.500'>({beer.alcohol_bv.toFixed(1)}%)</Text>
-            )}
-
-            {/* Spacer */}
-            <Box flex={1} />
-
-            {/* Relevance feedback buttons */}
-            <RelevanceFeedback onRelevant={() => {
-              console.log(beer, 'marked as relevant')
-            }} onIrrelevant={() => {
-              console.log(beer, 'marked as irrelevant')
-            }} />
-          </HStack>
-          <Text fontSize='sm' color='gray.500'>
-            <Highlight
-              query={query || ""}
-              styles={{
-                px: '2',
-                py: '1',
-                rounded: 'full',
-                bg: 'yellow.200',
-                _hover: {
-                  bg: 'yellow.300',
-                  transition: 'all 0.2s ease-in-out'
-                }
-              }}
-            >
-              {reduceDescription(beer.description)}
-            </Highlight>
-          </Text>
-        </CardBody>
-
-        <CardFooter>
-          <HStack // space around
-            spacing={2}
-            justifyContent={'space-between'}
-            w='100%'
-          >
-            {/* Beer page button */}
-            <Button
-              variant='solid'
-              colorScheme='blue'
-              size='sm'
-            >
-              View
-            </Button>
-
-            {/* View details button */}
-            <Tooltip label='View details' hasArrow>
-              <IconButton
-                aria-label='View details'
-                icon={<FiMaximize2 />}
-                variant='ghost'
-                colorScheme='info'
-                size='sm'
-                onClick={onClick ? () => onClick(beer) : undefined}
-              />
-            </Tooltip>
-          </HStack>
-        </CardFooter>
-      </Stack>
-    </Card>
-  )
-}
 
 function BeerResultStack({ beers, keywords, onClick }: BeerResultStackProps) {
   return (
@@ -118,7 +25,7 @@ function BeerResultStack({ beers, keywords, onClick }: BeerResultStackProps) {
     >
       {beers.map((beer) => (
         <Box key={beer.docno} w='100%'>
-          <BeerResult
+          <BeerResultSnippet
             query={keywords || []}
             beer={beer}
             onClick={onClick}
