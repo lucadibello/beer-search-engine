@@ -1,9 +1,10 @@
 import RelevanceFeedback from "./RelevanceFeedback";
 import { Beer } from "@/service/beer-service";
-import { Card, Image, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
+import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
 import StarRating from "./StarRating";
 import { BreweryLocation } from "./BreweryLocation";
 import { HightlightWords } from "../../HightlightWords";
+import ImageWithFallback from "@/components/ImageWithFallback";
 
 
 interface BeerResultSnippetProps {
@@ -29,12 +30,24 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
       size='sm'
       w='100%'
     >
-      <Image
-        objectFit='cover'
-        maxW={{ base: '100%', sm: '200px' }}
-        src={beer.image_url || 'https://via.placeholder.com/200'}
-        alt='Caffe Latte'
-      />
+      {/* Beer image / Placeholder if not available */}
+      <Box
+        w={'200px'}
+        h='fill'
+        overflow='hidden'
+        position='relative'
+      >
+        <ImageWithFallback
+          src={beer.image_url || '/images/beer-placeholder.png'}
+          fallbackSrc='/images/fallback.webp'
+          alt={beer.name}
+          loading='lazy'
+          fill={true}
+          style={{
+            objectFit: 'contain',
+          }}
+        />
+      </Box>
 
       <Stack w='100%'>
         <CardBody>
