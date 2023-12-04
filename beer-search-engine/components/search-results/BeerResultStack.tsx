@@ -1,6 +1,6 @@
 'use client';
 import { Box, Stack } from "@chakra-ui/react";
-import BeerResultSnippet from "./BeerResultSnippet";
+import BeerResultSnippet from "./snippet/BeerResultSnippet";
 import { Beer } from "@/service/beer-service";
 
 type BeerResultStackProps = {

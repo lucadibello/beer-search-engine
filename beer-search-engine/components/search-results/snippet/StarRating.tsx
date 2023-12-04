@@ -1,4 +1,4 @@
-import { HStack, Icon, Text } from "@chakra-ui/react";
+import { HStack, Icon, Text, useColorModeValue } from "@chakra-ui/react";
 import { FaStarHalfAlt, FaStar, FaRegStar } from 'react-icons/fa'
 
 interface StarRatingProps {
@@ -13,13 +13,15 @@ interface StarProps {
 }
 
 function Star({ filled }: StarProps) {
+  const color = useColorModeValue('yellow.400', 'yellow.300');
+
   switch (filled) {
     case 'full':
-      return <Icon as={FaStar} color='yellow.500' />
+      return <Icon as={FaStar} color={color} />
     case 'half':
-      return <Icon as={FaStarHalfAlt} color='yellow.500' />
+      return <Icon as={FaStarHalfAlt} color={color} />
     case 'empty':
-      return <Icon as={FaRegStar} color='yellow.500' />
+      return <Icon as={FaRegStar} color={color} />
   }
 }
 

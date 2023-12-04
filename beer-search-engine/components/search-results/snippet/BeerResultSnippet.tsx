@@ -1,10 +1,10 @@
 import { FiMaximize2 } from "react-icons/fi";
-import RelevanceFeedback from "./snippet/RelevanceFeedback";
+import RelevanceFeedback from "./RelevanceFeedback";
 import { Beer, Brewer } from "@/service/beer-service";
 import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text } from "@chakra-ui/react";
-import StarRating from "./snippet/StarRating";
-import { BreweryLocation } from "./snippet/BreweryLocation";
-import { HightlightWords } from "../HightlightWords";
+import StarRating from "./StarRating";
+import { BreweryLocation } from "./BreweryLocation";
+import { HightlightWords } from "../../HightlightWords";
 
 
 interface BeerResultSnippetProps {
@@ -53,34 +53,37 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
             }} />
           </HStack>
 
-          {/* Brewery location */}
-          <Heading size='xs' color='gray.500' mt={2}>
-            Brewery
-          </Heading>
-          <BreweryLocation brewer={beer.brewer} />
+          {/* card content */}
+          <Stack direction='column' spacing={2}>
+            {/* Brewery location */}
+            <BreweryLocation brewer={beer.brewer} />
 
-          {/* Description */}
-          <Heading size='xs' color='gray.500' mt={2}>
-            Description
-          </Heading>
-          {beer.description ? (
-            <HightlightWords keywords={keywords || []} text={reduceDescription(beer.description)} />
-          ) : (
-            <Text fontSize='sm' color='gray.500'>
-              No description available
-            </Text>
-          )}
+            {/* Description */}
+            <Box>
+              <Heading size='xs' mt={2}>
+                Description
+              </Heading>
+              {beer.description ? (
+                <HightlightWords keywords={keywords || []} text={reduceDescription(beer.description)} />
+              ) : (
+                <Text fontSize='sm'>
+                  No description available
+                </Text>
+              )}
+            </Box>
 
-          {/* Alcohol */}
-          <Heading size='xs' color='gray.500' mt={2}>
-            Alcohol
-          </Heading>
-          {beer.alcohol_bv > 0 && (
-            <Text fontSize='sm' color='gray.500'>({beer.alcohol_bv.toFixed(1)}%)</Text>
-          )}
-
-          {/* Style */}
-
+            {/* Alcohol */}
+            <Box>
+              <Heading size='xs' mt={2}>
+                Alcohol by volume (ABV)
+              </Heading>
+              {beer.alcohol_bv > 0 && (
+                <Text fontSize='sm'>
+                  {beer.alcohol_bv.toFixed(1)}%
+                </Text>
+              )}
+            </Box>
+          </Stack>
         </CardBody>
 
         <CardFooter>
