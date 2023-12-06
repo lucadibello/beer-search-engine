@@ -1,7 +1,7 @@
 "use client"
 
 import { Beer } from "@/service/beer-service"
-import { Box, HStack, Heading } from "@chakra-ui/react"
+import { Box, HStack, Heading, Text } from "@chakra-ui/react"
 import { BeerResultStack } from "./BeerResultStack"
 import { useEffect, useState } from "react"
 import { BeerSortingTarget, SortOrder, sortBeers } from "@/util/sorter"
@@ -54,18 +54,27 @@ export default function BeerResultLibrary({
 
   return (
     <Box w="100%" px={5}>
-      <HStack mb={5} w="100%" justifyContent="flex-start" alignItems="center">
-        <Heading size="md" mb={5}>
-          Results: {totalHits}
-        </Heading>
-        <span style={{ color: "gray" }}> ordered by </span>
-        <SortingSelect
-          sortingTarget={sorting}
-          order={order}
-          onSortTargetChange={setSorting}
-          onOrderChange={setOrder}
-        />
-      </HStack>
+      <Box mb={5}>
+        <HStack w="100%" justifyContent="flex-start" alignItems="center">
+          <Heading size="md">Results</Heading>
+          <Text fontSize={"xl"} style={{ color: "gray" }}>
+            ordered by
+          </Text>
+          <SortingSelect
+            sortingTarget={sorting}
+            order={order}
+            onSortTargetChange={setSorting}
+            onOrderChange={setOrder}
+          />
+        </HStack>
+
+        {/* Show total hits if available */}
+        {totalHits && (
+          <Text mb={5} style={{ color: "gray" }}>
+            {totalHits} results
+          </Text>
+        )}
+      </Box>
 
       <BeerResultStack
         beers={localBeers}
