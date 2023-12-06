@@ -1,7 +1,17 @@
 "use client"
 
 import { Beer } from "@/service/beer-service"
-import { Box, Heading, Stack, Text } from "@chakra-ui/react"
+import {
+  Alert,
+  AlertDescription,
+  AlertIcon,
+  AlertTitle,
+  Box,
+  Flex,
+  Heading,
+  Stack,
+  Text,
+} from "@chakra-ui/react"
 import { BeerResultStack } from "./BeerResultStack"
 import { useEffect, useState } from "react"
 import { BeerSortingTarget, SortOrder, sortBeers } from "@/util/sorter"
@@ -29,6 +39,11 @@ export default function BeerResultLibrary({
     "relevance",
   )
   const [order, setOrder] = useState<SortOrder>("descending")
+
+  // Update local beers when beers change
+  useEffect(() => {
+    setLocalBeers(beers)
+  }, [beers])
 
   useEffect(() => {
     // If no filter, do nothing
@@ -64,21 +79,24 @@ export default function BeerResultLibrary({
           spacing={5}
         >
           <Heading size="md">Results</Heading>
-          <Text fontSize={"xl"} style={{ color: "gray" }}>
-            ordered by
-          </Text>
+          <Text fontSize={"xl"}>ordered by</Text>
           <SortingSelect
             sortingTarget={sorting}
             order={order}
             onSortTargetChange={setSorting}
             onOrderChange={setOrder}
+            isDisabled={localBeers.length === 0}
           />
         </Stack>
 
         {/* Show total hits if available */}
-        {totalHits && (
+        {totalHits ? (
           <Text mb={5} style={{ color: "gray" }}>
-            {totalHits} results
+            {totalHits} documents found
+          </Text>
+        ) : (
+          <Text mb={5} style={{ color: "gray" }}>
+            No documents found
           </Text>
         )}
       </Box>
@@ -87,6 +105,28 @@ export default function BeerResultLibrary({
         beers={localBeers}
         keywords={keywords}
         onBeerSelected={onBeerSelected}
+        emptyComponent={
+          <Flex w="100%" justifyContent="center" h="60vh" alignItems="center">
+            <Alert
+              status="error"
+              variant="subtle"
+              flexDirection="column"
+              alignItems="center"
+              justifyContent="center"
+              textAlign="center"
+              height="200px"
+              w="80%"
+            >
+              <AlertIcon boxSize="40px" mr={0} />
+              <AlertTitle mt={4} mb={1} fontSize="lg">
+                Oh no! We couldn&apos;t find any beers for you.
+              </AlertTitle>
+              <AlertDescription maxWidth="sm">
+                You could try to search for something else.
+              </AlertDescription>
+            </Alert>
+          </Flex>
+        }
       />
     </Box>
   )

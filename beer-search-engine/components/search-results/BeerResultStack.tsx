@@ -9,13 +9,19 @@ type BeerResultStackProps = {
   keywords?: string | string[]
   onBeerSelected?: (beer: Beer) => void
   enableRichResults?: boolean
+  emptyComponent?: JSX.Element
 }
 
 export function BeerResultStack({
   beers,
   keywords,
   onBeerSelected,
+  emptyComponent,
 }: BeerResultStackProps) {
+  if (beers.length === 0) {
+    return emptyComponent || null
+  }
+
   return (
     <Stack spacing={4} direction="column" align="flex-start" justify="left">
       {beers.map((beer) => (

@@ -35,7 +35,12 @@ export default function Nav() {
 
           <Flex alignItems={"center"}>
             <Stack direction={"row"} spacing={7}>
-              <Button onClick={toggleColorMode} size="sm" variant="ghost">
+              <Button
+                onClick={toggleColorMode}
+                size="sm"
+                variant="ghost"
+                aria-label="Toggle color mode"
+              >
                 {colorMode === "light" ? (
                   <Icon as={FiMoon} />
                 ) : (

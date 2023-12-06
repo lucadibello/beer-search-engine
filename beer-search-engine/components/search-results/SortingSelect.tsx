@@ -11,6 +11,7 @@ interface SortingSelectProps {
   order: SortOrder
   onSortTargetChange?: (type: BeerSortingTarget) => void
   onOrderChange?: (order: SortOrder) => void
+  isDisabled?: boolean
 }
 
 export default function SortingSelect({
@@ -18,6 +19,7 @@ export default function SortingSelect({
   order,
   onSortTargetChange,
   onOrderChange,
+  isDisabled,
 }: SortingSelectProps) {
   // Return the component
   return (
@@ -29,7 +31,6 @@ export default function SortingSelect({
     >
       <Select
         value={sortingTarget}
-        color={"gray"}
         fontSize={"xl"}
         onChange={(e) =>
           onSortTargetChange &&
@@ -37,11 +38,12 @@ export default function SortingSelect({
         }
         variant="unstyled"
         w="250px"
+        isDisabled={isDisabled}
       >
         <option value="relevance">relevance</option>
         {getSortingTargets().map((key) => {
           return (
-            <option key={key} value={key}>
+            <option key={key} value={key} label={key}>
               {key}
             </option>
           )
@@ -52,17 +54,17 @@ export default function SortingSelect({
         <Box w="250px">
           <Select
             value={order}
-            color={"gray"}
             fontSize={"xl"}
             onChange={(e) =>
               onOrderChange && onOrderChange(e.target.value as SortOrder)
             }
             variant="unstyled"
+            isDisabled={isDisabled}
           >
             {/* Map SortOrder enum values to options */}
             {getSortOrders().map((key) => {
               return (
-                <option key={key} value={key}>
+                <option key={key} value={key} label={key}>
                   {key}
                 </option>
               )
