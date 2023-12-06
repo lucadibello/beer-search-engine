@@ -25,12 +25,14 @@ export default function SortingSelect({
       <Select
         value={sortingTarget}
         color={"gray"}
+        fontSize={"xl"}
         onChange={(e) =>
           onSortTargetChange &&
           onSortTargetChange(e.target.value as BeerSortingTarget)
         }
         size="sm"
         variant="unstyled"
+        pr={5}
       >
         <option value="relevance">relevance</option>
         {getSortingTargets().map((key) => {
@@ -46,11 +48,13 @@ export default function SortingSelect({
         <Select
           value={order}
           color={"gray"}
+          fontSize={"xl"}
           onChange={(e) =>
             onOrderChange && onOrderChange(e.target.value as SortOrder)
           }
           size="sm"
           variant="unstyled"
+          pr={5}
         >
           {/* Map SortOrder enum values to options */}
           {getSortOrders().map((key) => {
