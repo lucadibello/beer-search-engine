@@ -17,12 +17,17 @@ export type CriticScore = {
   actual: number
 }
 
+export type BeerPrice = {
+  amount: number
+  currency: string
+}
+
 export interface Beer {
   docno: string
   name: string
   description: string
   image_url: string
-  price: null | number
+  price: BeerPrice | null
   style: null | string
   critic_score: CriticScore
   brewer: Brewer
