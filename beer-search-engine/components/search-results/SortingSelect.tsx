@@ -4,7 +4,7 @@ import {
   getSortOrders,
   getSortingTargets,
 } from "@/util/sorter"
-import { HStack, Select } from "@chakra-ui/react"
+import { Box, Select, Stack } from "@chakra-ui/react"
 
 interface SortingSelectProps {
   sortingTarget: BeerSortingTarget | "relevance"
@@ -21,7 +21,12 @@ export default function SortingSelect({
 }: SortingSelectProps) {
   // Return the component
   return (
-    <HStack spacing={5}>
+    <Stack
+      spacing={5}
+      direction={{ base: "column", md: "row" }}
+      alignItems="center"
+      justifyContent="flex-start"
+    >
       <Select
         value={sortingTarget}
         color={"gray"}
@@ -30,9 +35,8 @@ export default function SortingSelect({
           onSortTargetChange &&
           onSortTargetChange(e.target.value as BeerSortingTarget)
         }
-        size="sm"
         variant="unstyled"
-        pr={5}
+        w="250px"
       >
         <option value="relevance">relevance</option>
         {getSortingTargets().map((key) => {
@@ -45,27 +49,27 @@ export default function SortingSelect({
       </Select>
 
       {sortingTarget !== "relevance" && (
-        <Select
-          value={order}
-          color={"gray"}
-          fontSize={"xl"}
-          onChange={(e) =>
-            onOrderChange && onOrderChange(e.target.value as SortOrder)
-          }
-          size="sm"
-          variant="unstyled"
-          pr={5}
-        >
-          {/* Map SortOrder enum values to options */}
-          {getSortOrders().map((key) => {
-            return (
-              <option key={key} value={key}>
-                {key}
-              </option>
-            )
-          })}
-        </Select>
+        <Box w="250px">
+          <Select
+            value={order}
+            color={"gray"}
+            fontSize={"xl"}
+            onChange={(e) =>
+              onOrderChange && onOrderChange(e.target.value as SortOrder)
+            }
+            variant="unstyled"
+          >
+            {/* Map SortOrder enum values to options */}
+            {getSortOrders().map((key) => {
+              return (
+                <option key={key} value={key}>
+                  {key}
+                </option>
+              )
+            })}
+          </Select>
+        </Box>
       )}
-    </HStack>
+    </Stack>
   )
 }

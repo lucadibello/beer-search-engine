@@ -1,7 +1,7 @@
 "use client"
 
 import { Beer } from "@/service/beer-service"
-import { Box, HStack, Heading, Text } from "@chakra-ui/react"
+import { Box, Heading, Stack, Text } from "@chakra-ui/react"
 import { BeerResultStack } from "./BeerResultStack"
 import { useEffect, useState } from "react"
 import { BeerSortingTarget, SortOrder, sortBeers } from "@/util/sorter"
@@ -55,7 +55,14 @@ export default function BeerResultLibrary({
   return (
     <Box w="100%" px={5}>
       <Box mb={5}>
-        <HStack w="100%" justifyContent="flex-start" alignItems="center">
+        <Stack
+          w="100%"
+          alignItems={{ base: "flex-start", md: "center" }}
+          flexDir={{ base: "column", md: "row" }}
+          // All aligned to the left
+          justifyContent="flex-start"
+          spacing={5}
+        >
           <Heading size="md">Results</Heading>
           <Text fontSize={"xl"} style={{ color: "gray" }}>
             ordered by
@@ -66,7 +73,7 @@ export default function BeerResultLibrary({
             onSortTargetChange={setSorting}
             onOrderChange={setOrder}
           />
-        </HStack>
+        </Stack>
 
         {/* Show total hits if available */}
         {totalHits && (
