@@ -1,7 +1,7 @@
 import { Beer } from "@/service/beer-service"
 import normalizeAndRoundRating from "./rating"
 
-export type BeerSortingTarget = "abv" | "score" | "name"
+export type BeerSortingTarget = "abv" | "rating" | "name"
 export type SortOrder = "ascending" | "descending"
 
 type SortingFunctions = {
@@ -15,7 +15,7 @@ const sortingFunctions: SortingFunctions = {
     ascending: (a: Beer, b: Beer) => a.alcohol_bv - b.alcohol_bv,
     descending: (a: Beer, b: Beer) => b.alcohol_bv - a.alcohol_bv,
   },
-  score: {
+  rating: {
     ascending: (a: Beer, b: Beer) => normalizeScore(a) - normalizeScore(b),
     descending: (a: Beer, b: Beer) => normalizeScore(b) - normalizeScore(a),
   },
@@ -31,7 +31,7 @@ const normalizeScore = (beer: Beer) =>
 
 export function sortBeers(
   beers: Beer[],
-  target: BeerSortingTarget = "score",
+  target: BeerSortingTarget = "rating",
   order: SortOrder = "ascending",
 ) {
   const sortFunction = sortingFunctions[target]?.[order]
