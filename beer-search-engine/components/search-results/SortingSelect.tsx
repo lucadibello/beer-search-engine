@@ -3,15 +3,15 @@ import {
   SortOrder,
   getSortOrders,
   getSortingTargets,
-} from "@/util/sorter"
-import { Box, Select, Stack } from "@chakra-ui/react"
+} from "@/util/sorter";
+import { Select, Stack } from "@chakra-ui/react";
 
 interface SortingSelectProps {
-  sortingTarget: BeerSortingTarget | "relevance"
-  order: SortOrder
-  onSortTargetChange?: (type: BeerSortingTarget) => void
-  onOrderChange?: (order: SortOrder) => void
-  isDisabled?: boolean
+  sortingTarget: BeerSortingTarget | "relevance";
+  order: SortOrder;
+  onSortTargetChange?: (type: BeerSortingTarget) => void;
+  onOrderChange?: (order: SortOrder) => void;
+  isDisabled?: boolean;
 }
 
 export default function SortingSelect({
@@ -55,7 +55,7 @@ export default function SortingSelect({
             <option key={key} value={key} label={key}>
               {key}
             </option>
-          )
+          );
         })}
       </Select>
 
@@ -82,11 +82,11 @@ export default function SortingSelect({
                 <option key={key} value={key} label={key}>
                   {key}
                 </option>
-              )
+              );
             })}
           </Select>
         </>
       )}
     </Stack>
-  )
+  );
 }
