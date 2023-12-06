@@ -1,9 +1,9 @@
-import { Tooltip, IconButton, Box } from "@chakra-ui/react";
-import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
+import { Tooltip, IconButton, Box } from "@chakra-ui/react"
+import { FiThumbsUp, FiThumbsDown } from "react-icons/fi"
 
 interface RelevanceFeedbackProps {
-  onRelevant: () => void;
-  onIrrelevant: () => void;
+  onRelevant: () => void
+  onIrrelevant: () => void
 }
 
 export default function RelevanceFeedback({
@@ -12,23 +12,23 @@ export default function RelevanceFeedback({
 }: RelevanceFeedbackProps) {
   return (
     <Box>
-      <Tooltip label='Mark as relevant' hasArrow>
+      <Tooltip label="Mark as relevant" hasArrow>
         <IconButton
-          aria-label='Relevant'
+          aria-label="Relevant"
           icon={<FiThumbsUp />}
-          variant='ghost'
-          colorScheme='green'
-          size='sm'
+          variant="ghost"
+          colorScheme="green"
+          size="sm"
           onClick={onRelevant}
         />
       </Tooltip>
-      <Tooltip label='Mark as irrelevant' hasArrow>
+      <Tooltip label="Mark as irrelevant" hasArrow>
         <IconButton
-          aria-label='Irrelevant'
+          aria-label="Irrelevant"
           icon={<FiThumbsDown />}
-          variant='ghost'
-          colorScheme='red'
-          size='sm'
+          variant="ghost"
+          colorScheme="red"
+          size="sm"
           onClick={onIrrelevant}
         />
       </Tooltip>

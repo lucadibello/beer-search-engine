@@ -1,15 +1,15 @@
-import { Button, HStack, ListItem } from "@chakra-ui/react";
-import { useState } from "react";
+import { Button, HStack, ListItem } from "@chakra-ui/react"
+import { useState } from "react"
 
 interface ExampleQueryItemProps {
-  query: string;
-  onClick: (query: string) => void | null;
-  isDisabled?: boolean;
+  query: string
+  onClick: (query: string) => void | null
+  isDisabled?: boolean
 }
 
 export default function ExampleQueryItem(props: ExampleQueryItemProps) {
   // Loading state
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   return (
     <ListItem>
@@ -22,8 +22,8 @@ export default function ExampleQueryItem(props: ExampleQueryItemProps) {
               setLoading(true)
             }
           }}
-          variant='ghost'
-          size='xs'
+          variant="ghost"
+          size="xs"
           isLoading={loading}
           isDisabled={props.isDisabled}
         >

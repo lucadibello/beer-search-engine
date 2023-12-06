@@ -1,3 +1,18 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": [
+    "next/core-web-vitals",
+    "plugin:prettier/recommended" // eslint-config-prettier
+  ],
+  "plugins": [
+    "unused-imports" // eslint-plugin-unused-imports
+  ],
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "warn",
+      { "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+    ],
+    // Prettier disable semi-colon rule
+    "prettier/prettier": ["error", { "semi": false }]
+  }
 }

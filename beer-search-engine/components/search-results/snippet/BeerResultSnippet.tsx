@@ -1,69 +1,74 @@
-import RelevanceFeedback from "./RelevanceFeedback";
-import { Beer } from "@/service/beer-service";
-import { Card, Stack, CardBody, HStack, Heading, CardFooter, Button, Tooltip, IconButton, Box, Text, Flex } from "@chakra-ui/react";
-import StarRating from "./StarRating";
-import { BreweryLocation } from "./BreweryLocation";
-import { HightlightWords } from "../../HightlightWords";
-import ImageWithFallback from "@/components/ImageWithFallback";
-
+import RelevanceFeedback from "./RelevanceFeedback"
+import { Beer } from "@/service/beer-service"
+import {
+  Card,
+  Stack,
+  CardBody,
+  HStack,
+  Heading,
+  CardFooter,
+  Button,
+  Box,
+  Text,
+  Flex,
+} from "@chakra-ui/react"
+import StarRating from "./StarRating"
+import { BreweryLocation } from "./BreweryLocation"
+import { HightlightWords } from "../../HightlightWords"
+import ImageWithFallback from "@/components/ImageWithFallback"
 
 interface BeerResultSnippetProps {
-  beer: Beer;
-  keywords?: string | string[];
-  onClick?: (beer: Beer) => void;
+  beer: Beer
+  keywords?: string | string[]
+  onClick?: (beer: Beer) => void
 }
 
 const reduceDescription = (description: string, wordsLimit: number = 30) => {
-  const words = description.split(' ')
+  const words = description.split(" ")
   if (words.length > wordsLimit) {
-    return words.slice(0, wordsLimit).join(' ') + '...'
+    return words.slice(0, wordsLimit).join(" ") + "..."
   }
   return description
 }
 
-export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResultSnippetProps) {
+export default function BeerResultSnippet({
+  keywords,
+  beer,
+  onClick,
+}: BeerResultSnippetProps) {
   return (
     <Card
-      direction={{ base: 'column', sm: 'row' }}
-      overflow='hidden'
-      variant='elevated'
-      size='sm'
-      w='100%'
+      direction={{ base: "column", sm: "row" }}
+      overflow="hidden"
+      variant="elevated"
+      size="sm"
+      w="100%"
     >
       {/* Beer image / Placeholder if not available */}
-      <Box
-        w={'200px'}
-        h='fill'
-        overflow='hidden'
-        position='relative'
-      >
+      <Box w={"200px"} h="fill" overflow="hidden" position="relative">
         <ImageWithFallback
-          src={beer.image_url || '/images/beer-placeholder.png'}
-          fallbackSrc='/images/fallback.webp'
+          src={beer.image_url || "/images/beer-placeholder.png"}
+          fallbackSrc="/images/fallback.webp"
           alt={beer.name}
-          loading='lazy'
+          loading="lazy"
           fill={true}
           sizes="200px"
           style={{
-            objectFit: 'contain',
+            objectFit: "contain",
           }}
         />
       </Box>
 
-      <Stack w='100%'>
+      <Stack w="100%">
         <CardBody>
-          <HStack
-            justify='space-between'
-            align='center'
-            w='100%'
-          >
+          <HStack justify="space-between" align="center" w="100%">
             <Flex
               gap={2}
-              direction={{ base: 'column', md: 'row' }}
+              direction={{ base: "column", md: "row" }}
               // Middle align
-              alignItems={{ base: 'flex-start', md: 'center' }}
+              alignItems={{ base: "flex-start", md: "center" }}
             >
-              <Heading size='sm'>{beer.name}</Heading>
+              <Heading size="sm">{beer.name}</Heading>
 
               {beer.critic_score.actual > 0 && (
                 <StarRating
@@ -74,41 +79,43 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
             </Flex>
 
             {/* Relevance feedback buttons */}
-            <RelevanceFeedback onRelevant={() => {
-              console.log(beer, 'marked as relevant')
-            }} onIrrelevant={() => {
-              console.log(beer, 'marked as irrelevant')
-            }} />
+            <RelevanceFeedback
+              onRelevant={() => {
+                console.log(beer, "marked as relevant")
+              }}
+              onIrrelevant={() => {
+                console.log(beer, "marked as irrelevant")
+              }}
+            />
           </HStack>
 
           {/* card content */}
-          <Stack direction='column' spacing={2}>
+          <Stack direction="column" spacing={2}>
             {/* Brewery location */}
             <BreweryLocation brewer={beer.brewer} />
 
             {/* Description */}
             <Box>
-              <Heading size='xs' mt={2}>
+              <Heading size="xs" mt={2}>
                 Description
               </Heading>
               {beer.description ? (
-                <HightlightWords keywords={keywords || []} text={reduceDescription(beer.description)} />
+                <HightlightWords
+                  keywords={keywords || []}
+                  text={reduceDescription(beer.description)}
+                />
               ) : (
-                <Text fontSize='sm'>
-                  No description available
-                </Text>
+                <Text fontSize="sm">No description available</Text>
               )}
             </Box>
 
             {/* Alcohol */}
             <Box>
-              <Heading size='xs' mt={2}>
+              <Heading size="xs" mt={2}>
                 Alcohol by volume (ABV)
               </Heading>
               {beer.alcohol_bv > 0 && (
-                <Text fontSize='sm'>
-                  {beer.alcohol_bv.toFixed(1)}%
-                </Text>
+                <Text fontSize="sm">{beer.alcohol_bv.toFixed(1)}%</Text>
               )}
             </Box>
           </Stack>
@@ -117,9 +124,9 @@ export default function BeerResultSnippet({ keywords, beer, onClick }: BeerResul
         <CardFooter>
           {/* Beer page button */}
           <Button
-            variant='solid'
-            colorScheme='blue'
-            size='sm'
+            variant="solid"
+            colorScheme="blue"
+            size="sm"
             onClick={onClick ? () => onClick(beer) : undefined}
           >
             View
