@@ -23,28 +23,22 @@ export default function BeerResultLibrary({
   // Save beers in state
   const [localBeers, setLocalBeers] = useState<Beer[]>(beers)
 
-  const [dirtyFilter, setDirtyFilter] = useState<boolean>(false)
+  // Sorting
+  const [dirtySorting, setDirtySorting] = useState<boolean>(false)
   const [sorting, setSorting] = useState<BeerSortingTarget | "relevance">(
     "relevance",
   )
   const [order, setOrder] = useState<SortOrder>("descending")
 
   useEffect(() => {
-    console.log("beers changed", beers)
-  }, [beers])
-
-  useEffect(() => {
     // If no filter, do nothing
     if (sorting === "relevance") {
       // Update only if filter is dirty
-      if (dirtyFilter) {
-        console.log("resetting beers", beers)
+      if (dirtySorting) {
         setLocalBeers(beers)
-        setDirtyFilter(false)
+        setDirtySorting(false)
       }
     } else {
-      console.log("sorting", sorting, order, beers)
-
       // Filter beers
       const filteredBeers = sortBeers(beers, sorting, order)
 
@@ -52,11 +46,11 @@ export default function BeerResultLibrary({
       setLocalBeers(filteredBeers)
 
       // Set dirty filter to true if it is not already
-      if (!dirtyFilter) {
-        setDirtyFilter(true)
+      if (!dirtySorting) {
+        setDirtySorting(true)
       }
     }
-  }, [beers, sorting, order, dirtyFilter])
+  }, [beers, sorting, order, dirtySorting])
 
   return (
     <Box w="100%" px={5}>
