@@ -1,14 +1,12 @@
-import { HStack, Spinner } from "@chakra-ui/react";
+import { HStack, Spinner } from "@chakra-ui/react"
 
 interface LoaderProps {
-  text?: string;
+  text?: string
 }
 
-export default function Loader(
-  { text = "Loading..." }: LoaderProps
-) {
+export default function Loader({ text = "Loading..." }: LoaderProps) {
   return (
-    <HStack spacing={2} align='center' justify='center'>
+    <HStack spacing={2} align="center" justify="center">
       <Spinner />
       <span>{text}</span>
     </HStack>

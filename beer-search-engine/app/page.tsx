@@ -1,25 +1,31 @@
-'use client';
+"use client"
 
-import { Box, Container, Flex, Heading, Icon, Input, InputGroup, InputLeftElement, InputRightElement, Spinner, Tooltip, UnorderedList, useColorMode, useColorModeValue } from '@chakra-ui/react'
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import {
+  Box,
+  Container,
+  Flex,
+  Heading,
+  UnorderedList,
+  useColorModeValue,
+} from "@chakra-ui/react"
+import Image from "next/image"
+import { useRouter } from "next/navigation"
+import { useState } from "react"
 
 // Import image
-import logoDarkMode from '@/public/logo-dark-mode.png'
-import logoLightMode from '@/public/logo-light-mode.png'
+import logoDarkMode from "@/public/logo-dark-mode.png"
+import logoLightMode from "@/public/logo-light-mode.png"
 
-import ExampleQueryItem from '@/components/ExampleQueryItem';
-import { preloadSearch } from '@/service';
-import QueryInput from '@/components/QueryInput';
+import ExampleQueryItem from "@/components/ExampleQueryItem"
+import { preloadSearch } from "@/service"
+import QueryInput from "@/components/QueryInput"
 
 export default function HomePage() {
-
   // State to keep track of the query
-  const [inputQuert, setInputQuery] = useState<string>('');
+  const [inputQuert, setInputQuery] = useState<string>("")
 
   // Loading state
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(false)
 
   // Load router
   const { push } = useRouter()
@@ -46,11 +52,11 @@ export default function HomePage() {
         {/* Logo */}
         <Box mb={8}>
           <Image
-            alt='Beer Search Engine logo'
+            alt="Beer Search Engine logo"
             src={useColorModeValue(logoLightMode, logoDarkMode)}
             style={{
-              width: '500px',
-              height: 'auto',
+              width: "500px",
+              height: "auto",
             }}
           />
         </Box>
@@ -72,17 +78,17 @@ export default function HomePage() {
         </Heading>
         <UnorderedList gap={2} mt={4}>
           <ExampleQueryItem
-            query='What&apos;s a beer that tastes like chocolate?'
+            query="What's a beer that tastes like chocolate?"
             onClick={tryQuery}
             isDisabled={loading}
           />
           <ExampleQueryItem
-            query="What&apos;s a beer perfect for a hot summer day?"
+            query="What's a beer perfect for a hot summer day?"
             onClick={tryQuery}
             isDisabled={loading}
           />
           <ExampleQueryItem
-            query="What&apos;s the best beer for a party?"
+            query="What's the best beer for a party?"
             onClick={tryQuery}
             isDisabled={loading}
           />

@@ -1,8 +1,8 @@
-'use client';
+"use client"
 
-import LazyBeerResultLibrary from "@/components/search-results/LazyLoadBeerResultLibrary";
+import LazyBeerResultLibrary from "@/components/search-results/LazyLoadBeerResultLibrary"
 import Loader from "@/components/Loader"
-import SearchForm from "@/components/SearchForm";
+import SearchForm from "@/components/SearchForm"
 import { Box } from "@chakra-ui/react"
 import { redirect, useRouter } from "next/navigation"
 import { Suspense } from "react"
@@ -19,7 +19,7 @@ export default function SearchPage({
   // If no query, redirect to home
   if (!query) {
     // Redirect to home
-    redirect('/')
+    redirect("/")
   }
 
   // If all data is ready, load router for further navigation
@@ -33,11 +33,11 @@ export default function SearchPage({
         onSearch={(newQuery) => {
           // Redirect to new query (shallow)
           push(`/search?q=${newQuery}`, {
-            shallow: true
+            shallow: true,
           })
         }}
       />
-      <hr style={{ marginBottom: '40px' }} />
+      <hr style={{ marginBottom: "40px" }} />
       <Suspense fallback={<Loader />}>
         <LazyBeerResultLibrary query={query} />
       </Suspense>

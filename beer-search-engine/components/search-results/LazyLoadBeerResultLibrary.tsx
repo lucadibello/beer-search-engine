@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import { searchBeer } from "@/service"
 import { SearchApiResponse } from "@/service/beer-service"
@@ -8,7 +8,8 @@ import { useState, useEffect } from "react"
 import BeerResultLibrary from "./BeerResultLibrary"
 
 const useBeerSearcher = (query: string) => {
-  const [beers, setBeers] = useState<WrapPromiseResult<SearchApiResponse> | null>(null)
+  const [beers, setBeers] =
+    useState<WrapPromiseResult<SearchApiResponse> | null>(null)
 
   useEffect(() => {
     const response = wrapPromise<SearchApiResponse>(searchBeer(query))
@@ -18,13 +19,9 @@ const useBeerSearcher = (query: string) => {
   return beers?.read()
 }
 
-export default function LazyBeerResultLibrary({
-  query,
-}: {
-  query: string
-}) {
+export default function LazyBeerResultLibrary({ query }: { query: string }) {
   // Use hook to search for beers
-  const beers = useBeerSearcher(query);
+  const beers = useBeerSearcher(query)
 
   // Do not show anything until a result is actually available
   if (!beers) {
@@ -38,7 +35,7 @@ export default function LazyBeerResultLibrary({
       beers={beers?.data || []}
       keywords={getKeywords(query)}
       onBeerSelected={(beer) => {
-        console.log('beer selected', beer)
+        console.log("beer selected", beer)
       }}
     />
   )

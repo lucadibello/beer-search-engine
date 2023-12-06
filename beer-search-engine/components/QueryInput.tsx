@@ -1,4 +1,12 @@
-import { InputGroup, InputLeftElement, Icon, Spinner, Input, InputRightElement, Tooltip } from "@chakra-ui/react"
+import {
+  InputGroup,
+  InputLeftElement,
+  Icon,
+  Spinner,
+  Input,
+  InputRightElement,
+  Tooltip,
+} from "@chakra-ui/react"
 import { useState } from "react"
 import { FiMic, FiSearch } from "react-icons/fi"
 
@@ -15,7 +23,7 @@ export default function QueryInput({
   setQuery,
   isLoading,
   onSearch,
-  showVoiceInput = false
+  showVoiceInput = false,
 }: QueryInputProps) {
   // State to keep track of active state
   const [active, setActive] = useState<boolean>(false)
@@ -23,31 +31,29 @@ export default function QueryInput({
   return (
     <InputGroup
       w="full"
-      size='md'
-      borderRadius='md'
-      boxShadow={active ? 'md' : 'sm'}
-      transition='all 0.2s ease-in-out'
+      size="md"
+      borderRadius="md"
+      boxShadow={active ? "md" : "sm"}
+      transition="all 0.2s ease-in-out"
       _hover={{
-        boxShadow: 'md',
+        boxShadow: "md",
       }}
     >
-      <InputLeftElement
-        pointerEvents='none'
-        color='gray.300'
-        fontSize='1.2em'
-      >
-        {!isLoading ?
+      <InputLeftElement pointerEvents="none" color="gray.300" fontSize="1.2em">
+        {!isLoading ? (
           <Icon
             as={isLoading ? FiMic : FiSearch}
-            color='gray.300'
+            color="gray.300"
             _hover={{
-              color: 'red'
+              color: "red",
             }}
-          /> : <Spinner />
-        }
+          />
+        ) : (
+          <Spinner />
+        )}
       </InputLeftElement>
       <Input
-        placeholder='Search for a beer'
+        placeholder="Search for a beer"
         spellCheck={true} // Force spellcheck
         autoFocus
         isDisabled={isLoading}
@@ -56,20 +62,25 @@ export default function QueryInput({
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => {
-          if (e.key === 'Enter') {
+          if (e.key === "Enter") {
             onSearch && onSearch(query)
           }
         }}
         // Disable blue border when focused
         _focus={{
-          borderWidth: '1px',
-          borderColor: 'gray.300',
-          boxShadow: 'none'
+          borderWidth: "1px",
+          borderColor: "gray.300",
+          boxShadow: "none",
         }}
       />
       {showVoiceInput && (
         <InputRightElement>
-          <Tooltip label='Voice input' aria-label='Voice input' placement='bottom' hasArrow>
+          <Tooltip
+            label="Voice input"
+            aria-label="Voice input"
+            placement="bottom"
+            hasArrow
+          >
             <span>
               <Icon
                 as={FiMic}
@@ -79,11 +90,11 @@ export default function QueryInput({
                   color: "purple.500",
                   transform: "scale(1.2)",
                   // Transition on hover and release
-                  transition: "all 0.2s ease-in-out"
+                  transition: "all 0.2s ease-in-out",
                 }}
                 onClick={() => {
                   // Trigger voice input
-                  console.log('Voice input triggered')
+                  console.log("Voice input triggered")
                 }}
               />
             </span>
