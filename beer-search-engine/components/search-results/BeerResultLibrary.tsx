@@ -2,7 +2,6 @@
 
 import { Beer } from "@/service/beer-service"
 import { Box, Heading } from "@chakra-ui/react"
-import { useState } from "react"
 import { BeerResultStack } from "./BeerResultStack"
 
 type BeerResultLibrary = {
@@ -19,12 +18,7 @@ export default function BeerResultLibrary({
   onBeerSelected,
 }: BeerResultLibrary) {
   return (
-    <Box
-      w="100%"
-      // Occupy 70% of the flex container
-      flex={beer ? { base: "0 0 100%", md: "0 0 65%" } : {}}
-      px={5}
-    >
+    <Box w="100%" px={5}>
       <Heading size="md" mb={5}>
         Results:
         {totalHits && (
