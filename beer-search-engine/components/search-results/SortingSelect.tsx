@@ -29,7 +29,14 @@ export default function SortingSelect({
       alignItems="center"
       justifyContent="flex-start"
     >
+      {/* Hidden label for screen readers */}
+      <label htmlFor="sorting" style={{ display: "none" }}>
+        Sorting
+      </label>
+
       <Select
+        id="sorting"
+        aria-label="sorting"
         value={sortingTarget}
         fontSize={"xl"}
         onChange={(e) =>
@@ -40,7 +47,9 @@ export default function SortingSelect({
         w="250px"
         isDisabled={isDisabled}
       >
-        <option value="relevance">relevance</option>
+        <option value="relevance" label="relevance">
+          relevance
+        </option>
         {getSortingTargets().map((key) => {
           return (
             <option key={key} value={key} label={key}>
@@ -51,8 +60,13 @@ export default function SortingSelect({
       </Select>
 
       {sortingTarget !== "relevance" && (
-        <Box w="250px">
+        <>
+          <label htmlFor="order" style={{ display: "none" }}>
+            order
+          </label>
           <Select
+            aria-label="order"
+            id="order"
             value={order}
             fontSize={"xl"}
             onChange={(e) =>
@@ -60,6 +74,7 @@ export default function SortingSelect({
             }
             variant="unstyled"
             isDisabled={isDisabled}
+            w="250px"
           >
             {/* Map SortOrder enum values to options */}
             {getSortOrders().map((key) => {
@@ -70,7 +85,7 @@ export default function SortingSelect({
               )
             })}
           </Select>
-        </Box>
+        </>
       )}
     </Stack>
   )

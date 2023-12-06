@@ -91,13 +91,9 @@ export default function BeerResultLibrary({
 
         {/* Show total hits if available */}
         {totalHits ? (
-          <Text mb={5} style={{ color: "gray" }}>
-            {totalHits} documents found
-          </Text>
+          <Text mb={5}>{totalHits} documents found</Text>
         ) : (
-          <Text mb={5} style={{ color: "gray" }}>
-            No documents found
-          </Text>
+          <Text mb={5}>No documents found</Text>
         )}
       </Box>
 
