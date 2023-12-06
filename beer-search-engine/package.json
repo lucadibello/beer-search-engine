@@ -35,6 +35,6 @@
     "prettier": "^3.1.0"
   },
   "lint-staged": {
-    "*": "next lint --cache --fix"
+    "*": "bunx next lint --cache --fix"
   }
 }
