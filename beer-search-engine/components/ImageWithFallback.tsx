@@ -11,7 +11,8 @@ export default function ImageWithFallback(props: ImageWithFallbackProps) {
   const [error, setError] = useState<boolean>(false)
 
   // Splitting fallbackSrc from the rest of the props
-  const { fallbackSrc, ...rest } = props
+        
+      const { fallbackSrc, ...rest } = props
 
   useEffect(() => {
     setError(false)
