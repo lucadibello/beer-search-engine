@@ -6,11 +6,6 @@
     "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@types/node": "20.9.1",
-    "@types/react": "18.2.37",
-    "@types/react-dom": "18.2.15",
-    "eslint": "8.53.0",
-    "eslint-config-next": "14.0.3",
     "framer-motion": "^10.16.5",
     "next": "14.0.3",
     "react": "18.2.0",
@@ -24,5 +19,13 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint"
+  },
+  "devDependencies": {
+    "eslint-plugin-unused-imports": "^3.0.0",
+    "@types/node": "20.9.1",
+    "@types/react": "18.2.37",
+    "@types/react-dom": "18.2.15",
+    "eslint": "8.53.0",
+    "eslint-config-next": "14.0.3"
   }
 }
