@@ -32,9 +32,9 @@ export default function HomePage() {
 
   // utility function to redirect
   const search = (query: string) => {
-        // URL encode query
-        const encodedQuery = encodeURIComponent(query)
-      // Preload search API
+    // URL encode query
+    const encodedQuery = encodeURIComponent(query)
+    // Preload search API
     preloadSearch(encodedQuery)
     // Redirect to search page
     push(`/search?q=${encodedQuery}`)
