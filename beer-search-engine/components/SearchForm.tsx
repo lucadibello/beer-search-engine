@@ -28,7 +28,12 @@ export default function SearchForm({
       bg={useColorModeValue("gray.100", "gray.900")}
     >
       <Box maxW={{ base: "100%", md: "3xl" }}>
-        <QueryInput query={query} setQuery={setQuery} onSearch={onSearch} />
+        <QueryInput
+          query={query}
+          setQuery={setQuery}
+          onSearch={onSearch}
+          iconLocaton="right"
+        />
       </Box>
     </Box>
   )

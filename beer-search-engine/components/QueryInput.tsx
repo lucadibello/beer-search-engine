@@ -8,7 +8,7 @@ import {
   Tooltip,
 } from "@chakra-ui/react"
 import { useState } from "react"
-import { FiMic, FiSearch } from "react-icons/fi"
+import { FiSearch } from "react-icons/fi"
 
 interface QueryInputProps {
   query: string
@@ -16,6 +16,7 @@ interface QueryInputProps {
   isLoading?: boolean
   showVoiceInput?: boolean
   onSearch?: (query: string) => void
+  iconLocaton?: "left" | "right"
 }
 
 export default function QueryInput({
@@ -23,7 +24,7 @@ export default function QueryInput({
   setQuery,
   isLoading,
   onSearch,
-  showVoiceInput = false,
+  iconLocaton = "left",
 }: QueryInputProps) {
   // State to keep track of active state
   const [active, setActive] = useState<boolean>(false)
@@ -39,22 +40,28 @@ export default function QueryInput({
         boxShadow: "md",
       }}
     >
-      <InputLeftElement pointerEvents="none" color="gray.300" fontSize="1.2em">
-        {!isLoading ? (
-          <Icon
-            as={isLoading ? FiMic : FiSearch}
-            color="gray.300"
-            _hover={{
-              color: "red",
-            }}
-          />
-        ) : (
-          <Spinner />
-        )}
-      </InputLeftElement>
+      {iconLocaton === "left" && (
+        <InputLeftElement
+          pointerEvents="none"
+          color="gray.300"
+          fontSize="1.2em"
+        >
+          {!isLoading ? (
+            <Icon
+              as={FiSearch}
+              cursor={"pointer"}
+              zIndex={10}
+              color="gray.300"
+            />
+          ) : (
+            <Spinner />
+          )}
+        </InputLeftElement>
+      )}
       <Input
         placeholder="Search for a beer"
         spellCheck={true} // Force spellcheck
+        zIndex={0}
         autoFocus
         isDisabled={isLoading}
         onFocus={() => setActive(true)}
@@ -73,28 +80,28 @@ export default function QueryInput({
           boxShadow: "none",
         }}
       />
-      {showVoiceInput && (
+      {iconLocaton === "right" && (
         <InputRightElement>
           <Tooltip
-            label="Voice input"
-            aria-label="Voice input"
+            label="Search"
+            aria-label="Search"
             placement="bottom"
             hasArrow
           >
             <span>
               <Icon
-                as={FiMic}
+                as={FiSearch}
                 cursor={"pointer"}
                 transition="all 0.2s ease-in-out"
                 _hover={{
-                  color: "purple.500",
+                  color: "gray.500",
                   transform: "scale(1.2)",
                   // Transition on hover and release
                   transition: "all 0.2s ease-in-out",
                 }}
                 onClick={() => {
                   // Trigger voice input
-                  console.log("Voice input triggered")
+                  onSearch && onSearch(query)
                 }}
               />
             </span>

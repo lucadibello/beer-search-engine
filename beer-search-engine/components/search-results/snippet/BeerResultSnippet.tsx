@@ -11,11 +11,13 @@ import {
   Box,
   Text,
   Flex,
+  Icon,
 } from "@chakra-ui/react"
 import StarRating from "./StarRating"
 import { BreweryLocation } from "./BreweryLocation"
 import { HightlightWords } from "../../HightlightWords"
 import ImageWithFallback from "@/components/ImageWithFallback"
+import { FiInfo } from "react-icons/fi"
 
 interface BeerResultSnippetProps {
   beer: Beer
@@ -36,6 +38,13 @@ export default function BeerResultSnippet({
   beer,
   onClick,
 }: BeerResultSnippetProps) {
+  const HighlightWrapper = ({ children }: { children: string }) => {
+    if (keywords && keywords.length > 0) {
+      return <HightlightWords keywords={keywords} text={children} />
+    }
+    return children
+  }
+
   return (
     <Card
       direction={{ base: "column", sm: "row" }}
@@ -70,11 +79,13 @@ export default function BeerResultSnippet({
             >
               <Heading size="sm">{beer.name}</Heading>
 
-              {beer.critic_score.actual > 0 && (
+              {beer.critic_score.actual > 0 ? (
                 <StarRating
                   rating={beer.critic_score.actual}
                   maxRating={beer.critic_score.max}
                 />
+              ) : (
+                <Text fontSize="sm">No rating available</Text>
               )}
             </Flex>
 
@@ -100,10 +111,9 @@ export default function BeerResultSnippet({
                 Description
               </Heading>
               {beer.description ? (
-                <HightlightWords
-                  keywords={keywords || []}
-                  text={reduceDescription(beer.description)}
-                />
+                <HighlightWrapper>
+                  {reduceDescription(beer.description)}
+                </HighlightWrapper>
               ) : (
                 <Text fontSize="sm">No description available</Text>
               )}
@@ -114,8 +124,25 @@ export default function BeerResultSnippet({
               <Heading size="xs" mt={2}>
                 Alcohol by volume (ABV)
               </Heading>
-              {beer.alcohol_bv > 0 && (
-                <Text fontSize="sm">{beer.alcohol_bv.toFixed(1)}%</Text>
+              {beer.alcohol_bv > 0 ? (
+                <HighlightWrapper>
+                  {beer.alcohol_bv.toFixed(1) + "%"}
+                </HighlightWrapper>
+              ) : (
+                <Text fontSize="sm">No information available</Text>
+              )}
+            </Box>
+
+            {/* Bitterness */}
+            <Box>
+              <Heading size="xs" mt={2}>
+                Taste notes
+              </Heading>
+
+              {beer.tasting_notes ? (
+                <HighlightWrapper>{beer.tasting_notes}</HighlightWrapper>
+              ) : (
+                <Text fontSize="sm">No information available</Text>
               )}
             </Box>
           </Stack>
@@ -127,9 +154,10 @@ export default function BeerResultSnippet({
             variant="solid"
             colorScheme="blue"
             size="sm"
+            leftIcon={<Icon as={FiInfo} />}
             onClick={onClick ? () => onClick(beer) : undefined}
           >
-            View
+            View details
           </Button>
         </CardFooter>
       </Stack>
