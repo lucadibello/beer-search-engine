@@ -7,7 +7,7 @@ interface HightlightWordsProps {
 
 export function HightlightWords({ keywords, text }: HightlightWordsProps) {
   return (
-    <Text fontSize="sm" color="gray.500">
+    <Text fontSize="sm">
       <Highlight
         query={keywords || ""}
         styles={{

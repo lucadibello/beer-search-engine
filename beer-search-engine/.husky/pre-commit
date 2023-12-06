@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/_/husky.sh"
-cd beer-search-engine && bunx next lint --fix
+cd beer-search-engine && bunx lint-staged

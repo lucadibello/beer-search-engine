@@ -2,10 +2,11 @@
 
 import {
   Box,
+  Button,
   Container,
   Flex,
   Heading,
-  UnorderedList,
+  Stack,
   useColorModeValue,
 } from "@chakra-ui/react"
 import Image from "next/image"
@@ -73,26 +74,32 @@ export default function HomePage() {
           }}
         />
 
+        {/* Google-like buttons */}
+        <Flex mt={8} justify="center" align="center">
+          <Button size="md">Search</Button>
+        </Flex>
+
         <Heading as="h2" size="md" mt={8}>
-          Example query:
+          Or try one of these queries
         </Heading>
-        <UnorderedList gap={2} mt={4}>
+
+        <Stack direction="row" spacing={4} mt={4}>
           <ExampleQueryItem
-            query="What's a beer that tastes like chocolate?"
+            query="What's the best beer for a hot summer day?"
             onClick={tryQuery}
             isDisabled={loading}
           />
           <ExampleQueryItem
-            query="What's a beer perfect for a hot summer day?"
+            query="Is there a beer that tastes like chocolate?"
             onClick={tryQuery}
             isDisabled={loading}
           />
           <ExampleQueryItem
-            query="What's the best beer for a party?"
+            query="Irish Dark beer with low alcohol content?"
             onClick={tryQuery}
             isDisabled={loading}
           />
-        </UnorderedList>
+        </Stack>
       </Flex>
     </Container>
   )
