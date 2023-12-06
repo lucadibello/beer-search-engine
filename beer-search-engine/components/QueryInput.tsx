@@ -87,23 +87,28 @@ export default function QueryInput({
             aria-label="Search"
             placement="bottom"
             hasArrow
+            isDisabled={isLoading}
           >
             <span>
-              <Icon
-                as={FiSearch}
-                cursor={"pointer"}
-                transition="all 0.2s ease-in-out"
-                _hover={{
-                  color: "gray.500",
-                  transform: "scale(1.2)",
-                  // Transition on hover and release
-                  transition: "all 0.2s ease-in-out",
-                }}
-                onClick={() => {
-                  // Trigger voice input
-                  onSearch && onSearch(query)
-                }}
-              />
+              {!isLoading ? (
+                <Icon
+                  as={FiSearch}
+                  cursor={"pointer"}
+                  transition="all 0.2s ease-in-out"
+                  _hover={{
+                    color: "gray.500",
+                    transform: "scale(1.2)",
+                    // Transition on hover and release
+                    transition: "all 0.2s ease-in-out",
+                  }}
+                  onClick={() => {
+                    // Trigger voice input
+                    onSearch && onSearch(query)
+                  }}
+                />
+              ) : (
+                <Spinner />
+              )}
             </span>
           </Tooltip>
         </InputRightElement>

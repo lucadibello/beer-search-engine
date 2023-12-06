@@ -7,11 +7,13 @@ import QueryInput from "./QueryInput"
 interface SearchFormProps {
   initialQuery?: string
   onSearch: (newQuery: string) => void
+  isLoading?: boolean
 }
 
 export default function SearchForm({
   onSearch,
   initialQuery,
+  isLoading,
 }: SearchFormProps) {
   // State to keep track of new query
   const [query, setQuery] = useState<string>(initialQuery || "")
@@ -32,6 +34,7 @@ export default function SearchForm({
           query={query}
           setQuery={setQuery}
           onSearch={onSearch}
+          isLoading={isLoading}
           iconLocaton="right"
         />
       </Box>

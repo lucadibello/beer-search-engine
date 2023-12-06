@@ -47,26 +47,28 @@ export default function BeerResultSnippet({
 
   return (
     <Card
-      direction={{ base: "column", sm: "row" }}
+      direction={{ base: "column", md: "row" }}
       overflow="hidden"
       variant="elevated"
       size="sm"
       w="100%"
     >
       {/* Beer image / Placeholder if not available */}
-      <Box w={"200px"} h="fill" overflow="hidden" position="relative">
-        <ImageWithFallback
-          src={beer.image_url || "/images/beer-placeholder.png"}
-          fallbackSrc="/images/fallback.webp"
-          alt={beer.name}
-          loading="lazy"
-          fill={true}
-          sizes="200px"
-          style={{
-            objectFit: "contain",
-          }}
-        />
-      </Box>
+      <Flex align="center" justify="center">
+        <Box w={"200px"} h="auto" overflow="hidden" position="relative">
+          <ImageWithFallback
+            src={beer.image_url || "/images/beer-placeholder.png"}
+            fallbackSrc="/images/fallback.webp"
+            alt={beer.name}
+            loading="lazy"
+            width={200}
+            height={200}
+            style={{
+              objectFit: "cover",
+            }}
+          />
+        </Box>
+      </Flex>
 
       <Stack w="100%">
         <CardBody>
