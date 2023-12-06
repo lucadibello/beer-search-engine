@@ -11,7 +11,6 @@ export default function ImageWithFallback(props: ImageWithFallbackProps) {
   const [error, setError] = useState<boolean>(false)
 
   // Splitting fallbackSrc from the rest of the props
-
   const { fallbackSrc, ...rest } = props
 
   useEffect(() => {
@@ -24,7 +23,7 @@ export default function ImageWithFallback(props: ImageWithFallbackProps) {
       {...rest}
       alt={props.alt || "Image"}
       onError={() => setError(true)}
-      src={error ? props.fallbackSrc : props.src}
+      src={error ? fallbackSrc : props.src}
       // If error, use the worse quality
       quality={error ? 25 : props.quality || 75}
     />

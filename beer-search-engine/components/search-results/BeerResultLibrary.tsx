@@ -18,8 +18,6 @@ export default function BeerResultLibrary({
   totalHits,
   onBeerSelected,
 }: BeerResultLibrary) {
-  const [beer, setBeer] = useState<Beer | null>(null)
-
   return (
     <Box
       w="100%"
