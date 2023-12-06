@@ -1,3 +1,4 @@
+import normalizeAndRoundRating from "@/util/rating"
 import { HStack, Icon, Text, useColorModeValue } from "@chakra-ui/react"
 import { FaStarHalfAlt, FaStar, FaRegStar } from "react-icons/fa"
 
@@ -24,33 +25,9 @@ function Star({ filled }: StarProps) {
       return <Icon as={FaRegStar} color={color} />
   }
 }
-
-/**
- * Normalize rating for visual star display, rounded to the nearest half star.
- * @param rating The rating to normalize
- * @param maxRating The maximum rating
- * @returns The normalized rating rounded to half star for display
- */
-const normalizeRatingForDisplay = (
-  rating: number,
-  maxRating: number,
-): number => {
-  return Math.round((rating / maxRating) * 5 * 2) / 2
-}
-
-/**
- * Normalize rating for text display, rounded to the nearest tenth.
- * @param rating The rating to normalize
- * @param maxRating The maximum rating
- * @returns The normalized rating rounded to tenth for text display
- */
-const normalizeRatingForText = (rating: number, maxRating: number): number => {
-  return Math.round((rating / maxRating) * 5 * 10) / 10
-}
-
 export default function StarRating({ rating, maxRating = 5 }: StarRatingProps) {
-  const displayRating = normalizeRatingForDisplay(rating, maxRating)
-  const textRating = normalizeRatingForText(rating, maxRating)
+  const displayRating = normalizeAndRoundRating(rating, maxRating, 2) // nearest half
+  const textRating = normalizeAndRoundRating(rating, maxRating, 10) // nearest tenth
 
   return (
     <HStack spacing={1}>
