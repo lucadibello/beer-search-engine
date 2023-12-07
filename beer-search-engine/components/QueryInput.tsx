@@ -12,10 +12,10 @@ import { FiSearch } from "react-icons/fi"
 
 interface QueryInputProps {
   query: string
-  setQuery: (query: string) => void
+  setQuery: (_query: string) => void
   isLoading?: boolean
   showVoiceInput?: boolean
-  onSearch?: (query: string) => void
+  onSearch?: (_query: string) => void
   iconLocaton?: "left" | "right"
 }
 

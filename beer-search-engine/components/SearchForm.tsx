@@ -6,7 +6,7 @@ import QueryInput from "./QueryInput"
 
 interface SearchFormProps {
   initialQuery?: string
-  onSearch: (newQuery: string) => void
+  onSearch: (_newQuery: string) => void
   isLoading?: boolean
 }
 

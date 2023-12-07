@@ -9,8 +9,8 @@ import { Select, Stack } from "@chakra-ui/react"
 interface SortingSelectProps {
   sortingTarget: BeerSortingTarget | "relevance"
   order: SortOrder
-  onSortTargetChange?: (type: BeerSortingTarget) => void
-  onOrderChange?: (order: SortOrder) => void
+  onSortTargetChange?: (_type: BeerSortingTarget) => void
+  onOrderChange?: (_order: SortOrder) => void
   isDisabled?: boolean
 }
 

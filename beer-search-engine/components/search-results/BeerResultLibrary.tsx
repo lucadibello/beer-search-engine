@@ -21,7 +21,7 @@ type BeerResultLibrary = {
   totalHits?: number
   beers: Beer[]
   keywords?: string | string[]
-  onBeerSelected?: (beer: Beer) => void
+  onBeerSelected?: (_beer: Beer) => void
 }
 
 export default function BeerResultLibrary({

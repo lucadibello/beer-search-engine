@@ -11,7 +11,7 @@ import { FiLoader, FiSearch } from "react-icons/fi"
 
 interface ExampleQueryItemProps {
   query: string
-  onClick: (query: string) => void | null
+  onClick: (_query: string) => void | null
   isDisabled?: boolean
 }
 

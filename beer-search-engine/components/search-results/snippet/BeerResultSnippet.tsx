@@ -22,7 +22,7 @@ import { FiInfo } from "react-icons/fi"
 interface BeerResultSnippetProps {
   beer: Beer
   keywords?: string | string[]
-  onClick?: (beer: Beer) => void
+  onClick?: (_beer: Beer) => void
 }
 
 const reduceDescription = (description: string, wordsLimit: number = 30) => {
