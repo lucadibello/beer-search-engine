@@ -7,12 +7,14 @@ interface BeerRelevanceFeedbackContextType {
   // States
   relevantBeers: Beer[]
   irrelevantBeers: Beer[]
+  weightedQuery: string
 
   // Setter methods
   addRelevantBeer: (_beer: Beer) => void
   addIrrelevantBeer: (_beer: Beer) => void
   removeRelevantBeer: (_beer: Beer) => void
   removeIrrelevantBeer: (_beer: Beer) => void
+  setWeightedQuery: (_weightedQuery: string) => void
 
   // Utility methods
   isBeerRelevant: (_beer: Beer) => boolean
@@ -28,6 +30,7 @@ const BeerRelevanceFeedbackContext =
     // Default values
     irrelevantBeers: [],
     relevantBeers: [],
+    weightedQuery: "",
     addRelevantBeer: function (_beer: Beer): {} {
       throw new Error("Function not implemented.")
     },
@@ -46,6 +49,9 @@ const BeerRelevanceFeedbackContext =
     removeIrrelevantBeer: function (_beer: Beer): void {
       throw new Error("Function not implemented.")
     },
+    setWeightedQuery: function (_weightedQuery: string): void {
+      throw new Error("Function not implemented.")
+    },
   })
 
 export function useBeerRelevanceFeedback() {
@@ -58,6 +64,7 @@ export default function BeerRelevanceFeedbackProvider({
   // States
   const [relevantBeers, setRelevantBeers] = useState<Beer[]>([])
   const [irrelevantBeers, setIrrelevantBeers] = useState<Beer[]>([])
+  const [weightedQuery, setWeightedQuery] = useState<string>("")
 
   // Functions
   function addRelevantBeer(_beer: Beer) {
@@ -107,6 +114,8 @@ export default function BeerRelevanceFeedbackProvider({
         addIrrelevantBeer,
         isBeerIrrelevant,
         isBeerRelevant,
+        weightedQuery,
+        setWeightedQuery,
       }}
     >
       {children}
