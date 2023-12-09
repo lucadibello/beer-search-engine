@@ -8,6 +8,7 @@ import { useState, useEffect } from "react"
 import BeerResultLibrary from "./BeerResultLibrary"
 import { Portal, useDisclosure } from "@chakra-ui/react"
 import BeerDetailsModal from "./BeerDetailsModal"
+import { useBeerLibrary } from "@/contexts/BeerLibraryContext"
 
 const useBeerSearcher = (query: string) => {
   const [beers, setBeers] =
@@ -23,9 +24,21 @@ const useBeerSearcher = (query: string) => {
 
 export default function LazyBeerResultLibrary({ query }: { query: string }) {
   // Use hook to search for beers
-  const beers = useBeerSearcher(query)
-  const { isOpen, onClose, onOpen } = useDisclosure()
+  const apiBeers = useBeerSearcher(query)
   const [selectedBeer, setSelectedBeer] = useState<Beer | null>(null)
+
+  // Load modal context
+  const { isOpen, onClose, onOpen } = useDisclosure()
+
+  // Load beer library context
+  const { beers, totalHits, setBeers, setTotalHits } = useBeerLibrary()
+
+  // Update beer library based on API response
+  useEffect(() => {
+    // Update beer library
+    setBeers(apiBeers?.data || [])
+    setTotalHits(apiBeers?.total_hits || 0)
+  }, [apiBeers, setBeers, setTotalHits])
 
   // Do not show anything until a result is actually available
   if (!beers) {
@@ -36,8 +49,8 @@ export default function LazyBeerResultLibrary({ query }: { query: string }) {
   return (
     <>
       <BeerResultLibrary
-        totalHits={beers?.total_hits || 0}
-        beers={beers?.data || []}
+        totalHits={totalHits}
+        beers={beers || []}
         keywords={getKeywords(query)}
         onBeerSelected={(beer) => {
           setSelectedBeer(beer)
