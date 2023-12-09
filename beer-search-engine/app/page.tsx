@@ -51,7 +51,7 @@ export default function HomePage() {
     <Container centerContent>
       <Flex direction="column" align="center" justify="center" h="60vh">
         {/* Logo */}
-        <Box mb={8}>
+        <Box mb={8} mt={5}>
           <Image
             alt="Beer Search Engine logo"
             src={useColorModeValue(logoLightMode, logoDarkMode)}
