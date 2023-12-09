@@ -23,6 +23,8 @@ interface BeerResultSnippetProps {
   beer: Beer
   keywords?: string | string[]
   onClick?: (_beer: Beer) => void
+  onRelevant?: (_beer: Beer) => void
+  onIrrelevant?: (_beer: Beer) => void
 }
 
 const reduceDescription = (description: string, wordsLimit: number = 30) => {
@@ -37,6 +39,8 @@ export default function BeerResultSnippet({
   keywords,
   beer,
   onClick,
+  onRelevant,
+  onIrrelevant,
 }: BeerResultSnippetProps) {
   const HighlightWrapper = ({ children }: { children: string }) => {
     if (keywords && keywords.length > 0) {
@@ -93,12 +97,8 @@ export default function BeerResultSnippet({
 
             {/* Relevance feedback buttons */}
             <RelevanceFeedback
-              onRelevant={() => {
-                console.log(beer, "marked as relevant")
-              }}
-              onIrrelevant={() => {
-                console.log(beer, "marked as irrelevant")
-              }}
+              onRelevant={() => onRelevant && onRelevant(beer)}
+              onIrrelevant={() => onIrrelevant && onIrrelevant(beer)}
             />
           </HStack>
 
