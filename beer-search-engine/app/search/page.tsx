@@ -5,7 +5,8 @@ import Loader from "@/components/Loader"
 import SearchForm from "@/components/SearchForm"
 import { Box } from "@chakra-ui/react"
 import { redirect, useRouter } from "next/navigation"
-import { Suspense } from "react"
+import { Suspense, useEffect } from "react"
+import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 
 // Search page
 export default function SearchPage({
@@ -24,6 +25,13 @@ export default function SearchPage({
 
   // If all data is ready, load router for further navigation
   const { push } = useRouter()
+
+  // Load relevance feedback context
+  const { relevantBeers, irrelevantBeers } = useBeerRelevanceFeedback()
+
+  useEffect(() => {
+    console.log(relevantBeers, irrelevantBeers)
+  }, [relevantBeers, irrelevantBeers])
 
   // Return the page
   return (
