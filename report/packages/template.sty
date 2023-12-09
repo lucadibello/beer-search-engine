@@ -1,0 +1,102 @@
+% Package
+\usepackage[dvipsnames]{xcolor}
+
+\usepackage{multicol}
+
+\usepackage{graphicx}
+
+\usepackage{amsmath}
+\usepackage{hyperref}
+
+\usepackage{bm} % \bm{}
+
+ \usepackage{float} %Image 
+ \usepackage{listings} % code list
+
+\usepackage{enumitem}
+\usepackage{fontawesome}
+\usepackage[T1]{fontenc}
+
+\usepackage{algorithm} % https://ctan.org/pkg/algorithms
+\usepackage{algpseudocodex} % https://ctan.org/pkg/algpseudocodex
+\usepackage{caption}
+
+
+\usepackage{geometry}
+\usepackage{fancyhdr}
+% Set page numbering to bottom right on all pages
+\fancypagestyle{plain}{%
+\fancyhf{} % clear header and footer fields
+\fancyfoot[R]{\thepage} % set page number on right side of footer
+}
+
+\pagestyle{plain} % use plain page style
+
+
+% Page style
+\geometry{
+    a4paper,
+    includefoot,
+    footskip=5mm,
+}
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand{\headrulewidth}{0pt}
+\rfoot{\footnotesize\thepage}
+
+% Image
+\graphicspath{ {./img/} }
+
+% Fonts
+%% Default font
+\renewcommand\familydefault{\sfdefault}
+
+\setcounter{secnumdepth}{4} % how many sectioning levels to assign numbers to
+\setcounter{tocdepth}{4} % how many sectioning levels to show in ToC
+
+% Environments
+\newenvironment{info}
+    {\begin{description}[style=multiline,leftmargin=10pt]
+        \item[\textcolor{Goldenrod}\faInfoCircle]}
+    {\end{description}}
+    
+\newenvironment{hint}
+    {\begin{description}[style=multiline,leftmargin=10pt]
+        \item[\textcolor{blue}\faLightbulbO]}
+    {\end{description}}
+    
+\newenvironment{warning}
+    {\begin{description}[style=multiline,leftmargin=10pt]
+        \item[\textcolor{red}\faWarning]}
+    {\end{description}}
+
+% Code 
+% doc: https://www.pvv.ntnu.no/~berland/latex/docs/listings.pdf
+\lstset{ 
+    aboveskip=2pt,
+    % backgroundcolor=\color{white},
+    basicstyle={\footnotesize\ttfamily},
+    belowskip=2pt,
+    breakatwhitespace=true,
+    breaklines=true,
+    captionpos=b,
+    columns=flexible,
+    commentstyle=\color{ForestGreen},
+    firstnumber=1,
+    frame=none,
+    keepspaces=true,
+    keywordstyle=\color{blue},
+    numbers=none,
+    numbersep=5pt,
+    numberstyle=\tiny\color{gray},
+    rulecolor=\color{black},
+    showstringspaces=false,
+    showtabs=false,
+    stepnumber=1,
+    stringstyle=\color{Mulberry},
+    tabsize=2
+}
+
+
+% Pseudocode
+\renewcommand{\ALG@beginalgorithmic}{\footnotesize}
