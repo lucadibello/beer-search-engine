@@ -11,6 +11,8 @@ interface BeerRelevanceFeedbackContextType {
   // Setter methods
   addRelevantBeer: (_beer: Beer) => void
   addIrrelevantBeer: (_beer: Beer) => void
+  removeRelevantBeer: (_beer: Beer) => void
+  removeIrrelevantBeer: (_beer: Beer) => void
 
   // Utility methods
   isBeerRelevant: (_beer: Beer) => boolean
@@ -38,6 +40,12 @@ const BeerRelevanceFeedbackContext =
     isBeerRelevant: function (_beer: Beer): boolean {
       throw new Error("Function not implemented.")
     },
+    removeRelevantBeer: function (_beer: Beer): void {
+      throw new Error("Function not implemented.")
+    },
+    removeIrrelevantBeer: function (_beer: Beer): void {
+      throw new Error("Function not implemented.")
+    },
   })
 
 export function useBeerRelevanceFeedback() {
@@ -58,7 +66,7 @@ export default function BeerRelevanceFeedbackProvider({
     }
     // Remove from irrelevant beers if present
     if (irrelevantBeers.includes(_beer)) {
-      setIrrelevantBeers(irrelevantBeers.filter((beer) => beer !== _beer))
+      removeIrrelevantBeer(_beer)
     }
   }
 
@@ -68,8 +76,16 @@ export default function BeerRelevanceFeedbackProvider({
     }
     // Remove from relevant beers if present
     if (relevantBeers.includes(_beer)) {
-      setRelevantBeers(relevantBeers.filter((beer) => beer !== _beer))
+      removeRelevantBeer(_beer)
     }
+  }
+
+  function removeRelevantBeer(_beer: Beer) {
+    setRelevantBeers(relevantBeers.filter((beer) => beer !== _beer))
+  }
+
+  function removeIrrelevantBeer(_beer: Beer) {
+    setIrrelevantBeers(irrelevantBeers.filter((beer) => beer !== _beer))
   }
 
   function isBeerRelevant(_beer: Beer) {
@@ -85,6 +101,8 @@ export default function BeerRelevanceFeedbackProvider({
       value={{
         relevantBeers,
         irrelevantBeers,
+        removeRelevantBeer,
+        removeIrrelevantBeer,
         addRelevantBeer,
         addIrrelevantBeer,
         isBeerIrrelevant,
