@@ -40,3 +40,7 @@ export interface Beer {
 export interface SearchApiResponse extends ApiResponse<Beer[]> {
   total_hits: number
 }
+export interface RelevanceFeedbackApiResponse extends ApiResponse<Beer[]> {
+  total_hits: number
+  new_query: string
+}
