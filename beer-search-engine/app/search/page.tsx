@@ -16,6 +16,7 @@ import { Suspense, useEffect } from "react"
 import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 import { FiRefreshCw } from "react-icons/fi"
 import { beerRelevanceFeedback } from "@/service"
+import { useBeerLibrary } from "@/contexts/BeerLibraryContext"
 
 // Search page
 export default function SearchPage({
@@ -35,13 +36,17 @@ export default function SearchPage({
   // If all data is ready, load router for further navigation
   const { push } = useRouter()
 
-  // Load relevance feedback context
-  const { relevantBeers, irrelevantBeers } = useBeerRelevanceFeedback()
+  // Load beer library context
+  const { setBeers } = useBeerLibrary()
 
+  // Load relevance feedback context
+  const { setWeightedQuery, weightedQuery, relevantBeers, irrelevantBeers } =
+    useBeerRelevanceFeedback()
+
+  // Update weighted query on query change
   useEffect(() => {
-    // Preload search API
-    console.log(relevantBeers, irrelevantBeers)
-  }, [relevantBeers, irrelevantBeers])
+    setWeightedQuery(query)
+  }, [query, setWeightedQuery])
 
   // Return the page
   return (
@@ -84,11 +89,16 @@ export default function SearchPage({
             leftIcon={<Icon as={FiRefreshCw} />}
             onClick={() => {
               // Add query to relevant beers
-              beerRelevanceFeedback(query, relevantBeers, irrelevantBeers).then(
-                (res) => {
-                  console.log(res)
-                },
-              )
+              beerRelevanceFeedback(
+                weightedQuery,
+                relevantBeers,
+                irrelevantBeers,
+              ).then((res) => {
+                // Set beers to new results
+                setBeers(res.data)
+                // Update weighted query
+                setWeightedQuery(res.new_query)
+              })
             }}
             isDisabled={
               relevantBeers.length === 0 && irrelevantBeers.length === 0
