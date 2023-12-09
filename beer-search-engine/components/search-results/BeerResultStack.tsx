@@ -20,7 +20,14 @@ export function BeerResultStack({
   emptyComponent,
 }: BeerResultStackProps) {
   // Load beer relevance feedback context
-  const { addRelevantBeer, addIrrelevantBeer } = useBeerRelevanceFeedback()
+  const {
+    addRelevantBeer,
+    addIrrelevantBeer,
+    removeRelevantBeer,
+    removeIrrelevantBeer,
+    isBeerIrrelevant,
+    isBeerRelevant,
+  } = useBeerRelevanceFeedback()
 
   if (beers.length === 0) {
     return emptyComponent || null
@@ -34,8 +41,22 @@ export function BeerResultStack({
             keywords={keywords || []}
             beer={beer}
             onClick={onBeerSelected}
-            onRelevant={addRelevantBeer}
-            onIrrelevant={addIrrelevantBeer}
+            onRelevant={(beer) => {
+              // If already relevant, remove
+              if (isBeerRelevant(beer)) {
+                removeRelevantBeer(beer)
+              } else {
+                addRelevantBeer(beer)
+              }
+            }}
+            onIrrelevant={(beer) => {
+              // If already irrelevant, remove
+              if (isBeerIrrelevant(beer)) {
+                removeIrrelevantBeer(beer)
+              } else {
+                addIrrelevantBeer(beer)
+              }
+            }}
           />
         </Box>
       ))}
