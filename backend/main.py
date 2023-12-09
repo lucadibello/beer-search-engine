@@ -1,3 +1,4 @@
+from pydoc import doc
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
@@ -40,6 +41,10 @@ def load_documents(path: str):
 df = load_documents(DATASET_PATH)
 relevance_scores = {} # where key is beer_id and value is relevance score
 ordered_docs = {}
+actual_results = {}
+relevant_docs = []
+non_relevant_docs = []
+current_query = ''
 current_top = 100
 
 # Load index and build retrieval model
@@ -71,9 +76,16 @@ def compute_relevance_scores(results):
 # Example URL: /api/v1/search?query=beer&top=10
 @app.get("/api/v" + API_VERSION + "/search")
 def search(query: str, top: int = 100):
+    global current_query
+    global actual_results
+    global relevance_scores
+    global current_top
+
+    current_query = query
+
     # Search documents by query
     results = model.search(sanitize_query(query))
-    global relevance_scores
+    actual_results = results
     relevance_scores = compute_relevance_scores(results)
 
     # Retrieve the document ids from the results
@@ -84,7 +96,6 @@ def search(query: str, top: int = 100):
 
     # Select only the top results
     top = min(top, len(ids))
-    global current_top
     current_top = top
     ids = ids[:top]
 
@@ -93,7 +104,6 @@ def search(query: str, top: int = 100):
     ordered_docs = df[df["docno"].isin(ids)].copy()
     ordered_docs["relevance_score"] = ordered_docs["docno"].map(relevance_scores)  # Add relevance scores to the DataFrame
     ordered_docs = ordered_docs.sort_values(by="relevance_score", ascending=False).reset_index(drop=True)
-    # ordered_docs = ordered_docs.drop(columns=["relevance_score"])  # Drop the temporary relevance_score column (if we don't want it to be available in the frontend)
     
     # Return the documents as JSON
     return ORJSONResponse(
@@ -107,31 +117,26 @@ def search(query: str, top: int = 100):
 # Example URL: /api/v1/feedback?id=1&query=beer&positive=true
 @app.get("/api/v" + API_VERSION + "/feedback")
 def feedback(id: str, positive: bool):
-    
-    feedback = 1
-    
-    # We could eventually think of something like that to adjust the feedback change based on the scores.
-    # global relevance_scores
-    # values = relevance_scores.values()
-    # max_score = max(values)
-    # min_score = min(values)
-    # score_range = max_score - min_score
-    # # Calculate the adjustment factor relative to the score range
-    # global current_top
-    # feedback = feedback * (score_range / current_top)
+    global relevant_docs
+    global non_relevant_docs
+    global actual_results
+    if positive:
+        relevant_docs.append(id)
+    else:
+        non_relevant_docs.append(id)
 
-    if not positive:
-        feedback = -feedback
-    relevance_scores[id] += feedback
-    global ordered_docs
-    ordered_docs["relevance_score"] = ordered_docs["docno"].map(relevance_scores)  # Add relevance scores to the DataFrame
-    ordered_docs = ordered_docs.sort_values(by="relevance_score", ascending=False).reset_index(drop=True)
-    # ordered_docs = ordered_docs.drop(columns=["relevance_score"])  # Drop the temporary relevance_score column (if we don't want it to be available in the frontend)
+    # Extract from results the records that are relevant
+    relevant_results = actual_results[actual_results["docno"].isin(relevant_docs)]
 
-    # Return the documents as JSON
-    return ORJSONResponse(
-        format_response(
-            ordered_docs.to_dict(orient="records"),
-            ordered_docs.shape[0]
-        )
-    )
+    # Expand query based on relevant results
+    klqe = pt.rewrite.KLQueryExpansion(index, fb_docs=len(relevant_results), fb_terms=10)
+    query = klqe.transform(relevant_results)["query"][0]
+    
+    # Fix transformed query to only contain words
+    words = query.split()[1:]
+    query = ''
+    for word in words:
+        query = f'{query} {word.split("^")[0]}'
+
+    # Search again with the expanded query
+    return search(query, current_top)
