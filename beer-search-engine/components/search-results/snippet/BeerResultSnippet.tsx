@@ -18,11 +18,14 @@ import { BreweryLocation } from "./BreweryLocation"
 import { HightlightWords } from "../../HightlightWords"
 import ImageWithFallback from "@/components/ImageWithFallback"
 import { FiInfo } from "react-icons/fi"
+import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 
 interface BeerResultSnippetProps {
   beer: Beer
   keywords?: string | string[]
   onClick?: (_beer: Beer) => void
+  onRelevant?: (_beer: Beer) => void
+  onIrrelevant?: (_beer: Beer) => void
 }
 
 const reduceDescription = (description: string, wordsLimit: number = 30) => {
@@ -37,7 +40,12 @@ export default function BeerResultSnippet({
   keywords,
   beer,
   onClick,
+  onRelevant,
+  onIrrelevant,
 }: BeerResultSnippetProps) {
+  // Load BeerRelenvanceFeedback context
+  const { isBeerIrrelevant, isBeerRelevant } = useBeerRelevanceFeedback()
+
   const HighlightWrapper = ({ children }: { children: string }) => {
     if (keywords && keywords.length > 0) {
       return <HightlightWords keywords={keywords} text={children} />
@@ -93,12 +101,10 @@ export default function BeerResultSnippet({
 
             {/* Relevance feedback buttons */}
             <RelevanceFeedback
-              onRelevant={() => {
-                console.log(beer, "marked as relevant")
-              }}
-              onIrrelevant={() => {
-                console.log(beer, "marked as irrelevant")
-              }}
+              isRelevant={isBeerRelevant(beer)}
+              isIrrelevant={isBeerIrrelevant(beer)}
+              onRelevant={() => onRelevant && onRelevant(beer)}
+              onIrrelevant={() => onIrrelevant && onIrrelevant(beer)}
             />
           </HStack>
 

@@ -2,6 +2,7 @@
 import { Box, Stack } from "@chakra-ui/react"
 import BeerResultSnippet from "./snippet/BeerResultSnippet"
 import { Beer } from "@/service/beer-service"
+import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 
 type BeerResultStackProps = {
   totalHits?: number
@@ -18,6 +19,16 @@ export function BeerResultStack({
   onBeerSelected,
   emptyComponent,
 }: BeerResultStackProps) {
+  // Load beer relevance feedback context
+  const {
+    addRelevantBeer,
+    addIrrelevantBeer,
+    removeRelevantBeer,
+    removeIrrelevantBeer,
+    isBeerIrrelevant,
+    isBeerRelevant,
+  } = useBeerRelevanceFeedback()
+
   if (beers.length === 0) {
     return emptyComponent || null
   }
@@ -30,6 +41,22 @@ export function BeerResultStack({
             keywords={keywords || []}
             beer={beer}
             onClick={onBeerSelected}
+            onRelevant={(beer) => {
+              // If already relevant, remove
+              if (isBeerRelevant(beer)) {
+                removeRelevantBeer(beer)
+              } else {
+                addRelevantBeer(beer)
+              }
+            }}
+            onIrrelevant={(beer) => {
+              // If already irrelevant, remove
+              if (isBeerIrrelevant(beer)) {
+                removeIrrelevantBeer(beer)
+              } else {
+                addIrrelevantBeer(beer)
+              }
+            }}
           />
         </Box>
       ))}
