@@ -15,11 +15,15 @@ const countryCodeToFlagEmoji = (countryCode: string): string => {
 }
 
 export function BreweryLocation({ brewer }: BreweryLocationProps) {
-  const locationParts = [brewer.city, brewer.state?.name, brewer.country?.name]
+  const locationParts = [
+    brewer?.city,
+    brewer?.state?.name,
+    brewer?.country?.name,
+  ]
     .filter(Boolean)
     .join(", ")
 
-  const flagEmoji = brewer.country?.code
+  const flagEmoji = brewer?.country?.code
     ? countryCodeToFlagEmoji(brewer.country.code)
     : ""
 

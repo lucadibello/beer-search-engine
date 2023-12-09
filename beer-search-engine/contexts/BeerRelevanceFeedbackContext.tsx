@@ -10,13 +10,15 @@ interface BeerRelevanceFeedbackContextType {
   weightedQuery: string
 
   // Setter methods
+  setWeightedQuery: (_weightedQuery: string) => void
+  setRelevantBeers: (_relevantBeers: Beer[]) => void
+  setIrrelevantBeers: (_irrelevantBeers: Beer[]) => void
+
+  // Utility methods
   addRelevantBeer: (_beer: Beer) => void
   addIrrelevantBeer: (_beer: Beer) => void
   removeRelevantBeer: (_beer: Beer) => void
   removeIrrelevantBeer: (_beer: Beer) => void
-  setWeightedQuery: (_weightedQuery: string) => void
-
-  // Utility methods
   isBeerRelevant: (_beer: Beer) => boolean
   isBeerIrrelevant: (_beer: Beer) => boolean
 }
@@ -50,6 +52,12 @@ const BeerRelevanceFeedbackContext =
       throw new Error("Function not implemented.")
     },
     setWeightedQuery: function (_weightedQuery: string): void {
+      throw new Error("Function not implemented.")
+    },
+    setRelevantBeers: function (_relevantBeers: Beer[]): void {
+      throw new Error("Function not implemented.")
+    },
+    setIrrelevantBeers: function (_irrelevantBeers: Beer[]): void {
       throw new Error("Function not implemented.")
     },
   })
@@ -116,6 +124,8 @@ export default function BeerRelevanceFeedbackProvider({
         isBeerRelevant,
         weightedQuery,
         setWeightedQuery,
+        setRelevantBeers,
+        setIrrelevantBeers,
       }}
     >
       {children}

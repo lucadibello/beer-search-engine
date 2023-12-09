@@ -40,8 +40,14 @@ export default function SearchPage({
   const { setBeers } = useBeerLibrary()
 
   // Load relevance feedback context
-  const { setWeightedQuery, weightedQuery, relevantBeers, irrelevantBeers } =
-    useBeerRelevanceFeedback()
+  const {
+    setWeightedQuery,
+    weightedQuery,
+    relevantBeers,
+    irrelevantBeers,
+    setIrrelevantBeers,
+    setRelevantBeers,
+  } = useBeerRelevanceFeedback()
 
   // Update weighted query on query change
   useEffect(() => {
@@ -98,6 +104,13 @@ export default function SearchPage({
                 setBeers(res.data)
                 // Update weighted query
                 setWeightedQuery(res.new_query)
+
+                // Scroll to top
+                window.scrollTo(0, 0)
+
+                // Reset relevance feedback context
+                setRelevantBeers([])
+                setIrrelevantBeers([])
               })
             }}
             isDisabled={
