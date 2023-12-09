@@ -17,7 +17,7 @@ import { useEffect, useState } from "react"
 import { BeerSortingTarget, SortOrder, sortBeers } from "@/util/sorter"
 import SortingSelect from "./SortingSelect"
 
-type BeerResultLibrary = {
+interface BeerResultLibraryProps {
   totalHits?: number
   beers: Beer[]
   keywords?: string | string[]
@@ -29,7 +29,7 @@ export default function BeerResultLibrary({
   keywords,
   totalHits,
   onBeerSelected,
-}: BeerResultLibrary) {
+}: BeerResultLibraryProps) {
   // Save beers in state
   const [localBeers, setLocalBeers] = useState<Beer[]>(beers)
 
