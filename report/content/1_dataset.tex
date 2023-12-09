@@ -1,4 +1,27 @@
-\section{Dataset}
+\section{Dataset construction}
 \label{sec:dataset}
 
-Text here
+\subsection{Data sources}
+
+For our Search Engine, we looked up the most possible complete websites. We considered the best option to opt for websites that were not too complicated to scrap, but that were at the same time able to give us enough data to build an effective search engine.
+
+So, the decision for us to pick the websites to pull the data was based on \textbf{two main parameters}:
+
+\begin{enumerate}
+  \item \textbf{Structure of the content}: How easy it is to access the content according to the structure, whether the website is loading the content dynamically or statically, and how easy it is to parse the content.
+  \item \textbf{Data Quality}: How precise and detailed the information provided by the website is and how many records we could take out of it to build a good information retrieval system.
+\end{enumerate}
+
+Among all the candidates, we have chosen the following websites to pull the data from:
+
+\begin{itemize}
+  \item \href{https://winevybe.com/}{\textbf{WineVybe}}: database with thousands of records of beers with Producer and Beer's name, type, alcohol bv, tasting notes, closure, and packaging.
+  \item \href{https://www.ratebeer.com/}{\textbf{RateBeer}}: website that contains more than 100 thousand different beers with complete description, taste notes, alcohol bv, price, packaging, critic score, and brewer details.
+  \item \href{https://beerme.com/beerlist.php}{\textbf{BeerMe}}: a database containing 11 thousand records of beers with brewer and beer's name, style, score, production date, and location.
+\end{itemize}
+
+Initially, other websites such as (\href{https://www.beeradvocate.com/}{BeerAdvocate} and \href{https://untappd.com/}{Untappd}) were considered, but they were discarded as applying scraping techniques was not possible due to the dynamic nature of the content and the authentication required to access the data loaded dynamically via APIs.
+
+\subsection{Data scraping}
+
+The data scraping process was done using the \textbf{Scrapy} framework, which is a Python library that allows us to create spiders to crawl websites and extract data from them. The framework is very flexible and allows us to create a spider for each website we want to crawl. The spiders are composed of two main parts:
