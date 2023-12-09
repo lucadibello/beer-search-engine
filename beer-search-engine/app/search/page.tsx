@@ -3,10 +3,18 @@
 import LazyBeerResultLibrary from "@/components/search-results/LazyLoadBeerResultLibrary"
 import Loader from "@/components/Loader"
 import SearchForm from "@/components/SearchForm"
-import { Box, Button, HStack, useColorModeValue } from "@chakra-ui/react"
+import {
+  Box,
+  Button,
+  HStack,
+  Icon,
+  Tooltip,
+  useColorModeValue,
+} from "@chakra-ui/react"
 import { redirect, useRouter } from "next/navigation"
 import { Suspense, useEffect } from "react"
 import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
+import { FiRefreshCw } from "react-icons/fi"
 
 // Search page
 export default function SearchPage({
@@ -62,17 +70,28 @@ export default function SearchPage({
         </Box>
 
         {/* Button to rerun query */}
-        {relevantBeers.length > 0 ||
-          (irrelevantBeers.length > 0 && (
-            <Button
-              onClick={() => {
-                // Add query to relevant beers
-                console.log("Adjusting results")
-              }}
-            >
-              Adjust results
-            </Button>
-          ))}
+        <Tooltip
+          label={
+            !irrelevantBeers.length && !relevantBeers.length
+              ? "You can adjust the results by marking beers as relevant or irrelevant."
+              : "You can rerun the query to get new results."
+          }
+          hasArrow
+        >
+          <Button
+            variant="outline"
+            leftIcon={<Icon as={FiRefreshCw} />}
+            onClick={() => {
+              // Add query to relevant beers
+              console.log("Adjusting results")
+            }}
+            isDisabled={
+              relevantBeers.length === 0 && irrelevantBeers.length === 0
+            }
+          >
+            Adjust results
+          </Button>
+        </Tooltip>
       </HStack>
       <hr style={{ marginBottom: "40px" }} />
       <Suspense fallback={<Loader />}>
