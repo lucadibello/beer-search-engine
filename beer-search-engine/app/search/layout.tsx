@@ -1,3 +1,4 @@
+import BeerLibraryProvider from "@/contexts/BeerLibraryContext"
 import BeerRelevanceFeedbackProvider from "@/contexts/BeerRelevanceFeedbackContext"
 
 interface SearchLayoutProps {
@@ -6,6 +7,8 @@ interface SearchLayoutProps {
 
 export default function SearchLayout({ children }: SearchLayoutProps) {
   return (
-    <BeerRelevanceFeedbackProvider>{children}</BeerRelevanceFeedbackProvider>
+    <BeerLibraryProvider>
+      <BeerRelevanceFeedbackProvider>{children}</BeerRelevanceFeedbackProvider>
+    </BeerLibraryProvider>
   )
 }
