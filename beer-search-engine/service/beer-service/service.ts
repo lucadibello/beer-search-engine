@@ -40,13 +40,14 @@ export async function beerRelevanceFeedback(
   if (process.env.NEXT_PUBLIC_API_URL === undefined) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined")
   }
-  const URL = process.env.NEXT_PUBLIC_API_URL + "/feedback?query=" + query
+  const URL = process.env.NEXT_PUBLIC_API_URL + "/feedback"
   const res = await fetch(URL, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      query: query,
       relevant: relevantBeers.map((beer) => beer.docno),
       irrelevant: irrelevantBeers.map((beer) => beer.docno),
     }),
