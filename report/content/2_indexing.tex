@@ -1,0 +1,7 @@
+\section{Indexing}
+
+For the indexing of the documents, we followed the guidelines indicating to use \textbf{PyTerrier}. After the completion of the crawling of the data, we realized we needed a set of strings to be able to create an index, which we didn't have yet ready for index creation.
+
+Our decision was thus to move on to put together all the data for each record into a single string by simply taking all the values of the various fields and concatenating them with a blank space in between. We decided to go with this structure as indexers usually have to deal with plain text, and thus it's reasonable to unify the data in this way as that's how data would usually look after scraping them.
+
+After that, we moved on to the index creation. There, a matter on which weighting model to use was raised. The final decision was to opt for the \textbf{BM25} model as it's considered the best option seen so far.
