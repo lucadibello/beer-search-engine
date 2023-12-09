@@ -102,9 +102,8 @@ async def feedback(query: str = Body(...), relevant: List[str] = Body(...), irre
     results = model.search(sanitize_query(query))
     
     # Extract a dataframe of relevant / irrelevant documents from the dataframe
-    REQUIRED_COLUMNS = ["qid", "docno", "query"]
-    relevant_df = results[results["docno"].isin(relevant)][REQUIRED_COLUMNS]
-    irrelevant_df = results[results["docno"].isin(irrelevant)][REQUIRED_COLUMNS]
+    relevant_df = results[results["docno"].isin(relevant)]
+    irrelevant_df = results[results["docno"].isin(irrelevant)]
     
     # Create query expansion object
     klqe = pt.rewrite.KLQueryExpansion(index, fb_docs=relevant_df.shape[0], fb_terms=5)
