@@ -15,6 +15,7 @@ import { redirect, useRouter } from "next/navigation"
 import { Suspense, useEffect } from "react"
 import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 import { FiRefreshCw } from "react-icons/fi"
+import { beerRelevanceFeedback } from "@/service"
 
 // Search page
 export default function SearchPage({
@@ -83,7 +84,11 @@ export default function SearchPage({
             leftIcon={<Icon as={FiRefreshCw} />}
             onClick={() => {
               // Add query to relevant beers
-              console.log("Adjusting results")
+              beerRelevanceFeedback(query, relevantBeers, irrelevantBeers).then(
+                (res) => {
+                  console.log(res)
+                },
+              )
             }}
             isDisabled={
               relevantBeers.length === 0 && irrelevantBeers.length === 0
