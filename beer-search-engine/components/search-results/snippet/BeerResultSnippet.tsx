@@ -18,6 +18,7 @@ import { BreweryLocation } from "./BreweryLocation"
 import { HightlightWords } from "../../HightlightWords"
 import ImageWithFallback from "@/components/ImageWithFallback"
 import { FiInfo } from "react-icons/fi"
+import { useBeerRelevanceFeedback } from "@/contexts/BeerRelevanceFeedbackContext"
 
 interface BeerResultSnippetProps {
   beer: Beer
@@ -42,6 +43,9 @@ export default function BeerResultSnippet({
   onRelevant,
   onIrrelevant,
 }: BeerResultSnippetProps) {
+  // Load BeerRelenvanceFeedback context
+  const { isBeerIrrelevant, isBeerRelevant } = useBeerRelevanceFeedback()
+
   const HighlightWrapper = ({ children }: { children: string }) => {
     if (keywords && keywords.length > 0) {
       return <HightlightWords keywords={keywords} text={children} />
@@ -97,6 +101,8 @@ export default function BeerResultSnippet({
 
             {/* Relevance feedback buttons */}
             <RelevanceFeedback
+              isRelevant={isBeerRelevant(beer)}
+              isIrrelevant={isBeerIrrelevant(beer)}
               onRelevant={() => onRelevant && onRelevant(beer)}
               onIrrelevant={() => onIrrelevant && onIrrelevant(beer)}
             />
