@@ -1,7 +1,15 @@
 \section{Indexing}
 
-For the indexing of the documents, we followed the guidelines indicating to use \textbf{PyTerrier}. After the completion of the crawling of the data, we realized we needed a set of strings to be able to create an index, which we didn't have yet ready for index creation.
+To build the index based on the collected data, we used the \href{https://github.com/terrier-org/pyterrier}{PyTerrier} library, which is a Python library for the Terrier IR platform. The library provides a set of tools to build and evaluate IR systems, and it's built on top of the Terrier platform, which is a Java-based open-source IR platform.
 
-Our decision was thus to move on to put together all the data for each record into a single string by simply taking all the values of the various fields and concatenating them with a blank space in between. We decided to go with this structure as indexers usually have to deal with plain text, and thus it's reasonable to unify the data in this way as that's how data would usually look after scraping them.
+After the completion of the crawling of the data, we realized we needed a set of strings to be able to create an index, which we did not have yet ready for index creation as our dataset was composed of JSON objects.
 
-After that, we moved on to the index creation. There, a matter on which weighting model to use was raised. The final decision was to opt for the \textbf{BM25} model as it's considered the best option seen so far.
+Our decision was thus to move on to put together all the data for each record into a single string by recursively taking all the values of the various fields and concatenating them with a blank space in between. We decided to go with this structure as indexers usually have to deal with plain text, and thus it's reasonable to unify the data in this way as that's how data would usually look after scraping them.
+
+After this step, we moved on the actual index creation. To address this task, we leveraged the \texttt{IterDictIndexer} class, which allows to build an index from a dictionary of textual documents. The index has been built using the following settings:
+
+\begin{itemize}
+  \item \textbf{Stemmer}: Porter stemmer. This stemmer is based on the original Porter stemmer algorithm, which is a widely used stemmer for the English language.
+  \item \textbf{Stopwords}: PyTerrier default stopwords for English language.
+  \item \textbf{Tokeniser}: PyTerrier default tokeniser for English language.
+\end{itemize}

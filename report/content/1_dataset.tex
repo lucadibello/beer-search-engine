@@ -3,37 +3,36 @@
 
 \subsection{Data sources}
 
-For our Search Engine, we looked up the most possible complete websites. We considered the best option to opt for websites that were not too complicated to scrap, but that were at the same time able to give us enough data to build an effective search engine.
+To ensure a complete and diverse dataset, we selected carefully websites for scraping based on their content richness and scraping feasibility. We evaluated several data sources, but we decided to opt for websites with comprehensive beer information.
 
-So, the decision for us to pick the websites to pull the data was based on \textbf{two main parameters}:
+The selection criteria for the data sources was based on the following key aspects:
 
 \begin{enumerate}
-  \item \textbf{Structure of the content}: How easy it is to access the content according to the structure, whether the website is loading the content dynamically or statically, and how easy it is to parse the content.
-  \item \textbf{Data Quality}: How precise and detailed the information provided by the website is and how many records we could take out of it to build a good information retrieval system.
-  \item \textbf{Data Availability}: How easy it is to access the data and how many records we can pull out of the website.
+  \item \textbf{Content structure}: Assessing the ease of scraping the data from the website, for both dynamic and static content loading.
+  \item \textbf{Data quality and availability}: Evaluating the quality and detail of the provided data, aiming for a rich dataset with a wide variety of beer styles and information.
 \end{enumerate}
 
-Among all the candidates, we have chosen the following websites to pull the data from:
+Among all the candidates, we have selected the following three websites as data sources:
 
 \begin{itemize}
-  \item \href{https://winevybe.com/}{\textbf{WineVybe}}: database with thousands of records of beers with Producer and Beer's name, type, Alcohol By Volume (ABV\%), tasting notes, closure and packaging type.
-  \item \href{https://www.ratebeer.com/}{\textbf{RateBeer}}: website that contains more than 100 thousand different beers with complete description, taste notes, alcohol bv, price, packaging, critic score, and brewer details.
-  \item \href{https://beerme.com/beerlist.php}{\textbf{BeerMe}}: a database containing 11 thousand records of beers with brewer and beer's name, style, score, production date, and location.
+  \item \href{https://winevybe.com/}{\textbf{WineVybe}}: offers a wide variety of beers, including names, descriptions, types, prices, tasting notes, images, closure and packaging details. The website is built using WordPress, which makes it easy to scrape.
+  \item \href{https://www.ratebeer.com/}{\textbf{RateBeer}}: hosts over 100'000 unique beers with well-written descriptions, taste notes, alcohol by volume (ABV\%), price, packaging, critic score, and brewer information. The content is loaded dynamically via APIs, which requires more advanced scraping techniques.
+  \item \href{https://beerme.com/beerlist.php}{\textbf{BeerMe}}: Contains around 11'000 beer records, detailing brewer information, beer names, styles, scores and production dates. This website is the easiest to scrape, as it is built using static HTML pages with tabular data.
 \end{itemize}
 
-Initially, other websites such as (\href{https://www.beeradvocate.com/}{BeerAdvocate} and \href{https://untappd.com/}{Untappd}) were considered, but they were discarded as applying scraping techniques was not possible due to the dynamic nature of the content and the authentication required to access the data loaded dynamically via APIs.
+Initially, other websites such as (\href{https://www.beeradvocate.com/}{BeerAdvocate} and \href{https://untappd.com/}{Untappd}) were considered, but they were discarded due to challenges in scraping dynamically loaded content and authentication requirements.
 
 \subsection{Data structure and storage}
 
-The dataset used to build the retrieval reverse index is stored in a JSONL file (JSON Lines), where each line is a JSON object containing the information collected for a specific beer. The JSONL format has been chosen since it is a convenient way to store structured data that may be processed one record at a time, which perfectly fits our needs.
+The data for the information retrieval system is stored in a \textit{JSONL} file (JSON Lines), where each line is a JSON object representing a distinct beer. We chose \textit{JSONL} for suitability in handling record-by-record data processing, which is the exact use case for our system.
 
-Each JSON object follows a fixed structure to facilitate easy parsing of data. It contains the following fields:
+Each JSON object follows a consistent structure to ensure consistency across all the records. The fields of the JSON object are the following:
 
 \begin{itemize}
-  \item \textbf{docno}: A unique identifier for each beer.
+  \item \textbf{docno}: A unique beer identifier.
   \item \textbf{name}: The name of the beer.
   \item \textbf{description}: A detailed description of the beer.
-  \item \textbf{image\_url}: URL link to an image of the beer.
+  \item \textbf{image\_url}: URL to an image of the beer.
   \item \textbf{price}: An object containing the price details of the beer, which includes:
         \begin{itemize}
           \item \textbf{amount}: The numerical value of the price.
@@ -42,8 +41,8 @@ Each JSON object follows a fixed structure to facilitate easy parsing of data. I
   \item \textbf{style}: The style or category of the beer (e.g., lager, ale).
   \item \textbf{critic\_score}: An object representing the scores given by critics, which includes:
         \begin{itemize}
-          \item \textbf{max}: The maximum possible score.
-          \item \textbf{actual}: The actual score received.
+          \item \textbf{max}: The maximum possible score that can be given.
+          \item \textbf{actual}: The actual score received to the beer.
         \end{itemize}
   \item \textbf{brewer}: Information about the brewer, including:
         \begin{itemize}
@@ -58,40 +57,28 @@ Each JSON object follows a fixed structure to facilitate easy parsing of data. I
   \item \textbf{packaging}: The type of packaging used for the beer (e.g., bottle, can).
 \end{itemize}
 
-Having a standard structure for all the records in the dataset allows us to easily represent results in the web interface without having to parse the data differently for each website at runtime.
+Having a uniform structure for all the records simplifies the representation of the results in the web interface, as it eliminates the need to parse the data using different techniques depending on the website.
 
 \subsection{Data scraping}
 \label{sec:data-scraping}
 
-The data scraping process was done using the \textbf{Scrapy} framework, which is a Python library that allows to create ad-hoc spiders to crawl websites and extract the data in a matter of minutes. From the three websites, we have been able to extract more than \textbf{20'000 records} of beers.
+The data scraping process leverages \textbf{Scrapy} framework, a robust Python library for creating web crawlers in a straightforward manner. For each of the three selected websites (refer to section \ref{sec:dataset}), we have created a dedicated spider tailored to the website structure and data presentation format.
 
-Each website has been scraped using a different spider, which leverages different techniques to extract the data. The spiders are described in detail in the following sections.
+This approach enabled us to efficiently extract over 20'000 beer records from the three websites. The following sections provide a brief overview of the scraping process for each of the three websites.
 
 \subsubsection{WineVybe spider}
 
-\textcolor{red}{Work in progess}
+The \href{https://winevybe.com/}{WineVybe} spider scrapes the website beer gallery powered by the WooCommerce plugin for WordPress. The website posed some additional scraping challenges since the data structure is not consistent across all pages.
 
-To-do list:
+However, the data is generally clean, and for most of the beers, we have all the fields we need, including the image URL and a varied-length description. Unfortunately, due to the \textit{Cross-Origin Resource Sharing} (CORS) policies enforced by the CDN that hosts the website images, we cannot access the images directly from the browser.
 
-\begin{itemize}
-  \item Gallery of images, based on WordPress's WooCommerce plugin
-  \item Very straightforward to scrape, but the data is a bit shuffeled and not very clean (tabluar data does not follow the same structure on all pages, even if the same fields are present)
-  \item The data is clean, and for most of the beers we have all the fields we need, in addition to the image URL and a description (length varies from missing to lengthy, but in most cases is present)
-  \item Unfortunately, due to the CORS policies set to the CDN that hosts the images, we cannot access the images directly from the browser. Since downloading images to our server would be a waste of resources, we decided to leave the image URL as is, and let our web UI show a placeholder image instead.
-\end{itemize}
+We opted to not download the images to our server to respect the CDN policies and avoiding wasting resources. Instead, we left the image URL as is, and we instruct the web interface to show a placeholder image instead if the actual image is not available.
 
 \subsubsection{RateBeer spider}
 
-\textcolor{red}{Work in progess}
+The \href{https://www.ratebeer.com/}{RateBeer} spider was developed using a different approach than the other two spiders. Since the website dynamically loads the content via APIs, we could not use the standard scraping techniques presented during the course. To address this issue, we have reverse-engineered the API endpoints to load the data in the same way the website does, a technique referred in the official documentation of Scrapy (learn more \href{https://docs.scrapy.org/en/latest/topics/dynamic-content.html}{here}).
 
-To-do list:
-
-\begin{itemize}
-  \item Very famous websites, with a lot of well-structured and high-quality data
-  \item Unfortunately the website is not very easy to scrape as all content is loaded dynamically via JavaScript at runtime. For this reasons, we have not been able to use the standard crawling techniques presented during the course, but we have been forced to use alternative techniques referred in the official documentation of Scrapy (learn more \href{https://docs.scrapy.org/en/latest/topics/dynamic-content.html}{here}).
-  \item As outlined in the documentation, we have direclty used the API endpoints leveraged by the website to load the data dynamically. This has allowed us to get the data we needed, but it has also forced us to reverse engineer the API endpoints and the data format used to load the data dynamically. This has been a bit time consuming, but we have been able to get the data we needed in a matter of hours.
-  \item The technical details of the API endpoints and the specific requests we have used to get the data will not be discussed here, but they can be found in the code of the spider (see \texttt{./crawler/spiders/beerme.py}).
-\end{itemize}
+Thanks to tailored requests to the API endpoint that loads the beer library given a query and a page number, we have been able to extract over 12'000 beer records. Thanks to the notoriety of this website, we have been able to collect high-quality data, including detailed descriptions, critic scores, tasting notes, and more.
 
 \subsubsection{BeerMe spider}
 
