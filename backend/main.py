@@ -94,7 +94,7 @@ async def search(query: str, top: int = MAX_DOCUMENTS):
 
 # POST API for relevance feedback
 @app.post("/api/v" + API_VERSION + "/feedback")
-async def feedback(query: str = Body(...), relevant: List[str] = Body(...), irrelevant: List[str] = Body(...), top: int = MAX_DOCUMENTS):
+async def feedback(query: str = Body(...), relevant: List[str] = Body(...), irrelevant: List[str] = Body(...), top: int = Body(MAX_DOCUMENTS)):
     if top > MAX_DOCUMENTS:
         raise ValueError("Top cannot be higher than " + str(MAX_DOCUMENTS))
     
