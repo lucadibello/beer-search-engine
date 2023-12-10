@@ -58,13 +58,16 @@ Each JSON object follows a fixed structure to facilitate easy parsing of data. I
   \item \textbf{packaging}: The type of packaging used for the beer (e.g., bottle, can).
 \end{itemize}
 
+Having a standard structure for all the records in the dataset allows us to easily represent results in the web interface without having to parse the data differently for each website at runtime.
+
 \subsection{Data scraping}
+\label{sec:data-scraping}
 
 The data scraping process was done using the \textbf{Scrapy} framework, which is a Python library that allows to create ad-hoc spiders to crawl websites and extract the data in a matter of minutes. From the three websites, we have been able to extract more than \textbf{20'000 records} of beers.
 
 Each website has been scraped using a different spider, which leverages different techniques to extract the data. The spiders are described in detail in the following sections.
 
-\subsubsection{WineVybe}
+\subsubsection{WineVybe spider}
 
 \textcolor{red}{Work in progess}
 
@@ -77,7 +80,7 @@ To-do list:
   \item Unfortunately, due to the CORS policies set to the CDN that hosts the images, we cannot access the images directly from the browser. Since downloading images to our server would be a waste of resources, we decided to leave the image URL as is, and let our web UI show a placeholder image instead.
 \end{itemize}
 
-\subsubsection{RateBeer}
+\subsubsection{RateBeer spider}
 
 \textcolor{red}{Work in progess}
 
@@ -90,7 +93,7 @@ To-do list:
   \item The technical details of the API endpoints and the specific requests we have used to get the data will not be discussed here, but they can be found in the code of the spider (see \texttt{./crawler/spiders/beerme.py}).
 \end{itemize}
 
-\subsubsection{BeerMe}
+\subsubsection{BeerMe spider}
 
 \textcolor{red}{Work in progess}
 
