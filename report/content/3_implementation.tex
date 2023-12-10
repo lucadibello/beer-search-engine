@@ -126,9 +126,8 @@ The search engine user interface offers the following features:
 To assess the quality of the frontend, a Lighthouse benchmark has been performed. Lighthouse is an open-source tool that allows to measure the performance, accessibility, best practices and SEO of a web application. The benchmark, focusing on the search page, has been performed on a \textit{MacBook Pro 16" 2023} with the following specifications:
 
 \begin{itemize}
-  \item \textbf{CPU}: 2.3 GHz 8-Core Intel Core i9
-  \item \textbf{RAM}: 16 GB 2667 MHz DDR4
-  \item \textbf{GPU}: AMD Radeon Pro 5500M 4 GB
+  \item \textbf{CPU}: Apple M2 Pro
+  \item \textbf{RAM}: 16 GB
   \item \textbf{OS}: macOS Sonoma 14.0
 \end{itemize}
 
@@ -144,7 +143,7 @@ In the following figure (Figure \ref{fig:lighthouse-benchmark}) is possible to s
 
 From the results, it is possible to see that the frontend has a perfect score in three of the four categories: accessibility, best practices and \textit{SEO} (Search-Engine Optimization). Performance is the only area not scoring perfectly, mainly due to slow-loading image CDNs.
 
-Slow-loading images are a common problem in web applications, and special measures have been taken to mitigate this problem: images are loaded asynchronously, and a placeholder is shown while the image is loading, allowing the user to browse the results without waiting for the images to load.
+Slow-loading images are a common problem in web applications, and special measures have been taken to mitigate this issue: images are loaded asynchronously, and a placeholder is shown while the image is loading, allowing the user to browse the results without waiting for the images to load.
 
 \newpage
 \subsection{Flow of execution}
