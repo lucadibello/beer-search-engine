@@ -54,11 +54,11 @@ class BeermeSpiderSpider(scrapy.Spider):
                 'critic_score': {'max': 20, 'actual': critic_score},
                 'image_url': image_url,
                 'brewer': {
-                    'name': '',
-                    'city': '',
-                    'country': {'code': '', 'name': ''},
-                    'state': {'name': ''}
-                           },
+                    'name': None,
+                    'city': None,
+                    'country': None,
+                    'state': None
+                },
                 'price': None,
                 'style': None,
                 'tasting_notes': None,

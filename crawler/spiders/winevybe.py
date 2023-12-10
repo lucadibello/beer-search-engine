@@ -108,7 +108,7 @@ class WinevybeSpider(scrapy.Spider):
             **table_data,  # Spread dictionary containing row data
         }
 
-    def parse_table_rows(self, row: scrapy.Selector) -> tuple[str | None, str | None]:
+    def parse_table_rows(self, row: scrapy.Selector):
         # .wineleft = Name
         # .wineright = Actual value
         data_name = row.css(".wineleft::text").get()
@@ -117,7 +117,7 @@ class WinevybeSpider(scrapy.Spider):
 
     def parse_product_brand_name(
         self, response: scrapy.Selector
-    ) -> tuple[str | None, str]:
+    ):
         # Extract brand name
         brand = response.css(".brand::text").get()
         name = "".join(response.css(".product::text").getall()).strip()
@@ -174,7 +174,7 @@ class WinevybeSpider(scrapy.Spider):
 
     def parse_product_price(
         self, response: scrapy.Selector
-    ) -> tuple[float | None, str | None]:
+    ):
         # Extract price
         price = response.css(".woocommerce-Price-amount > bdi::text").get()
 
