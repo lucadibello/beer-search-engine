@@ -10,7 +10,7 @@ export async function preloadSearch(query: string): Promise<void> {
 
 export async function searchBeer(
   query: string,
-  limit: number = 10,
+  limit: number = 50,
 ): Promise<SearchApiResponse> {
   if (process.env.NEXT_PUBLIC_API_URL === undefined) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined")
@@ -36,6 +36,7 @@ export async function beerRelevanceFeedback(
   query: string,
   relevantBeers: Beer[],
   irrelevantBeers: Beer[],
+  top: number = 50,
 ): Promise<RelevanceFeedbackApiResponse> {
   if (process.env.NEXT_PUBLIC_API_URL === undefined) {
     throw new Error("NEXT_PUBLIC_API_URL is not defined")
@@ -47,6 +48,7 @@ export async function beerRelevanceFeedback(
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      top: top,
       query: query,
       relevant: relevantBeers.map((beer) => beer.docno),
       irrelevant: irrelevantBeers.map((beer) => beer.docno),

@@ -10,7 +10,7 @@
 \thispagestyle{plain}
 \begin{center}
   \Large
-  \textbf{Beer Search Engine} \\
+  \textbf{Information Retrieval course project \\ Beer Search Engine} \\
   \vspace{0.4cm}
   \textbf{Luca Di Bello, Enrico Benedettini}
   \vspace{0.4cm}
@@ -21,7 +21,13 @@
 %font size
 \footnotesize
 
+% Introduction
+\noindent The aim of this project is to create an information retrieval system for beers where users are able to find relevant beers through natural language queries. Leveraging \textit{PyTerrier} and \textit{FastAPI} we developed a RESTful API that allows users to query the index and retrieve the results in JSON format. Additionally, a responsive web interface, developed using \textit{NextJS} and \textit{React.js}, allows interacting with the search engine in a more user-friendly and effective way.
+
 % Content
 \input{content/1_dataset}
+\input{content/2_indexing}
+\input{content/3_implementation}
+\input{content/4_evaluation}
 
 \end{document}
