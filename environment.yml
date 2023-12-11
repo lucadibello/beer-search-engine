@@ -3,6 +3,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
+  - _openmp_mutex=4.5
   - anyio=3.7.1
   - bzip2=1.0.8
   - ca-certificates=2023.11.17
@@ -12,14 +13,21 @@ dependencies:
   - h11=0.14.0
   - httptools=0.6.1
   - idna=3.4
+  - ld_impl_linux-aarch64=2.40
   - libcxx=14.0.6
+  - libcxxabi=14.0.6
   - libffi=3.4.4
+  - libgcc-ng=13.2.0
+  - libgomp=13.2.0
+  - libnsl=2.0.1
   - libsqlite=3.44.0
+  - libstdcxx-ng=13.2.0
+  - libuuid=2.38.1
   - libuv=1.46.0
   - libzlib=1.2.13
   - ncurses=6.4
   - openssl=3.1.4
-  - pip=23.3
+  - pip=23.3.1
   - pydantic=1.10.12
   - python=3.8.18
   - python-dotenv=1.0.0
@@ -120,4 +128,4 @@ dependencies:
       - wrapt==1.16.0
       - zlib-state==0.1.6
       - zope-interface==6.1
-prefix: /opt/homebrew/Caskroom/miniconda/base/envs/beer-search-engine
+prefix: /opt/conda/envs/beer-search-engine
