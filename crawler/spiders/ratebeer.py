@@ -208,7 +208,7 @@ class RatebeerSpiderSpider(scrapy.Spider):
             "packaging": packaging,
         }
 
-    def parse_packaging(self, availability) -> str | None:
+    def parse_packaging(self, availability) -> str:
         """
         EXAMPLE RESPONSE:
         "availability": {
@@ -219,7 +219,7 @@ class RatebeerSpiderSpider(scrapy.Spider):
 
         # If bottle and tap are unknown, return None
         if availability["bottle"] == "unknown" and availability["tap"] == "unknown":
-            return None
+            return None # type: ignore (Python 3.8 does not support multiple return types)
         elif availability["bottle"] != "unknown" and availability["tap"] == "unknown":
             return "bottle"
         elif availability["bottle"] == "unknown" and availability["tap"] != "unknown":

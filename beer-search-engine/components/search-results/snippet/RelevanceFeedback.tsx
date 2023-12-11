@@ -22,7 +22,7 @@ export default function RelevanceFeedback({
           icon={<FiThumbsUp />}
           variant="ghost"
           colorScheme="green"
-          size="sm"
+          size="md"
           onClick={onRelevant}
           bgColor={isRelevant ? "green.100" : undefined}
           color={isRelevant ? "green.600" : undefined}
@@ -34,7 +34,7 @@ export default function RelevanceFeedback({
           icon={<FiThumbsDown />}
           variant="ghost"
           colorScheme="red"
-          size="sm"
+          size="md"
           onClick={onIrrelevant}
           bgColor={isIrrelevant ? "red.100" : undefined}
           color={isIrrelevant ? "red.600" : undefined}

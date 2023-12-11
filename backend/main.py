@@ -101,16 +101,17 @@ async def feedback(query: str = Body(...), relevant: List[str] = Body(...), irre
     # Search documents by query
     results = model.search(sanitize_query(query))
     
-    # Extract a dataframe of relevant / irrelevant documents from the dataframe
-    relevant_df = results[results["docno"].isin(relevant)]
-    irrelevant_df = results[results["docno"].isin(irrelevant)]
-    
-    # Create query expansion object
-    klqe = pt.rewrite.KLQueryExpansion(index, fb_docs=relevant_df.shape[0], fb_terms=5)
-    new_query = klqe.transform(relevant_df)["query"][0]
+    # Check if query can be expanded
+    if len(relevant) > 0:
+        # Extract a dataframe of relevant / irrelevant documents from the dataframe
+        relevant_df = results[results["docno"].isin(relevant)]
+        
+        # Create query expansion object
+        klqe = pt.rewrite.KLQueryExpansion(index, fb_docs=relevant_df.shape[0], fb_terms=5) # type: ignore
+        query = klqe.transform(relevant_df)["query"][0]
     
     # Search again with the new query
-    results = model.search(new_query)
+    results = model.search(sanitize_query(query))
     ids = [x for x in results["docno"].tolist() if x not in relevant and x not in irrelevant]
     top = min(top, len(ids))
     ids = ids[:top]
@@ -122,7 +123,7 @@ async def feedback(query: str = Body(...), relevant: List[str] = Body(...), irre
             ordered_docs.to_dict(orient="records"),
             ordered_docs.shape[0],
             {
-                "new_query": new_query,
+                "new_query": query,
             }
         )
     )
