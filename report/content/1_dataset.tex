@@ -80,12 +80,9 @@ The \href{https://www.ratebeer.com/}{RateBeer} spider was developed using a diff
 
 Thanks to tailored requests to the API endpoint that loads the beer library given a query and a page number, we have been able to extract over 12'000 beer records. Thanks to the notoriety of this website, we have been able to collect high-quality data, including detailed descriptions, critic scores, tasting notes, and more.
 
+
 \subsubsection{BeerMe spider}
 
-\textcolor{red}{Work in progess}
+The \href{https://beerme.com/beerlist.php}{\textbf{BeerMe}} spider was scraped thanks to the usage of dynamic scraping. The website proposes a selection of more than 31'000 breweries, some of which were closed and some of which are still active. Each brewery page then contains the list of produced beers. There were some troubles due to the way the data was loaded. The structure and content are not consistent and change for every beer, with fields present in some beers and not in others and vice versa. Thus, to be able to load these fields when present, we used dynamic xpath to scrape them. Instead, placeholders' null values were used for missing fields to align to a common beer structure with other spiders. 
 
-To-do list:
-
-\begin{itemize}
-  \item Enrico, questo è tutto tuo :)
-\end{itemize}
+Another problem arose when scraping these pages, as the content is loaded dynamically. Thus, to overcome this issue, we opted for the usage of \href{https://github.com/scrapy-plugins/scrapy-splash#requests}{SplashRequest} to be able to load the content only after some seconds. This still didn't completely fix the issue, but still allowed us to scrape most of the beers, Although it was not possible to retrieve all of the 62'000 beer records, more than 45'000 beers were retrieved, thus a sufficient amount for our engine.
