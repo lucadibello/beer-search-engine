@@ -59,7 +59,7 @@ Among all the candidates, we have selected the following three websites as data 
 
 - [WineVybe](https://www.winevybe.com/beer/): offers a wide variety of beers, including names, descriptions, types, prices, tasting notes, images, closure and packaging details. The website is built using WordPress, which makes it easy to scrape.
 
-- [RateBeer](https://www.ratebeer.com/): hosts over 100’000 unique beers with well-written descriptions, taste notes, alcohol by volume (ABV%), price, packaging, critic score, and brewer information. The content is loaded dynamically via APIs, which requires more advanced scraping techniques. 
+- [RateBeer](https://www.ratebeer.com/): hosts over 100’000 unique beers with well-written descriptions, taste notes, alcohol by volume (ABV%), price, packaging, critic score, and brewer information. The content is loaded dynamically via APIs, which requires more advanced scraping techniques.
 
 - [BeerMe](https://beerme.com/index.php): Contains around 11’000 beer records, detailing brewer information, beer names, styles, scores and production dates. This website is the easiest to scrape, as it is built using static HTML pages with tabular data.
 
@@ -119,11 +119,9 @@ The [BeerMe](https://beerme.com/beerlist.php) spider was scraped thanks to the u
 
 Another problem arose when scraping these pages, as the content is loaded dynamically. Thus, to overcome this issue, we opted for the usage of [SplashRequest](https://github.com/scrapy-plugins/scrapy-splash#requests) to be able to load the content only after some seconds. This still did not completely fix the issue, but still allowed us to scrape most of the beers, Although it was not possible to retrieve all of the 62'000 beer records, more than 45'000 beers were retrieved, thus a sufficient amount for our engine.
 
-
 ## 4. Indexing
 
-To build the index based on the collected data, we used the PyTerrier library, which is a Python library for the Terrier IR platform. The library provides a set of tools to build and evaluate IR systems, and it’s built on top of the Terrier platform, which is a Java-based open-source IR platform. 
-After the completion of the crawling of the data, we realized we needed a set of strings to be able to create an index,
+To build the index based on the collected data, we used the PyTerrier library, which is a Python library for the Terrier IR platform. The library provides a set of tools to build and evaluate IR systems, and it’s built on top of the Terrier platform, which is a Java-based open-source IR platform. After the completion of the crawling of the data, we realized we needed a set of strings to be able to create an index,
 which we did not have yet ready for index creation as our dataset was composed of JSON objects.
 
 Our decision was thus to move on to put together all the data for each record into a single string by recursively taking
