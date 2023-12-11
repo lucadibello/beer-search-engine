@@ -64,7 +64,7 @@ Having a uniform structure for all the records simplifies the representation of 
 
 The data scraping process leverages \textbf{Scrapy} framework, a robust Python library for creating web crawlers in a straightforward manner. For each of the three selected websites (refer to section \ref{sec:dataset}), we have created a dedicated spider tailored to the website structure and data presentation format.
 
-This approach enabled us to efficiently extract over 20'000 beer records from the three websites. The following sections provide a brief overview of the scraping process for each of the three websites.
+This approach enabled us to efficiently extract over 50'000 beer records from the three websites. The following sections provide a brief overview of the scraping process for each of the three websites.
 
 \subsubsection{WineVybe spider}
 
@@ -83,6 +83,6 @@ Thanks to tailored requests to the API endpoint that loads the beer library give
 
 \subsubsection{BeerMe spider}
 
-The \href{https://beerme.com/beerlist.php}{\textbf{BeerMe}} spider was scraped thanks to the usage of dynamic scraping. The website proposes a selection of more than 31'000 breweries, some of which were closed and some of which are still active. Each brewery page then contains the list of produced beers. There were some troubles due to the way the data was loaded. The structure and content are not consistent and change for every beer, with fields present in some beers and not in others and vice versa. Thus, to be able to load these fields when present, we used dynamic xpath to scrape them. Instead, placeholders' null values were used for missing fields to align to a common beer structure with other spiders. 
+The \href{https://beerme.com/beerlist.php}{BeerMe} spider was scraped thanks to the usage of dynamic scraping. The website proposes a selection of more than 31'000 breweries, some of which were closed and some of which are still active. Each brewery page then contains the list of produced beers. There were some troubles due to the way the data was loaded. The structure and content are not consistent and change for every beer, with fields present in some beers and not in others and vice versa. Thus, to be able to load these fields when present, we used dynamic xpath to scrape them. Instead, placeholders' null values were used for missing fields to align to a common beer structure with other spiders. 
 
-Another problem arose when scraping these pages, as the content is loaded dynamically. Thus, to overcome this issue, we opted for the usage of \href{https://github.com/scrapy-plugins/scrapy-splash#requests}{SplashRequest} to be able to load the content only after some seconds. This still didn't completely fix the issue, but still allowed us to scrape most of the beers, Although it was not possible to retrieve all of the 62'000 beer records, more than 45'000 beers were retrieved, thus a sufficient amount for our engine.
+Another problem arose when scraping these pages, as the content is loaded dynamically. Thus, to overcome this issue, we opted for the usage of \href{https://github.com/scrapy-plugins/scrapy-splash#requests}{SplashRequest} to be able to load the content only after some seconds. This still did not completely fix the issue, but still allowed us to scrape most of the beers, Although it was not possible to retrieve all of the 62'000 beer records, more than 45'000 beers were retrieved, thus a sufficient amount for our engine.

@@ -9,6 +9,7 @@ Our decision was thus to move on to put together all the data for each record in
 After this step, we moved on the actual index creation. To address this task, we leveraged the \texttt{IterDictIndexer} class, which allows to build an index from a dictionary of textual documents. The index has been built using the following settings:
 
 \begin{itemize}
+  \item \textbf{Retrieval model}: BM25. This is a probabilistic retrieval model that ranks documents based on the query terms appearing in each document, learn more \href{https://en.wikipedia.org/wiki/Okapi_BM25}{here}.
   \item \textbf{Stemmer}: Porter stemmer. This stemmer is based on the original Porter stemmer algorithm, which is a widely used stemmer for the English language.
   \item \textbf{Stopwords}: PyTerrier default stopwords for English language.
   \item \textbf{Tokeniser}: PyTerrier default tokeniser for English language.
