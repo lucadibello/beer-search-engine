@@ -38,7 +38,8 @@ So, whether you're a beer connoisseur or a casual drinker, our project is here t
     - [5.1.1. Endpoints](#511-endpoints)
     - [5.1.2. Commands](#512-commands)
   - [5.2. Frontend](#52-frontend)
-    - [5.2.1. Lighthouse benchmark](#521-lighthouse-benchmark)
+    - [5.2.1. Screenshots](#521-screenshots)
+    - [5.2.2. Lighthouse benchmark](#522-lighthouse-benchmark)
   - [5.3. Flow of execution](#53-flow-of-execution)
 - [6. Evaluation](#6-evaluation)
   - [6.1. Evaluation design and methodology](#61-evaluation-design-and-methodology)
@@ -234,6 +235,8 @@ modern web standards. The following technologies have been used to build the fro
 
 - [Chakra UI](https://chakra-ui.com/) is a component library that provides a set of accessible and reusable components that can be used to build user interfaces.
 
+#### 5.2.1. Screenshots
+
 The frontend is composed of two main pages: a homepage that allows the user to perform an initial search, and a search page that allows the user to visualize, filter and sort the results of the query. Additionally, this last page allows the user to perform relevance feedback to improve the results of the given query.
 
 Home page screenshot:
@@ -242,7 +245,7 @@ Home page screenshot:
 Search page screenshot:
 ![Search page](./extra/screenshots/search-page.png)
 
-#### 5.2.1. Lighthouse benchmark
+#### 5.2.2. Lighthouse benchmark
 
 o assess the quality of the frontend, a Lighthouse benchmark has been performed. Lighthouse is an open-source tool that allows to measure the performance, accessibility, best practices and SEO of a web application. The benchmark, focusing on the search page, has been performed on a MacBook Pro 16" 2023 with the following specifications:
 
