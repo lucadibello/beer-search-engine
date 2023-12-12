@@ -8,7 +8,19 @@
 	</picture>
 </p>
 
-The aim of this project is to create an information retrieval system for beers where users are able to find relevant beers through natural language queries. Leveraging [PyTerrier](https://github.com/terrier-org/pyterrier) and [FastAPI](https://github.com/tiangolo/fastapi) we developed a RESTful API that allows users to query the index and retrieve the results in JSON format. Additionally, a responsive web interface, developed using [NextJS](https://github.com/vercel/next.js) and [React.js](https://github.com/facebook/react), allows interacting with the search engine in a more user-friendly and effective way.
+Welcome to our unique project, a sophisticated information retrieval system specifically designed for beer enthusiasts! This project is not just about finding a beer, it's about discovering the perfect brew that matches your taste and mood.
+
+Our system leverages the power of [PyTerrier](https://github.com/terrier-org/pyterrier) for information retrieval and [FastAPI](https://github.com/tiangolo/fastapi) for creating a fast, robust, and easy-to-use RESTful API. The results? You get to query the index and retrieve results in a convenient JSON format.
+
+But that's not all! We've also developed a responsive web interface using [NextJS](https://github.com/vercel/next.js) and [React.js](https://github.com/facebook/react). This means you can interact with our search engine in a user-friendly and effective way, right from your browser.
+
+Our system is designed to answer intuitive queries like:
+
+- *What's the best beer for a hot summer day?*
+- *Is there a beer that tastes like chocolate?*
+- *Irish dark beer with low alcohol content*
+
+So, whether you're a beer connoisseur or a casual drinker, our project is here to transform the way you discover and enjoy beer. Cheers to that! 🍻
 
 ## Table of Contents<!-- omit in toc -->
 
@@ -267,7 +279,6 @@ The SUS questionnaire was administered immediately after the user interaction wi
 ### 6.3. User Experience (UX) questionnaire
 
 In addition to the SUS questionnaire, participants were provided with a UX questionnaire to capture subjective experiences, emotions, and overall satisfaction with the beer-search-engine. The questionnaire comprised a range of Likert scale questions aimed at uncovering 26 specific aspects of the user experience.
-
 
 ### 6.4. Outcomes
 
