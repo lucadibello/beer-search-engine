@@ -193,7 +193,7 @@ body parameters:
 
   ```bash
   curl -X 'POST' \
-    'http://localhost:8000/feedback?top=10' \
+    'http://localhost:8000/feedback' \
     -H 'accept: application/json' \
     -H 'Content-Type: application/json' \
     -d '{
@@ -205,7 +205,8 @@ body parameters:
       "irrelevant": [
         "d3",
         "d4"
-      ]
+      ],
+      "top": 10
     }'
   ```
 
